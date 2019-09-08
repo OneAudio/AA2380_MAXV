@@ -26,9 +26,9 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.all;
- 
+
  entity F0_ctrl_encoder is
-    Port ( 
+    Port (
 		   -- INPUTS
            CLKSLOW  	: in  std_logic; -- low frequency clock clock (100Hz)
            Ta	 		: in  std_logic; -- encoder track a input
@@ -44,12 +44,12 @@ use IEEE.numeric_std.all;
            SEnDIFF 	 	: buffer std_logic ; -- AC/DC mode selection
 		   HBWon		: buffer std_logic ; -- High bandwidth analog input filter type (0= Low bandwidth 1=High bandwidth)
            FIRnSinC	 	: buffer std_logic ; -- FIR or SinC filter selection (0=SInC 1=FIR)
-           CAL_pulse	: buffer std_logic	 -- Pulse for DC calibration process ent to HPF.           
+           CAL_pulse	: buffer std_logic	 -- Pulse for DC calibration process ent to HPF.
 		   --TEST SIGNALS
- 
+
     );
  end F0_ctrl_encoder;
- 
+
 architecture select_mode of F0_ctrl_encoder is
 
 signal pushcnt			: integer range 0 to 3 ; -- counter for SR selection
@@ -58,12 +58,12 @@ signal rotary_in        : STD_LOGIC_vector (1 downto 0)  ; -- Vector of the two 
 signal delay_rotary_q1  : STD_LOGIC  ; --
 signal pushf   			: STD_LOGIC  ; -- Filtered push button
 signal Rotate  			: STD_LOGIC  ; -- pulse output of encoder
-signal D		 		: STD_LOGIC  ; -- variable 
-signal Qtm	  			: STD_LOGIC  ; -- variable 
+signal D		 		: STD_LOGIC  ; -- variable
+signal Qtm	  			: STD_LOGIC  ; -- variable
 signal sel_AVG 			: STD_LOGIC_vector (2 downto 0); -- Averaging ratio counter (default value 3= 1x)
-signal CALtime 			: integer range 0 to 1023 ; -- Calibration time counter 
+signal CALtime 			: integer range 0 to 1023 ; -- Calibration time counter
 signal CALmax  			: integer range 0 to 1023 :=127 ; -- Calibration time max values
-signal StartCAL			: STD_LOGIC ; -- latched Calibration start  
+signal StartCAL			: STD_LOGIC ; -- latched Calibration start
 
 begin
 
@@ -73,9 +73,9 @@ begin
 -- sampled at 100Hz with clkslow
 ---------------------------------------------------------
 process (clkslow)
-begin 
+begin
     if rising_edge(clkslow) then
-    Pushf <= Push;   
+    Pushf <= not Push; -- push is inverted and Filtered   
     end if;
 end process;
 
@@ -89,7 +89,7 @@ process (Pushf,pushcnt,EXT_SR,EN_ext)
 begin
 	if	rising_edge(Pushf)	then
 		if	pushcnt < 3	then
-			pushcnt <= pushcnt + 1 ; 
+			pushcnt <= pushcnt + 1 ;
 		else
 			pushcnt <= 0 ;
 		end if;
@@ -125,41 +125,41 @@ begin
 	if		SR="00" then		-- 48kHz / AVG max is 32x
 				case sel_AVG is
 					when "000" => AVG <= "000" ; -- avg= 1x
-					when "001" => AVG <= "001" ; -- avg= 2x   
-					when "010" => AVG <= "010" ; -- avg= 4x          
-					when "011" => AVG <= "011" ; -- avg= 8x 
+					when "001" => AVG <= "001" ; -- avg= 2x
+					when "010" => AVG <= "010" ; -- avg= 4x
+					when "011" => AVG <= "011" ; -- avg= 8x
 					when "100" => AVG <= "100" ; -- avg= 16x
-					when "101" => AVG <= "101" ; -- avg= 32x	
+					when "101" => AVG <= "101" ; -- avg= 32x
 					when others => AVG <= "000";
 				end case;
-	elsif	SR="01" then		-- 96kHz / AVG max is 16x 
+	elsif	SR="01" then		-- 96kHz / AVG max is 16x
 				case sel_AVG is
 					when "000" => AVG <= "000" ; -- avg= 1x
-					when "001" => AVG <= "001" ; -- avg= 2x   
-					when "010" => AVG <= "010" ; -- avg= 4x          
-					when "011" => AVG <= "011" ; -- avg= 8x 
+					when "001" => AVG <= "001" ; -- avg= 2x
+					when "010" => AVG <= "010" ; -- avg= 4x
+					when "011" => AVG <= "011" ; -- avg= 8x
 					when "100" => AVG <= "100" ; -- avg= 16x
 					when "101" => AVG <= "100" ; -- avg= 16x
 					when others => AVG <= "000";
 				end case;
-	elsif	SR="10" then		-- 192kHz / AVG max is 8x 
+	elsif	SR="10" then		-- 192kHz / AVG max is 8x
 				case sel_AVG is
 					when "000" => AVG <= "000" ; -- avg= 1x
-					when "001" => AVG <= "001" ; -- avg= 2x   
-					when "010" => AVG <= "010" ; -- avg= 4x          
-					when "011" => AVG <= "011" ; -- avg= 8x 
+					when "001" => AVG <= "001" ; -- avg= 2x
+					when "010" => AVG <= "010" ; -- avg= 4x
+					when "011" => AVG <= "011" ; -- avg= 8x
 					when "100" => AVG <= "011" ; -- avg= 8x
 					when "101" => AVG <= "011" ; -- avg= 8x
 					when others => AVG <= "000";
 				end case;
-	else						-- 384kHz / AVG max is 4x 
+	else						-- 384kHz / AVG max is 4x
 		case sel_AVG is
 			when "000" => AVG <= "000" ; -- avg= 1x
-			when "001" => AVG <= "001" ; -- avg= 2x   
-			when "010" => AVG <= "010" ; -- avg= 4x          
-			when "011" => AVG <= "010" ; -- avg= 4x 
+			when "001" => AVG <= "001" ; -- avg= 2x
+			when "010" => AVG <= "010" ; -- avg= 4x
+			when "011" => AVG <= "010" ; -- avg= 4x
 			when "100" => AVG <= "010" ; -- avg= 4x
-			when "101" => AVG <= "010" ; -- avg= 4x 
+			when "101" => AVG <= "010" ; -- avg= 4x
 			when others => AVG <= "000";
 		end case;
 	end if;
@@ -171,25 +171,25 @@ end process;
 -- Duration depend on sampling rate.
 -------------------------------------------------------------------------
 process (pushf,SR,clkslow,CALtime,CALmax,Qtm,D,StartCAL)
-begin 
+begin
 	--Sampling rate select the CALtime value for corresponding pulse width
-	case SR is				
+	case SR is
 		when "00" => CALmax <= 1023 ;	--48kHz sampling rate  =10.24s autozero pulse (with clkslow=100Hz)
 		when "01" => CALmax <= 511  ;	--96kHz sampling rate  = 5.12s autozero pulse
 		when "10" => CALmax <= 255  ;	--192kHz sampling rate = 2.56s autozero pulse
 		when "11" => CALmax <= 127  ;	--384kHz sampling rate = 1.28s autozero pulse
 	end case;
-	
+
 	-- Generate a StartCAL pulse when pushf is active for 1s.
 	if D= '0'	then
 		if pushf = '1' then
 			if rising_edge(clkslow) then
 				if  count1s = 100 then
-					StartCAL <= '1';  -- 
+					StartCAL <= '1';  --
 					count1s  <= 0 ;-- clear counter
-				else 
+				else
 					count1s <= count1s +1 ;-- increment counter
-				end if; 
+				end if;
 			end if;
 		else
 			count1s <= 0; -- reset counter when push button is not pressed
@@ -197,7 +197,7 @@ begin
 	else
 		StartCAL <= '0';  --clear counter
 	end if;
-	
+
 	if rising_edge(clkslow) then
 		CAL_pulse <= StartCAL and not Qtm; -- Output pulse=1 until counter maxval reached.
 		if 	StartCAL='1' then

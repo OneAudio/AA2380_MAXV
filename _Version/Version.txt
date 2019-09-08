@@ -2,5 +2,34 @@
 -----------------
 Logiciel de test du CPLD (5M570CT100C5N) de la carte AA2380v1 de l'OSVA.
 
-Version 0 du 06/2019.
----------------------
+Version 0 du 28/08/2019.
+------------------------
+
+
+Explication des straps: 
+-----------------------
+
+CONF 2 = single-ended-Differential
+CONF 3 = Analog Filter bandwidth
+---
+J12
+
+UI0..2 =  Average value
+UI0 3 = FIRnSINC filter
+
+
+Sorties connecteur de test J12 :
+----------------------------
+ UI0 4	= I2S LRCK
+ UI0 5	= I2S BCK
+ UI0 6	= I2S SDATA
+ UI0 7	= Ready
+ UI0 8	= CLKSLOW
+ UI0 9	= nFS
+ UIO 10 = 128FS
+ 
+
+Les leds tricolores CMS sont rouges pendant la phase de calibration
+==> mode calib avec appui long sur bouton
+   
+
