@@ -1,0 +1,211 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 1991-2010 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 16 16 192 368)
+	(text "F2_leds_decoders" (rect 5 0 94 12)(font "Arial" ))
+	(text "inst" (rect 8 336 25 348)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "CLKSLOW" (rect 0 0 53 12)(font "Arial" ))
+		(text "CLKSLOW" (rect 21 27 74 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 1))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "SR[1..0]" (rect 0 0 41 12)(font "Arial" ))
+		(text "SR[1..0]" (rect 21 43 62 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 3))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "AVG[2..0]" (rect 0 0 48 12)(font "Arial" ))
+		(text "AVG[2..0]" (rect 21 59 69 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 3))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "SEnDIFF" (rect 0 0 46 12)(font "Arial" ))
+		(text "SEnDIFF" (rect 21 75 67 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 1))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "HBWon" (rect 0 0 37 12)(font "Arial" ))
+		(text "HBWon" (rect 21 91 58 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 1))
+	)
+	(port
+		(pt 0 112)
+		(input)
+		(text "FIRnSinC" (rect 0 0 48 12)(font "Arial" ))
+		(text "FIRnSinC" (rect 21 107 69 119)(font "Arial" ))
+		(line (pt 0 112)(pt 16 112)(line_width 1))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "CAL_pulse" (rect 0 0 53 12)(font "Arial" ))
+		(text "CAL_pulse" (rect 21 123 74 135)(font "Arial" ))
+		(line (pt 0 128)(pt 16 128)(line_width 1))
+	)
+	(port
+		(pt 176 32)
+		(output)
+		(text "LED_48K" (rect 0 0 46 12)(font "Arial" ))
+		(text "LED_48K" (rect 109 27 155 39)(font "Arial" ))
+		(line (pt 176 32)(pt 160 32)(line_width 1))
+	)
+	(port
+		(pt 176 48)
+		(output)
+		(text "LED_96K" (rect 0 0 46 12)(font "Arial" ))
+		(text "LED_96K" (rect 109 43 155 55)(font "Arial" ))
+		(line (pt 176 48)(pt 160 48)(line_width 1))
+	)
+	(port
+		(pt 176 64)
+		(output)
+		(text "LED_192K" (rect 0 0 51 12)(font "Arial" ))
+		(text "LED_192K" (rect 104 59 155 71)(font "Arial" ))
+		(line (pt 176 64)(pt 160 64)(line_width 1))
+	)
+	(port
+		(pt 176 80)
+		(output)
+		(text "LED_AVG0" (rect 0 0 55 12)(font "Arial" ))
+		(text "LED_AVG0" (rect 100 75 155 87)(font "Arial" ))
+		(line (pt 176 80)(pt 160 80)(line_width 1))
+	)
+	(port
+		(pt 176 96)
+		(output)
+		(text "LED_AVG1" (rect 0 0 55 12)(font "Arial" ))
+		(text "LED_AVG1" (rect 100 91 155 103)(font "Arial" ))
+		(line (pt 176 96)(pt 160 96)(line_width 1))
+	)
+	(port
+		(pt 176 112)
+		(output)
+		(text "LED_AVG2" (rect 0 0 55 12)(font "Arial" ))
+		(text "LED_AVG2" (rect 100 107 155 119)(font "Arial" ))
+		(line (pt 176 112)(pt 160 112)(line_width 1))
+	)
+	(port
+		(pt 176 128)
+		(output)
+		(text "LED_SE" (rect 0 0 41 12)(font "Arial" ))
+		(text "LED_SE" (rect 114 123 155 135)(font "Arial" ))
+		(line (pt 176 128)(pt 160 128)(line_width 1))
+	)
+	(port
+		(pt 176 144)
+		(output)
+		(text "LED_FILTOFF" (rect 0 0 71 12)(font "Arial" ))
+		(text "LED_FILTOFF" (rect 84 139 155 151)(font "Arial" ))
+		(line (pt 176 144)(pt 160 144)(line_width 1))
+	)
+	(port
+		(pt 176 160)
+		(output)
+		(text "LED_CAL" (rect 0 0 48 12)(font "Arial" ))
+		(text "LED_CAL" (rect 107 155 155 167)(font "Arial" ))
+		(line (pt 176 160)(pt 160 160)(line_width 1))
+	)
+	(port
+		(pt 176 176)
+		(output)
+		(text "nLED1_G" (rect 0 0 47 12)(font "Arial" ))
+		(text "nLED1_G" (rect 108 171 155 183)(font "Arial" ))
+		(line (pt 176 176)(pt 160 176)(line_width 1))
+	)
+	(port
+		(pt 176 192)
+		(output)
+		(text "nLED1_R" (rect 0 0 47 12)(font "Arial" ))
+		(text "nLED1_R" (rect 108 187 155 199)(font "Arial" ))
+		(line (pt 176 192)(pt 160 192)(line_width 1))
+	)
+	(port
+		(pt 176 208)
+		(output)
+		(text "nLED1_Y" (rect 0 0 47 12)(font "Arial" ))
+		(text "nLED1_Y" (rect 108 203 155 215)(font "Arial" ))
+		(line (pt 176 208)(pt 160 208)(line_width 1))
+	)
+	(port
+		(pt 176 224)
+		(output)
+		(text "nLED2_G" (rect 0 0 47 12)(font "Arial" ))
+		(text "nLED2_G" (rect 108 219 155 231)(font "Arial" ))
+		(line (pt 176 224)(pt 160 224)(line_width 1))
+	)
+	(port
+		(pt 176 240)
+		(output)
+		(text "nLED2_R" (rect 0 0 47 12)(font "Arial" ))
+		(text "nLED2_R" (rect 108 235 155 247)(font "Arial" ))
+		(line (pt 176 240)(pt 160 240)(line_width 1))
+	)
+	(port
+		(pt 176 256)
+		(output)
+		(text "nLED2_Y" (rect 0 0 47 12)(font "Arial" ))
+		(text "nLED2_Y" (rect 108 251 155 263)(font "Arial" ))
+		(line (pt 176 256)(pt 160 256)(line_width 1))
+	)
+	(port
+		(pt 176 272)
+		(output)
+		(text "FILTER_CH1" (rect 0 0 66 12)(font "Arial" ))
+		(text "FILTER_CH1" (rect 89 267 155 279)(font "Arial" ))
+		(line (pt 176 272)(pt 160 272)(line_width 1))
+	)
+	(port
+		(pt 176 288)
+		(output)
+		(text "SE_CH1" (rect 0 0 42 12)(font "Arial" ))
+		(text "SE_CH1" (rect 113 283 155 295)(font "Arial" ))
+		(line (pt 176 288)(pt 160 288)(line_width 1))
+	)
+	(port
+		(pt 176 304)
+		(output)
+		(text "FILTER_CH2" (rect 0 0 66 12)(font "Arial" ))
+		(text "FILTER_CH2" (rect 89 299 155 311)(font "Arial" ))
+		(line (pt 176 304)(pt 160 304)(line_width 1))
+	)
+	(port
+		(pt 176 320)
+		(output)
+		(text "SE_CH2" (rect 0 0 42 12)(font "Arial" ))
+		(text "SE_CH2" (rect 113 315 155 327)(font "Arial" ))
+		(line (pt 176 320)(pt 160 320)(line_width 1))
+	)
+	(drawing
+		(rectangle (rect 16 16 160 336)(line_width 1))
+	)
+)

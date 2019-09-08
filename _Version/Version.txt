@@ -1,0 +1,6 @@
+﻿ON le 04/04/2019
+-----------------
+Logiciel de test du CPLD (5M570CT100C5N) de la carte AA2380v1 de l'OSVA.
+
+Version 0 du 06/2019.
+---------------------
