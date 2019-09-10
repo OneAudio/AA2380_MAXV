@@ -1,8 +1,8 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date: 23/08/19	Designer: O.N
+-- Date: 10/09/19	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 42 LE.
+-- Intel MAXV 5M570 CPLD	Take 46 LE.
 -- Function F0 :  FO_ctrl_encoder.vhd
 -----------------------------------------------------------------
 -- Allow to choose and select values for each function
@@ -27,24 +27,26 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.all;
 
- entity F0_ctrl_encoder is
-    Port (
-		   -- INPUTS
-           CLKSLOW  	: in  std_logic; -- low frequency clock clock (100Hz)
-           Ta	 		: in  std_logic; -- encoder track a input
-           Tb			: in  std_logic; -- encoder track b input
-           push   		: in  std_logic; -- encoder push switch input
-		   CONF			: in  std_logic_vector(3 downto 0); -- CONF jumpers inputs
-		   UIO			: in  std_logic_vector(3 downto 0); -- UIO  jumpers inputs
-		   EXT_SR		: in  std_logic_vector(1 downto 0); -- external sampling rate selection
-		   EN_ext		: in  std_logic; -- external sampling enable mode (active high)
-		   -- OUTPUTS
-           SR       	: buffer std_logic_vector (1 downto 0); -- select SPDIF sampling rate
-           AVG      	: out std_logic_vector (2 downto 0); -- select averaging ration of SinC filter
-           SEnDIFF 	 	: buffer std_logic ; -- AC/DC mode selection
-		   HBWon		: buffer std_logic ; -- High bandwidth analog input filter type (0= Low bandwidth 1=High bandwidth)
-           FIRnSinC	 	: buffer std_logic ; -- FIR or SinC filter selection (0=SInC 1=FIR)
-           CAL_pulse	: buffer std_logic	 -- Pulse for DC calibration process ent to HPF.
+entity F0_ctrl_encoder is
+Port (
+		-- INPUTS
+    CLKSLOW  	: in  std_logic; -- low frequency clock clock (100Hz)
+    Ta	 		  : in  std_logic; -- encoder track a input
+    Tb		  	: in  std_logic; -- encoder track b input
+    push   		: in  std_logic; -- encoder push switch input
+    CONF			: in  std_logic_vector(3 downto 0); -- CONF jumpers inputs
+    UIO		   	: in  std_logic_vector(3 downto 0); -- UIO  jumpers inputs
+    EXT_SR		: in  std_logic_vector(1 downto 0); -- external sampling rate selection
+    EN_ext		: in  std_logic; -- external sampling enable mode (active high)
+    -- OUTPUTS
+    SR       	: buffer std_logic_vector (1 downto 0); -- select SPDIF sampling rate
+    AVG      	: out std_logic_vector (2 downto 0); -- select averaging ration of SinC filter
+    SEnDIFFL 	: buffer std_logic ; -- Single-ended / Differential input mode : Left channel
+    SEnDIFFR 	: buffer std_logic ; -- Single-ended / Differential input mode : Right channel
+    HBWonL	  : buffer std_logic ; -- High bandwidth analog input filter type (0= Low bandwidth 1=High bandwidth) : Left channel
+    HBWonR	  : buffer std_logic ; -- High bandwidth analog input filter type (0= Low bandwidth 1=High bandwidth) : Right channel
+    FIRnSinC 	: buffer std_logic ; -- FIR or SinC filter selection (0=SInC 1=FIR)
+    CAL_pulse	: buffer std_logic	 -- Pulse for DC calibration process ent to HPF.
 		   --TEST SIGNALS
 
     );
@@ -75,7 +77,7 @@ begin
 process (clkslow)
 begin
     if rising_edge(clkslow) then
-    Pushf <= not Push; -- push is inverted and Filtered   
+    Pushf <= not Push; -- push is inverted and Filtered
     end if;
 end process;
 
@@ -111,12 +113,15 @@ end process;
 -- 192 k = 8x max / 96k = 16x max and 48k=32x max
 -- and no average in FIR.
 ----------------------------------------------------------
--- SR			<= CONF(1 downto 0) ; 	-- send config jumpers 0-1 to sampling rate bits.
-SEnDIFF 	<= CONF(2) ;			-- send config jumper 2 to SEnDIFF (single-ended-Differential)
-HBWon		<= CONF(3) ;			-- send config jumper 3 to HBWon ( Analog input filter bandwidth).
+-- Config jumpers allow seletion of input coupling and bandwidth for each input channe :.
+SEnDIFFL 	<= CONF(0) ;	--JPA config jumper "SEnDIFF" (single-ended-Differential) : Left
+HBWonL	  <= CONF(1) ;	--JPB config jumper "HBWon" ( Analog input filter bandwidth): Left
+SEnDIFFR 	<= CONF(2) ;	--JPC config jumper "SEnDIFF" (single-ended-Differential) : Right
+HBWonR	  <= CONF(3) ;	--JPD config jumper "HBWon" ( Analog input filter bandwidth) : Right
+
+-- Others jumpers on JP12 connector
 sel_AVG		<= UIO (2 downto 0) ;	-- send UIO jumper 0-1-2 to averaging value
 FIRnSinC	<= UIO (3) ;			-- send UIO jumper 3 to FIRnSinC (Digital filter type)
-
 
 -- Set AVG value depending on sampling rate and filter type
 -- Averaging ratio (AVG) x Sampling rate (SR) equal always 1536 kHz.
