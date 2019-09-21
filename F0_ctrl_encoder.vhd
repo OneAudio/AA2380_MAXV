@@ -1,8 +1,8 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date: 10/09/19	Designer: O.N
+-- Date: 19/09/19	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 46 LE.
+-- Intel MAXV 5M570 CPLD	Take 44 LE.
 -- Function F0 :  FO_ctrl_encoder.vhd
 -----------------------------------------------------------------
 -- Allow to choose and select values for each function
@@ -18,6 +18,10 @@
 -- 4) Low or high bandwidth analog filter type
 -- 5) Digital HPF mode *optional future use*
 -- 6) DC offset calibration process
+-- 7) if digital averaging value bits (UIO) are ='111', then the
+--    averaging mode is autoset for real SR=1536kHz
+--    Then for nFS=1536kHz :
+--    48kHz@ avg=32x / 96kHz@ avg=16x / 192kHz@ avg=8x
 -----------------------------------------------------------------
 -- Sampling can be selected by encoder push, or it is controlled
 -- by SDR-widget directly if EN_ext is active (SDR board detected
@@ -63,8 +67,8 @@ signal Rotate  			: STD_LOGIC  ; -- pulse output of encoder
 signal D		 		: STD_LOGIC  ; -- variable
 signal Qtm	  			: STD_LOGIC  ; -- variable
 signal sel_AVG 			: STD_LOGIC_vector (2 downto 0); -- Averaging ratio counter (default value 3= 1x)
-signal CALtime 			: integer range 0 to 1023 ; -- Calibration time counter
-signal CALmax  			: integer range 0 to 1023 :=127 ; -- Calibration time max values
+signal CALtime 			: integer range 0 to 255 ; -- Calibration time counter
+signal CALmax  			: integer range 0 to 255 :=127 ; -- Calibration time max values
 signal StartCAL			: STD_LOGIC ; -- latched Calibration start
 
 begin
@@ -134,7 +138,7 @@ begin
 					when "010" => AVG <= "010" ; -- avg= 4x
 					when "011" => AVG <= "011" ; -- avg= 8x
 					when "100" => AVG <= "100" ; -- avg= 16x
-					when "101" => AVG <= "101" ; -- avg= 32x
+					when ("101" or "111") => AVG <= "101" ; -- avg= 32x ("111"=auto avg mode)
 					when others => AVG <= "000";
 				end case;
 	elsif	SR="01" then		-- 96kHz / AVG max is 16x
@@ -143,7 +147,7 @@ begin
 					when "001" => AVG <= "001" ; -- avg= 2x
 					when "010" => AVG <= "010" ; -- avg= 4x
 					when "011" => AVG <= "011" ; -- avg= 8x
-					when "100" => AVG <= "100" ; -- avg= 16x
+					when ("100" or "111") => AVG <= "100" ; -- avg= 16x ("111"=auto avg mode)
 					when "101" => AVG <= "100" ; -- avg= 16x
 					when others => AVG <= "000";
 				end case;
@@ -152,21 +156,21 @@ begin
 					when "000" => AVG <= "000" ; -- avg= 1x
 					when "001" => AVG <= "001" ; -- avg= 2x
 					when "010" => AVG <= "010" ; -- avg= 4x
-					when "011" => AVG <= "011" ; -- avg= 8x
+					when ("011" or "111") => AVG <= "011" ; -- avg= 8x ("111"=auto avg mode)
 					when "100" => AVG <= "011" ; -- avg= 8x
 					when "101" => AVG <= "011" ; -- avg= 8x
 					when others => AVG <= "000";
 				end case;
-	else						-- 384kHz / AVG max is 4x
-		case sel_AVG is
-			when "000" => AVG <= "000" ; -- avg= 1x
-			when "001" => AVG <= "001" ; -- avg= 2x
-			when "010" => AVG <= "010" ; -- avg= 4x
-			when "011" => AVG <= "010" ; -- avg= 4x
-			when "100" => AVG <= "010" ; -- avg= 4x
-			when "101" => AVG <= "010" ; -- avg= 4x
-			when others => AVG <= "000";
-		end case;
+	else					    	-- 384kHz / AVG max is 4x
+    		case sel_AVG is
+    			when "000" => AVG <= "000" ; -- avg= 1x
+    			when "001" => AVG <= "001" ; -- avg= 2x
+    			when ("010" or "111") => AVG <= "010" ; -- avg= 4x ("111"=auto avg mode)
+    			when "011" => AVG <= "010" ; -- avg= 4x
+    			when "100" => AVG <= "010" ; -- avg= 4x
+    			when "101" => AVG <= "010" ; -- avg= 4x
+    			when others => AVG <= "000";
+    		end case;
 	end if;
 end process;
 
@@ -174,15 +178,19 @@ end process;
 -------------------------------------------------------------------------
 -- Generate CAL_pulse signal when DC calibration is activated
 -- Duration depend on sampling rate.
+-- clkslow = 100Hz (T= 10ms)
+-- RC@48k = 1.36 s
+-- RC@96k = 0.683 s
+-- RC@192k= 0.341 s
 -------------------------------------------------------------------------
 process (pushf,SR,clkslow,CALtime,CALmax,Qtm,D,StartCAL)
 begin
 	--Sampling rate select the CALtime value for corresponding pulse width
 	case SR is
-		when "00" => CALmax <= 1023 ;	--48kHz sampling rate  =10.24s autozero pulse (with clkslow=100Hz)
-		when "01" => CALmax <= 511  ;	--96kHz sampling rate  = 5.12s autozero pulse
-		when "10" => CALmax <= 255  ;	--192kHz sampling rate = 2.56s autozero pulse
-		when "11" => CALmax <= 127  ;	--384kHz sampling rate = 1.28s autozero pulse
+		when "00" => CALmax <= 136 ;	--48kHz sampling rate  = 1.360 s autozero pulse (with clkslow=100Hz)
+		when "01" => CALmax <=  68  ;	--96kHz sampling rate  = 0.683 s autozero pulse (with clkslow=100Hz)
+		when "10" => CALmax <=  34  ;	--192kHz sampling rate = 0.341 s autozero pulse (with clkslow=100Hz)
+		when "11" => CALmax <=  17  ;	--384kHz sampling rate = 0.170 s autozero pulse (with clkslow=100Hz)
 	end case;
 
 	-- Generate a StartCAL pulse when pushf is active for 1s.

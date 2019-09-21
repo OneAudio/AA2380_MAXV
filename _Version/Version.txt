@@ -1,4 +1,4 @@
-﻿ON le 04/04/2019
+ON le 04/04/2019
 -----------------
 Logiciel de test du CPLD (5M570CT100C5N) de la carte AA2380v1 de l'OSVA.
 
@@ -60,3 +60,14 @@ Pin 29 = ISOUT PIN10 = GND
 Pin 31 = ISOUT PIN11 = GND
 Pin 33 = ISIN PIN4   = xx
 Pin 35 = ISIN PIN5   = xx
+
+
+Tests of 21/09/19
+-----------------
+(For simpler debug, we remove digital HPF)
+
+1/ Only left channel is send o both L/R SPDIF output
+We see that LRCK is near 100% duty cycle and must be 50%!
+2/ The averaging values others than max avg are not working.
+(The avg set value is not send to ADC read function ?...)
+3/ Sine wave at input is not correctly reproduced (corrupted value..)
