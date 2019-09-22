@@ -30,7 +30,7 @@ port(
   SR            : in  std_logic_vector(1 downto 0); -- selected output sampling rate (48,96 or 192kHz)
   DOUTL	 	    : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Left channel
   DOUTR	 	    : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Right channel
-  Fso		    : out std_logic ; -- effective output sampling rate
+  Fso		    : buffer std_logic ; -- effective output sampling rate
   nFS			: out std_logic ; -- ADC sampling rate unaveraged
   --- ADC i/o control signals
   nCNVL         : out std_logic ; -- ADC start conv signal (inverted), Left channel
@@ -137,7 +137,7 @@ begin
             avg_cnt <= 1 		; -- reset counter
         end if;
         -- Generate 50% duty cycle Fso (LRCK) (output effective sampling clock)
-        if  avg_cnt < (avg_max/2)  then
+        if  avg_cnt =< (avg_max/2)  then
             Fso <= '1'  ; -- set to high for half averaging cycle
         else
             Fso <= '0'  ; -- set to low for half averaging cycle
@@ -295,12 +295,12 @@ end process p_serial_input;
 
 ------------------------------------------------------------------------------
 -- Transfer data register to DOUTL and DOUTR output at each rising edge
--- of enable_sck signal output is 0 if enable input is low
+-- of Fso (LRCK) signal output is 0 if enable input is low
 ------------------------------------------------------------------------------
-process (enable, enable_sck)
+process (enable, Fso)
 begin
 	if 	enable='1' then
-		if	falling_edge(enable_sck) then
+		if	falling_edge(Fso) then
 			DOUTL <= r_DATAL; -- Left channel data latch
 			DOUTR <= r_DATAR; -- Right channel data latch
 		end if;
