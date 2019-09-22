@@ -48,6 +48,7 @@
 *.smsg
 *.sof
 *.sld  # added by ON 10/09/2019
+*.zip  # added by ON 10/09/2019
 *.sopc_builder
 *.summary
 *.tcl

@@ -1,21 +1,22 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date: 20/08/19	Designer: O.N
+-- Date: 22/09/19	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 183 LE.
+-- Intel MAXV 5M570 CPLD	Take 182 LE.
 -- Function F1 :  F1_ADCx2_DistributedRead.vhd
 -- Function to read data from two LT2380-24 ADC using the distributed
 -- reading protocol.
 -- ==> Data reading of both ADCs are made synchronously using same
 -- control signals.
 ------------------------------------------------------------------
--- Averaging ratio is fixed as follow (SinC mode only) : 
--- Fso=384 kHz Avg = 4 x (nFS= 1531 kHz)
--- Fso=192 kHz Avg = 8 x (nFS= 1531 kHz)
--- Fso= 96 kHz Avg = 16x (nFS= 1531 kHz)
--- Fso= 48 kHz Avg = 32x (nFS= 1531 kHz)
+-- Averaging ratio is fixed as follow (SinC mode only) :
+-- Fso=384 kHz Avg = 4 x (nFS= 1562.5 kHz)
+-- Fso=192 kHz Avg = 8 x (nFS= 1562.5 kHz)
+-- Fso= 96 kHz Avg = 16x (nFS= 1562.5 kHz)
+-- Fso= 48 kHz Avg = 32x (nFS= 1562.5 kHz)
 -- NO FIR mode available here !
 -- (Note : nFS = AVG x Fso )
+-- 22/09/19 : Modif for Fso 50% duty-cycle
 ------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
@@ -26,7 +27,7 @@ entity F1_ADCx2_DistributedRead is
 port(
   enable		: in  std_logic; -- enable input
   CLOCK         : in  std_logic; -- 100MHz clock input
-  SR            : in  std_logic_vector(1 downto 0); -- selected output sampling rate (48,96 or 192kHz) 
+  SR            : in  std_logic_vector(1 downto 0); -- selected output sampling rate (48,96 or 192kHz)
   DOUTL	 	    : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Left channel
   DOUTR	 	    : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Right channel
   Fso		    : out std_logic ; -- effective output sampling rate
@@ -41,7 +42,7 @@ port(
   SCK           : out std_logic ; -- ADC clk_div4
   CK128FS		: out std_logic   -- 128 Fso output for SPDIF (6.144M to 24.576M)
 );
- 
+
 end F1_ADCx2_DistributedRead;
 
 architecture Behavioral of F1_ADCx2_DistributedRead is
@@ -51,8 +52,8 @@ signal  clk_div2	: std_logic ; --  49.152 MHz clock (50MHz with 100M clk)
 signal  clk_div4	: std_logic ; --  24.576 MHz clock (25MHz with 100M clk)
 signal  clk_div8	: std_logic ; --  12.288 MHz clock (12.5MHz with 100M clk)
 signal  clk_div16	: std_logic ; --   6.144 MHz clock (6.125MHz with 100M clk)
-  	
-signal  xFS  	    : std_logic ; -- output sampling clock 	
+
+signal  xFS  	    : std_logic ; -- output sampling clock
 
 signal  avg_max     : integer range 1 to 32  ; -- max average value
 signal  avg_cnt     : integer range 1 to 32  ; -- average counter
@@ -60,7 +61,7 @@ signal  tclk_cnt    : integer range 0 to 6   ; -- clk_div4 pulse counter for eac
 signal  tclk23      : integer range 0 to 23   ; -- clk_div4 pulses counter for complete ADC reading
 
 signal  enable_sck  : std_logic; -- ADC clk_div4 enable
-signal  QA          : std_logic ; --  
+signal  QA          : std_logic ; --
 signal  ResetA      : std_logic ; --
 signal  ena_sck     : std_logic ; --
 signal  ena_shft    : std_logic ; --
@@ -80,16 +81,15 @@ begin
 p_clk_divider: process(CLOCK,enable,enable_sck,ResetA)
 begin
 	if enable = '1' then
-		if (rising_edge(CLOCK)) then
-		 clk_divider   <= clk_divider + 1;
+		if  (rising_edge(CLOCK)) then
+		    clk_divider   <= clk_divider + 1;
 		end if;
-    Fso 	<= enable_sck	; -- no Fso output if enable is low
+    --
     nCNVL 	<= not ResetA 	; -- ADC start convertion pulse (inverted),Left channel
-	nCNVR	<= not ResetA 	; -- ADC start convertion pulse (inverted), Right channel
+	  nCNVR	<= not ResetA 	; -- ADC start convertion pulse (inverted), Right channel
 	else
-    Fso 	<= '0'	; -- clear Fso
     nCNVL 	<= '1' 	; -- nCNV set to high,Left channel
-	nCNVR 	<= '1' 	; -- nCNV set to high,Right channel
+	  nCNVR 	<= '1' 	; -- nCNV set to high,Right channel
     clk_divider <= "000000" ; -- clear counter if enable is low.
 	end if;
 end process p_clk_divider;
@@ -98,11 +98,11 @@ end process p_clk_divider;
 clk_div2    <= clk_divider(0); -- 50 MHz (128*384)
 clk_div4    <= clk_divider(1); -- 25 MHz (128*192)
 clk_div8  	<= clk_divider(2); -- 12.5 MHz (128*96)
-clk_div16	<= clk_divider(3); -- 6.125 MHz (128*48)
+clk_div16	  <= clk_divider(3); -- 6.125 MHz (128*48)
 
-xFS         <= clk_divider(5); -- 1531 kHz (384x4/192x8/96x16/48x32)
+xFS         <= clk_divider(5); -- 1562.5 kHz (384x4/192x8/96x16/48x32)
 
-nFS <= xFS ; -- nFS always equal 1531 kHz
+nFS <= xFS ; -- nFS always equal 1562.5 kHz
 
 ------------------------------------------------------------------
 -- Decoding 128FS frequencies and averaging value from  SR inputs
@@ -114,34 +114,43 @@ begin
       when "00" => avg_max  <= 32 		; -- Fso= 48k,  averaging = 32x
                    CK128FS	<= clk_div16; -- CK128FS = 6.144M (6.125M with 100M clk)
       when "01" => avg_max  <= 16 		; -- Fso= 96k,  averaging = 16x
-  			       CK128FS	<= clk_div8	; -- CK128FS = 12.288M (12.5M with 100M clk)
+  			           CK128FS	<= clk_div8	; -- CK128FS = 12.288M (12.5M with 100M clk)
       when "10" => avg_max  <= 8  		; -- Fso=192k,  averaging = 8x
-  		           CK128FS	<= clk_div4	; -- CK128FS = 24.576M (25M with 100M clk)
+  		             CK128FS	<= clk_div4	; -- CK128FS = 24.576M (25M with 100M clk)
       when "11" => avg_max  <= 4  		; -- Fso=384k,  averaging = 4x
-  			       CK128FS	<= clk_div2	; -- CK128FS = 49.152M (50M with 100M clk)
+  			           CK128FS	<= clk_div2	; -- CK128FS = 49.152M (50M with 100M clk)
     end case;
   end if;
 end process;
 
 ------------------------------------------------------------------
 -- Enable SCK window for auto averaging process of ADC
---  
+-- xFS is ADC real sampling clock ) 1562.5kHz
 ------------------------------------------------------------------
 process (xFS,avg_cnt,avg_max)
 begin
     if rising_edge(xFS) then
+        --
         if  avg_cnt < avg_max then
             avg_cnt <=avg_cnt +1; -- increment coounter
         else
             avg_cnt <= 1 		; -- reset counter
         end if;
+        -- Generate 50% duty cycle Fso (LRCK) (output effective sampling clock)
+        if  avg_cnt < (avg_max/2)  then
+            Fso <= '1'  ; -- set to high for half averaging cycle
+        else
+            Fso <= '0'  ; -- set to low for half averaging cycle
+        end if;
+        -- Generate ADC clock window
         if  avg_cnt = avg_max-1 then
             enable_sck <= '0' 	; -- disable ADC clk_div4 for last avg count (end of averaging)
         else
             enable_sck <= '1' 	; -- enable clk_div4
         end if;
+        -- Generate enable data read window.
         if  avg_cnt = avg_max or avg_cnt <6 then
-            enable_read <= '1' 	; -- eaneble reading for only 4x6 clocks count
+            enable_read <= '1' 	; -- enable reading for only 4x6 clocks count
         else
             enable_read <= '0' 	; -- disable reading
         end if;
@@ -155,7 +164,7 @@ end process;
 process (enable_sck,r_sck,tclk23)
 begin
 	if	enable_sck = '0' then
-		tclk23 <= 0			; 
+		tclk23 <= 0			;
 	elsif  rising_edge(r_sck) and tclk23 < 23 then
         tclk23 <= tclk23 +1 ;
 	end if;
@@ -211,16 +220,16 @@ begin
 		end if;
 	end if;
 end process;
-          
+
 process (clock)
 begin
 	if  rising_edge(clock) then
 		r_sck <= clk_div4 and enable_sck and ena_sck;      -- ADC clock pulse
-		sckshift <= clk_div4 and enable_read and ena_shft; -- shift register clock 
+		sckshift <= clk_div4 and enable_read and ena_shft; -- shift register clock
 	end if;
 end process;
 
-SCK <= r_sck; 
+SCK <= r_sck;
 
 --------------------------------------------------------------------
 -- ADCs Serial data Input Process
@@ -264,7 +273,7 @@ begin
 			when 15  => r_DATAL( 8)  <= SDOL;
 						r_DATAR( 8)  <= SDOR;
 			when 16  => r_DATAL( 7)  <= SDOL;
-						r_DATAR( 7)  <= SDOR;	
+						r_DATAR( 7)  <= SDOR;
 			when 17  => r_DATAL( 6)  <= SDOL;
 						r_DATAR( 6)  <= SDOR;
 			when 18  => r_DATAL( 5)  <= SDOL;
@@ -290,7 +299,7 @@ end process p_serial_input;
 ------------------------------------------------------------------------------
 process (enable, enable_sck)
 begin
-	if 	enable='1' then		
+	if 	enable='1' then
 		if	falling_edge(enable_sck) then
 			DOUTL <= r_DATAL; -- Left channel data latch
 			DOUTR <= r_DATAR; -- Right channel data latch
@@ -302,5 +311,3 @@ begin
 end process;
 
 end Behavioral ;
-          
-
