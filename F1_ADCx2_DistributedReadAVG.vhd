@@ -1,8 +1,8 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date: 22/09/19	Designer: O.N
+-- Date: 32/09/19	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 182 LE.
+-- Intel MAXV 5M570 CPLD	Take xxx LE.
 -- Function F1 :  F1_ADCx2_DistributedRead.vhd
 -- Function to read data from two LT2380-24 ADC using the distributed
 -- reading protocol.
@@ -17,21 +17,25 @@
 -- NO FIR mode available here !
 -- (Note : nFS = AVG x Fso )
 -- 22/09/19 : Modif for Fso 50% duty-cycle
+-- 23/09/19 : add nFS sampling rate control to allow
+-- any averaging value from external setting.
 ------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity F1_ADCx2_DistributedRead is
+entity F1_ADCx2_DistributedReadAVG is
 --
 port(
-  enable		: in  std_logic; -- enable input
+  enable		    : in  std_logic; -- enable input
   CLOCK         : in  std_logic; -- 100MHz clock input
   SR            : in  std_logic_vector(1 downto 0); -- selected output sampling rate (48,96 or 192kHz)
-  DOUTL	 	    : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Left channel
-  DOUTR	 	    : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Right channel
-  Fso		    : buffer std_logic ; -- effective output sampling rate
-  nFS			: out std_logic ; -- ADC sampling rate unaveraged
+  AVG           : in  std_logic_vector(2 downto 0); -- Averaging value select (1 to 128 for 0 to 7)
+  DOUTL	 	      : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Left channel
+  DOUTR	 	      : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Right channel
+  Fso		        : buffer std_logic ; -- effective output sampling rate
+  nFS			      : out std_logic ; -- ADC sampling rate unaveraged
+--  xFSA          : out std_logic ; -- new xFS sampling depending on AVG value.
   --- ADC i/o control signals
   nCNVL         : out std_logic ; -- ADC start conv signal (inverted), Left channel
   BUSYL         : in std_logic  ; -- ADC BUSY signal, Left channel
@@ -43,9 +47,9 @@ port(
   CK128FS		: out std_logic   -- 128 Fso output for SPDIF (6.144M to 24.576M)
 );
 
-end F1_ADCx2_DistributedRead;
+end F1_ADCx2_DistributedReadAVG;
 
-architecture Behavioral of F1_ADCx2_DistributedRead is
+architecture Behavioral of F1_ADCx2_DistributedReadAVG is
 
 signal  clk_divider : unsigned (5 downto 0); -- clock divider counter
 signal  clk_div2	: std_logic ; --  49.152 MHz clock (50MHz with 100M clk)
@@ -72,7 +76,82 @@ signal  r_sck	    : std_logic ; --
 signal	r_DATAL      : std_logic_vector (23 downto 0) ; -- DATAL Left channel temp buffer
 signal	r_DATAR      : std_logic_vector (23 downto 0) ; -- DATAL Right channel temp buffer
 
+signal  xFSdiv : unsigned (4 downto 0); -- clock divider counter
+signal  xFSA	    : std_logic ; --
+
 begin
+
+  ------------------------------------------------------------------
+  --Generate new nFS ADC sampling frequency depending on the selected
+  -- external averaging setting.
+  -- This allow to choose averaging ratio for all sampling rate.
+  -- New clock is nFSA
+  -- xFS = 1536 kHZ
+  -- xFSdiv(0) = 768kHz
+  -- xFSdiv(1) = 384kHz
+  -- xFSdiv(2) = 192kHz
+  -- xFSdiv(3) = 96kHz
+  -- xFSdiv(4) = 48kHz
+  ------------------------------------------------------------------
+process (xFS,AVG,xFSdiv,SR)
+begin
+    --
+    if  rising_edge(xFS) then
+        xFSdiv  <= xFSdiv + 1 ;-- increment counter
+    end if;
+    --
+    if    SR="00"  then  -- 48kHz output sampling rate
+          case Avg is
+              when "000" => xFSA <= xFSdiv(4) ; --AVG=1 x 48k => xFS =48kHz
+              when "001" => xFSA <= xFSdiv(3) ; --AVG=2 x 48k => xFS =96kHz
+              when "010" => xFSA <= xFSdiv(2) ; --AVG=4 x 48k => xFS =192kHz
+              when "011" => xFSA <= xFSdiv(1) ; --AVG=8 x 48k => xFS =384kHz
+              when "100" => xFSA <= xFSdiv(0) ; --AVG=16 x 48k => xFS =768kHz
+              when others => xFSA <= xFS;--AVG=32 x 48k => xFS =1536kHz
+          end case;
+    elsif SR="01"  then  -- 96kHz output sampling rate
+          case Avg is
+              when "000" => xFSA <= xFSdiv(3) ; --AVG=1 x 96k => xFS =96kHz
+              when "001" => xFSA <= xFSdiv(2) ; --AVG=2 x 96k => xFS =192kHz
+              when "010" => xFSA <= xFSdiv(1) ; --AVG=4 x 96k => xFS =384kHz
+              when "011" => xFSA <= xFSdiv(0) ; --AVG=8 x 96k => xFS =768kHz
+              when others => xFSA <= xFS; --AVG=16 x 96k => xFS =1536kHz
+          end case;
+    elsif SR="10"  then  -- 192kHz output sampling rate
+          case Avg is
+              when "000" => xFSA <= xFSdiv(2) ; --AVG=1 x 192k => xFS =192kHz
+              when "001" => xFSA <= xFSdiv(1) ; --AVG=2 x 192k => xFS =384kHz
+              when "010" => xFSA <= xFSdiv(0) ; --AVG=4 x 192k => xFS =768kHz
+              when others => xFSA <= xFS;--AVG=8 x 192k => xFS =1536kHz
+          end case;
+    elsif SR="11"  then  -- 384kHz output sampling rate
+          case Avg is
+              when "000" => xFSA <= xFSdiv(1) ; --AVG=1 x 384k => xFS =384kHz
+              when "001" => xFSA <= xFSdiv(0) ; --AVG=2 x 384k => xFS =768kHz
+              when others => xFSA <= xFS; --AVG=4 x 384k => xFS =1536kHz
+          end case;
+    end if;
+end process;
+
+------------------------------------------------------------------
+-- ADC nCNV pulse generator
+------------------------------------------------------------------
+process (xFSA,ResetA,clk_div4)
+begin
+	if	ResetA='1' then
+		  QA 		<= '0'	;
+  elsif rising_edge(xFSA) then
+  		QA		<= '1'	;
+  end if;
+end process;
+--
+
+process (clk_div4)
+begin
+	if	rising_edge(clk_div4) then
+  		ResetA	<= QA	;
+	end if;
+end process;
 
 ------------------------------------------------------------------
 -- CLOCK divider
@@ -86,7 +165,7 @@ begin
 		end if;
     --
     nCNVL 	<= not ResetA 	; -- ADC start convertion pulse (inverted),Left channel
-	  nCNVR	<= not ResetA 	; -- ADC start convertion pulse (inverted), Right channel
+	  nCNVR	  <= not ResetA 	; -- ADC start convertion pulse (inverted), Right channel
 	else
     nCNVL 	<= '1' 	; -- nCNV set to high,Left channel
 	  nCNVR 	<= '1' 	; -- nCNV set to high,Right channel
@@ -137,7 +216,7 @@ begin
             avg_cnt <= 1 		; -- reset counter
         end if;
         -- Generate 50% duty cycle Fso (LRCK) (output effective sampling clock)
-        if  avg_cnt =< (avg_max/2)  then
+        if  avg_cnt <= (avg_max/2)  then
             Fso <= '1'  ; -- set to high for half averaging cycle
         else
             Fso <= '0'  ; -- set to low for half averaging cycle
@@ -167,26 +246,6 @@ begin
 		tclk23 <= 0			;
 	elsif  rising_edge(r_sck) and tclk23 < 23 then
         tclk23 <= tclk23 +1 ;
-	end if;
-end process;
-
-------------------------------------------------------------------
--- ADC nCNV pulse generator
-------------------------------------------------------------------
-process (xFS,ResetA,clk_div4)
-begin
-	if	ResetA='1' then
-		QA 		<= '0'	;
-	elsif rising_edge(xFS) then
-		QA		<= '1'	;
-	end if;
-end process;
---
-
-process (clk_div4)
-begin
-	if	rising_edge(clk_div4) then
-		ResetA	<= QA	;
 	end if;
 end process;
 
@@ -241,53 +300,53 @@ begin
 	if falling_edge(sckshift) then --stored data of SDO is send to bit 0 to 23 of DATAO
 		case tclk23 is
 			when  0  => r_DATAL(23)  <= SDOL; -- MSB Left channel
-						      r_DATAR(23)  <= SDOR; -- MSB Right channel
+						r_DATAR(23)  <= SDOR; -- MSB Right channel
 			when  1  => r_DATAL(22)  <= SDOL;
-						      r_DATAR(22)  <= SDOR;
+						r_DATAR(22)  <= SDOR;
 			when  2  => r_DATAL(21)  <= SDOL;
-						      r_DATAR(21)  <= SDOR;
+						r_DATAR(21)  <= SDOR;
 			when  3  => r_DATAL(20)  <= SDOL;
-						      r_DATAR(20)  <= SDOR;
+						r_DATAR(20)  <= SDOR;
 			when  4  => r_DATAL(19)  <= SDOL;
-						      r_DATAR(19)  <= SDOR;
+						r_DATAR(19)  <= SDOR;
 			when  5  => r_DATAL(18)  <= SDOL;
-						      r_DATAR(18)  <= SDOR;
+						r_DATAR(18)  <= SDOR;
 			when  6  => r_DATAL(17)  <= SDOL;
-						      r_DATAR(17)  <= SDOR;
+						r_DATAR(17)  <= SDOR;
 			when  7  => r_DATAL(16)  <= SDOL;
-						      r_DATAR(16)  <= SDOR;
+						r_DATAR(16)  <= SDOR;
 			when  8  => r_DATAL(15)  <= SDOL;
-						      r_DATAR(15)  <= SDOR;
+						r_DATAR(15)  <= SDOR;
 			when  9  => r_DATAL(14)  <= SDOL;
-						      r_DATAR(14)  <= SDOR;
+						r_DATAR(14)  <= SDOR;
 			when 10  => r_DATAL(13)  <= SDOL;
-						      r_DATAR(13)  <= SDOR;
+						r_DATAR(13)  <= SDOR;
 			when 11  => r_DATAL(12)  <= SDOL;
-						      r_DATAR(12)  <= SDOR;
+						r_DATAR(12)  <= SDOR;
 			when 12  => r_DATAL(11)  <= SDOL;
-						      r_DATAR(11)  <= SDOR;
+						r_DATAR(11)  <= SDOR;
 			when 13  => r_DATAL(10)  <= SDOL;
-						      r_DATAR(10)  <= SDOR;
+						r_DATAR(10)  <= SDOR;
 			when 14  => r_DATAL( 9)  <= SDOL;
-						      r_DATAR( 9)  <= SDOR;
+						r_DATAR( 9)  <= SDOR;
 			when 15  => r_DATAL( 8)  <= SDOL;
-						      r_DATAR( 8)  <= SDOR;
+						r_DATAR( 8)  <= SDOR;
 			when 16  => r_DATAL( 7)  <= SDOL;
-						      r_DATAR( 7)  <= SDOR;
+						r_DATAR( 7)  <= SDOR;
 			when 17  => r_DATAL( 6)  <= SDOL;
-						      r_DATAR( 6)  <= SDOR;
+						r_DATAR( 6)  <= SDOR;
 			when 18  => r_DATAL( 5)  <= SDOL;
-						      r_DATAR( 5)  <= SDOR;
+						r_DATAR( 5)  <= SDOR;
 			when 19  => r_DATAL( 4)  <= SDOL;
-						      r_DATAR( 4)  <= SDOR;
+						r_DATAR( 4)  <= SDOR;
 			when 20  => r_DATAL( 3)  <= SDOL;
-						      r_DATAR( 3)  <= SDOR;
+						r_DATAR( 3)  <= SDOR;
 			when 21  => r_DATAL( 2)  <= SDOL;
-						      r_DATAR( 2)  <= SDOR;
+						r_DATAR( 2)  <= SDOR;
 			when 22  => r_DATAL( 1)  <= SDOL;
-						      r_DATAR( 1)  <= SDOR;
+						r_DATAR( 1)  <= SDOR;
 			when 23  => r_DATAL( 0)  <= SDOL; -- LSB Left channel
-						      r_DATAR( 0)  <= SDOR; -- LSB Right channel
+						r_DATAR( 0)  <= SDOR; -- LSB Right channel
 			when others => NULL;
 		end case;
   end if;
