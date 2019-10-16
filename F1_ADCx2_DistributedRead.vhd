@@ -2,7 +2,7 @@
 -- AA2380V1 OSVA PROJECT.
 -- Date: 22/09/19	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 182 LE.
+-- Intel MAXV 5M570 CPLD	Take 187 LE.
 -- Function F1 :  F1_ADCx2_DistributedRead.vhd
 -- Function to read data from two LT2380-24 ADC using the distributed
 -- reading protocol.
@@ -137,7 +137,7 @@ begin
             avg_cnt <= 1 		; -- reset counter
         end if;
         -- Generate 50% duty cycle Fso (LRCK) (output effective sampling clock)
-        if  avg_cnt =< (avg_max/2)  then
+        if  avg_cnt <= (avg_max/2)  then
             Fso <= '1'  ; -- set to high for half averaging cycle
         else
             Fso <= '0'  ; -- set to low for half averaging cycle
