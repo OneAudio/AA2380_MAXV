@@ -1,14 +1,14 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date: 19/09/19	Designer: O.N
+-- Date: 26/10/19	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 44 LE.
+-- Intel MAXV 5M570 CPLD	Take 46 LE.
 -- Function F0 :  FO_ctrl_encoder.vhd
 -----------------------------------------------------------------
 -- Allow to choose and select values for each function
 -- using jumper on connectors J17 (config jumpers)
 -- and connectors J12 (unisolated OPT I/O).
--- Only calibration require encoder push (1s).
+-- Only calibration require encoder nPush (1s).
 ----------------------------------------------------------------
 -- 0) SPDIF Sampling rate : 48, 96 or 192 kHz (2 bits)
 -- 1) SinC averaging filter or FIR filter mode (1 bit)
@@ -23,8 +23,10 @@
 --    Then for nFS=1536kHz :
 --    48kHz@ avg=32x / 96kHz@ avg=16x / 192kHz@ avg=8x
 -----------------------------------------------------------------
--- Sampling can be selected by encoder push, or it is controlled
+-- Sampling can be selected by encoder nPush, or it is controlled
 -- by SDR-widget directly if EN_ext is active (SDR board detected
+-----------------------------------------------------------------
+-- 26/10/19,avoid SR change when long nPush is initiate for calib
 -----------------------------------------------------------------
 
 library IEEE;
@@ -37,7 +39,7 @@ Port (
     CLKSLOW  	: in  std_logic; -- low frequency clock clock (100Hz)
     Ta	 		  : in  std_logic; -- encoder track a input
     Tb		  	: in  std_logic; -- encoder track b input
-    push   		: in  std_logic; -- encoder push switch input
+    nPush   		: in  std_logic; -- encoder nPush switch input
     CONF			: in  std_logic_vector(3 downto 0); -- CONF jumpers inputs
     UIO		   	: in  std_logic_vector(3 downto 0); -- UIO  jumpers inputs
     EXT_SR		: in  std_logic_vector(1 downto 0); -- external sampling rate selection
@@ -59,10 +61,10 @@ Port (
 architecture select_mode of F0_ctrl_encoder is
 
 signal pushcnt			: integer range 0 to 3 ; -- counter for SR selection
-signal count1s 			: integer range 0 to 100 ; -- counter for 1s push detection
+signal count1s 			: integer range 0 to 100 ; -- counter for 1s nPush detection
 signal rotary_in        : STD_LOGIC_vector (1 downto 0)  ; -- Vector of the two encoder tracks
 signal delay_rotary_q1  : STD_LOGIC  ; --
-signal pushf   			: STD_LOGIC  ; -- Filtered push button
+signal pushf   			: STD_LOGIC  ; -- Filtered nPush button
 signal Rotate  			: STD_LOGIC  ; -- pulse output of encoder
 signal D		 		: STD_LOGIC  ; -- variable
 signal Qtm	  			: STD_LOGIC  ; -- variable
@@ -75,32 +77,34 @@ begin
 
 
 ----------------------------------------------------------
--- Filtering of push button
+-- Filtering of nPush button
 -- sampled at 100Hz with clkslow
 ---------------------------------------------------------
 process (clkslow)
 begin
     if rising_edge(clkslow) then
-    Pushf <= not Push; -- push is inverted and Filtered
+    Pushf <= not nPush; -- nPush is inverted and Filtered
     end if;
 end process;
 
 ---------------------------------------------------------
--- Each short pulse on encoder Push button allow
+-- Each short pulse on encoder nPush button allow
 -- to select sampling rate sequencially/
 -- If EN_ext is active (SDR board is connected)
 -- then SR follow EXT_SR selection bits.
 ---------------------------------------------------------
-process (Pushf,pushcnt,EXT_SR,EN_ext)
+process (Pushf,pushcnt,EXT_SR,EN_ext,StartCAL)
 begin
-	if	rising_edge(Pushf)	then
-		if	pushcnt < 3	then
-			pushcnt <= pushcnt + 1 ;
-		else
-			pushcnt <= 0 ;
-		end if;
-	end if;
-	if EN_ext='0'	then-- Sampling  rate is selected by ncoder push button
+  if StartCAL='0' then                -- SR can be changed only is no calib is active.
+	   if	falling_edge(Pushf)	then      -- SR change when push is released
+		     if	pushcnt < 3	then
+			      pushcnt <= pushcnt + 1 ;
+		     else
+			      pushcnt <= 0 ;
+         end if;
+	   end if;
+  end if;
+	if EN_ext='0'	then-- Sampling  rate is selected by ncoder nPush button
 		case pushcnt is
 			when 0 => SR <= "00" ; -- 48k
 			when 1 => SR <= "01" ; -- 96k
@@ -205,7 +209,7 @@ begin
 				end if;
 			end if;
 		else
-			count1s <= 0; -- reset counter when push button is not pressed
+			count1s <= 0; -- reset counter when nPush button is not pressed
 		end if;
 	else
 		StartCAL <= '0';  --clear counter

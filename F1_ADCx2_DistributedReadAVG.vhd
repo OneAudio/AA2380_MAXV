@@ -1,8 +1,8 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date: 32/09/19	Designer: O.N
+-- Date: 23/09/19	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take xxx LE.
+-- Intel MAXV 5M570 CPLD	Take 210 LE.
 -- Function F1 :  F1_ADCx2_DistributedRead.vhd
 -- Function to read data from two LT2380-24 ADC using the distributed
 -- reading protocol.

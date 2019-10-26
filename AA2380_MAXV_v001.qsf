@@ -171,5 +171,6 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[8]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[7]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[6]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO
+set_global_assignment -name VHDL_FILE F1_ADCx2_DistributedReadAVG.vhd
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
