@@ -136,13 +136,25 @@ set_location_assignment PIN_97 -to SPDIFO
 set_location_assignment PIN_33 -to UIO_04
 set_location_assignment PIN_34 -to UIO_05
 set_location_assignment PIN_27 -to UIO_10
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_push
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Ta
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Tb
 set_location_assignment PIN_41 -to CONF[0]
 set_location_assignment PIN_42 -to CONF[1]
 set_location_assignment PIN_43 -to CONF[2]
 set_location_assignment PIN_44 -to CONF[3]
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
+set_global_assignment -name OPTIMIZATION_MODE "HIGH PERFORMANCE EFFORT"
+set_global_assignment -name AUTO_PACKED_REGISTERS_MAX "MINIMIZE AREA"
+set_location_assignment PIN_40 -to UIO[9]
+set_location_assignment PIN_38 -to UIO[8]
+set_location_assignment PIN_36 -to UIO[7]
+set_location_assignment PIN_35 -to UIO[6]
+set_location_assignment PIN_26 -to UIO_0
+set_location_assignment PIN_28 -to UIO_1
+set_location_assignment PIN_29 -to UIO_2
+set_location_assignment PIN_30 -to UIO_3
+set_global_assignment -name VHDL_FILE F1_ADCx2_DistributedReadAVG.vhd
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_push
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Ta
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Tb
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[3]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[2]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[1]
@@ -155,22 +167,11 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC1_BUSY
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC1_SDO
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC2_BUSY
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC2_SDO
-set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
-set_global_assignment -name OPTIMIZATION_MODE "HIGH PERFORMANCE EFFORT"
-set_global_assignment -name AUTO_PACKED_REGISTERS_MAX "MINIMIZE AREA"
-set_location_assignment PIN_40 -to UIO[9]
-set_location_assignment PIN_38 -to UIO[8]
-set_location_assignment PIN_36 -to UIO[7]
-set_location_assignment PIN_35 -to UIO[6]
-set_location_assignment PIN_26 -to UIO_0
-set_location_assignment PIN_28 -to UIO_1
-set_location_assignment PIN_29 -to UIO_2
-set_location_assignment PIN_30 -to UIO_3
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[9]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[8]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[7]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[6]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO
-set_global_assignment -name VHDL_FILE F1_ADCx2_DistributedReadAVG.vhd
+set_global_assignment -name VHDL_FILE F3_AutoZero.vhd
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"

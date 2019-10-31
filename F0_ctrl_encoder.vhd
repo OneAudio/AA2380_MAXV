@@ -2,7 +2,7 @@
 -- AA2380V1 OSVA PROJECT.
 -- Date: 26/10/19	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 46 LE.
+-- Intel MAXV 5M570 CPLD	Take 37 LE.
 -- Function F0 :  FO_ctrl_encoder.vhd
 -----------------------------------------------------------------
 -- Allow to choose and select values for each function
@@ -27,6 +27,7 @@
 -- by SDR-widget directly if EN_ext is active (SDR board detected
 -----------------------------------------------------------------
 -- 26/10/19,avoid SR change when long nPush is initiate for calib
+-- 27/10/19, add control of averaging with coder rotating
 -----------------------------------------------------------------
 
 library IEEE;
@@ -52,26 +53,27 @@ Port (
     HBWonL	  : buffer std_logic ; -- High bandwidth analog input filter type (0= Low bandwidth 1=High bandwidth) : Left channel
     HBWonR	  : buffer std_logic ; -- High bandwidth analog input filter type (0= Low bandwidth 1=High bandwidth) : Right channel
     FIRnSinC 	: buffer std_logic ; -- FIR or SinC filter selection (0=SInC 1=FIR)
-    CAL_pulse	: buffer std_logic	 -- Pulse for DC calibration process ent to HPF.
+    Push2s     	: buffer std_logic -- Pulse when push button of rotary encoderis press for more than 2s
 		   --TEST SIGNALS
-
+--       Blank : buffer std_logic --
     );
  end F0_ctrl_encoder;
 
 architecture select_mode of F0_ctrl_encoder is
 
 signal pushcnt			: integer range 0 to 3 ; -- counter for SR selection
-signal count1s 			: integer range 0 to 100 ; -- counter for 1s nPush detection
+signal count2s 			: integer range 0 to 255 ; -- counter for 2s nPush detection
+signal delay        : integer range 0 to 31 ; --delay
 signal rotary_in        : STD_LOGIC_vector (1 downto 0)  ; -- Vector of the two encoder tracks
 signal delay_rotary_q1  : STD_LOGIC  ; --
 signal pushf   			: STD_LOGIC  ; -- Filtered nPush button
 signal Rotate  			: STD_LOGIC  ; -- pulse output of encoder
-signal D		 		: STD_LOGIC  ; -- variable
-signal Qtm	  			: STD_LOGIC  ; -- variable
-signal sel_AVG 			: STD_LOGIC_vector (2 downto 0); -- Averaging ratio counter (default value 3= 1x)
-signal CALtime 			: integer range 0 to 255 ; -- Calibration time counter
-signal CALmax  			: integer range 0 to 255 :=127 ; -- Calibration time max values
-signal StartCAL			: STD_LOGIC ; -- latched Calibration start
+signal sel_AVG 			: integer range 0 to 7 ; -- Averaging ratio counter
+signal Dir					: STD_LOGIC ;
+signal CntEnd      	: STD_LOGIC ;
+signal Start		: STD_LOGIC ;
+signal blank		: STD_LOGIC ;
+
 
 begin
 
@@ -87,15 +89,50 @@ begin
     end if;
 end process;
 
+----------------------------------------------------------
+-- New rotary encoder function from Xilinx app note
+-- (Works fine !)
+----------------------------------------------------------
+rotary_filter: process(CLKSLOW)
+begin
+if rising_edge(CLKSLOW) then
+    rotary_in <= Ta & Tb; --
+case rotary_in is
+  when "00"   => Rotate <= '0';
+                 Dir <= Dir;
+  when "01"   => Rotate <= Rotate;
+                 Dir <= '0';
+  when "10"   => Rotate <= Rotate;
+                 Dir <= '1';
+  when "11"   => Rotate <= '1';
+                 Dir <= Dir;
+  when others => Rotate <= Rotate;
+                 Dir <= Dir;
+  end case;
+end if;
+end process rotary_filter;
+
+
+-- Coder rotating select averaging ratio.
+process (Dir,Rotate,sel_AVG)
+begin
+  if  rising_edge(Rotate) then
+      if    Dir='0' and sel_AVG > 0 then
+            sel_AVG <= sel_AVG - 1 ;
+      elsif Dir='1' and sel_AVG < 5 then
+            sel_AVG <= sel_AVG + 1 ;
+      end if;
+  end if;
+end process;
 ---------------------------------------------------------
 -- Each short pulse on encoder nPush button allow
--- to select sampling rate sequencially/
+-- to select sampling rate sequencially.
 -- If EN_ext is active (SDR board is connected)
 -- then SR follow EXT_SR selection bits.
 ---------------------------------------------------------
-process (Pushf,pushcnt,EXT_SR,EN_ext,StartCAL)
+process (Pushf,pushcnt,EXT_SR,EN_ext,Push2s,blank)
 begin
-  if StartCAL='0' then                -- SR can be changed only is no calib is active.
+  if Blank='0' then                -- SR can be changed only is no calib is active.
 	   if	falling_edge(Pushf)	then      -- SR change when push is released
 		     if	pushcnt < 3	then
 			      pushcnt <= pushcnt + 1 ;
@@ -106,10 +143,10 @@ begin
   end if;
 	if EN_ext='0'	then-- Sampling  rate is selected by ncoder nPush button
 		case pushcnt is
-			when 0 => SR <= "00" ; -- 48k
-			when 1 => SR <= "01" ; -- 96k
-			when 2 => SR <= "10" ; -- 192k
-			when others => SR <= "00" ;
+			when       0 => SR <= "00" ; -- 48k
+			when       1 => SR <= "01" ; -- 96k
+			when       2 => SR <= "10" ; -- 192k
+			when others  => SR <= "00" ;
 		end case;
 	else  				-- Sampling  rate is coming from SDR-widget
 		SR	<= EXT_SR ;
@@ -128,109 +165,86 @@ SEnDIFFR 	<= CONF(2) ;	--JPC config jumper "SEnDIFF" (single-ended-Differential)
 HBWonR	  <= CONF(3) ;	--JPD config jumper "HBWon" ( Analog input filter bandwidth) : Right
 
 -- Others jumpers on JP12 connector
-sel_AVG		<= UIO (2 downto 0) ;	-- send UIO jumper 0-1-2 to averaging value
+-- sel_AVG		<= UIO (2 downto 0) ;	-- send UIO jumper 0-1-2 to averaging value
 FIRnSinC	<= UIO (3) ;			-- send UIO jumper 3 to FIRnSinC (Digital filter type)
 
--- Set AVG value depending on sampling rate and filter type
--- Averaging ratio (AVG) x Sampling rate (SR) equal always 1536 kHz.
+-- Set AVG value depending on sampling rate and selected averaging values
 process (sel_AVG,SR)
 begin
 	if		SR="00" then		-- 48kHz / AVG max is 32x
 				case sel_AVG is
-					when "000" => AVG <= "000" ; -- avg= 1x
-					when "001" => AVG <= "001" ; -- avg= 2x
-					when "010" => AVG <= "010" ; -- avg= 4x
-					when "011" => AVG <= "011" ; -- avg= 8x
-					when "100" => AVG <= "100" ; -- avg= 16x
-					when ("101" or "111") => AVG <= "101" ; -- avg= 32x ("111"=auto avg mode)
-					when others => AVG <= "000";
+					when 0 => AVG <= "000" ; -- avg= 1x
+					when 1 => AVG <= "001" ; -- avg= 2x
+					when 2 => AVG <= "010" ; -- avg= 4x
+					when 3 => AVG <= "011" ; -- avg= 8x
+					when 4 => AVG <= "100" ; -- avg= 16x
+					when others => AVG <= "101";-- avg= 32x
 				end case;
 	elsif	SR="01" then		-- 96kHz / AVG max is 16x
 				case sel_AVG is
-					when "000" => AVG <= "000" ; -- avg= 1x
-					when "001" => AVG <= "001" ; -- avg= 2x
-					when "010" => AVG <= "010" ; -- avg= 4x
-					when "011" => AVG <= "011" ; -- avg= 8x
-					when ("100" or "111") => AVG <= "100" ; -- avg= 16x ("111"=auto avg mode)
-					when "101" => AVG <= "100" ; -- avg= 16x
-					when others => AVG <= "000";
+					when 0 => AVG <= "000" ; -- avg= 1x
+					when 1 => AVG <= "001" ; -- avg= 2x
+					when 2 => AVG <= "010" ; -- avg= 4x
+					when 3 => AVG <= "011" ; -- avg= 8x
+					when others => AVG <= "100"; -- avg= 16x
 				end case;
 	elsif	SR="10" then		-- 192kHz / AVG max is 8x
 				case sel_AVG is
-					when "000" => AVG <= "000" ; -- avg= 1x
-					when "001" => AVG <= "001" ; -- avg= 2x
-					when "010" => AVG <= "010" ; -- avg= 4x
-					when ("011" or "111") => AVG <= "011" ; -- avg= 8x ("111"=auto avg mode)
-					when "100" => AVG <= "011" ; -- avg= 8x
-					when "101" => AVG <= "011" ; -- avg= 8x
-					when others => AVG <= "000";
+					when 0 => AVG <= "000" ; -- avg= 1x
+					when 1 => AVG <= "001" ; -- avg= 2x
+					when 2 => AVG <= "010" ; -- avg= 4x
+					when others => AVG <= "011";-- avg= 8x
 				end case;
 	else					    	-- 384kHz / AVG max is 4x
     		case sel_AVG is
-    			when "000" => AVG <= "000" ; -- avg= 1x
-    			when "001" => AVG <= "001" ; -- avg= 2x
-    			when ("010" or "111") => AVG <= "010" ; -- avg= 4x ("111"=auto avg mode)
-    			when "011" => AVG <= "010" ; -- avg= 4x
-    			when "100" => AVG <= "010" ; -- avg= 4x
-    			when "101" => AVG <= "010" ; -- avg= 4x
-    			when others => AVG <= "000";
+    			when 0 => AVG <= "000" ; -- avg= 1x
+    			when 1 => AVG <= "001" ; -- avg= 2x
+    			when others => AVG <= "010";-- avg= 4x
     		end case;
 	end if;
 end process;
 
-
 -------------------------------------------------------------------------
--- Generate CAL_pulse signal when DC calibration is activated
--- Duration depend on sampling rate.
--- clkslow = 100Hz (T= 10ms)
--- RC@48k = 1.36 s
--- RC@96k = 0.683 s
--- RC@192k= 0.341 s
+-- Generate a pulse signal when long push on rotatry encoder,
+-- to start DC calibration process
+ -- (and a longer pulse (blank) to disable the short pulse detection.)
 -------------------------------------------------------------------------
-process (pushf,SR,clkslow,CALtime,CALmax,Qtm,D,StartCAL)
+process (pushf,clkslow,Push2s,delay,Blank,CntEnd,Start)
 begin
-	--Sampling rate select the CALtime value for corresponding pulse width
-	case SR is
-		when "00" => CALmax <= 136 ;	--48kHz sampling rate  = 1.360 s autozero pulse (with clkslow=100Hz)
-		when "01" => CALmax <=  68  ;	--96kHz sampling rate  = 0.683 s autozero pulse (with clkslow=100Hz)
-		when "10" => CALmax <=  34  ;	--192kHz sampling rate = 0.341 s autozero pulse (with clkslow=100Hz)
-		when "11" => CALmax <=  17  ;	--384kHz sampling rate = 0.170 s autozero pulse (with clkslow=100Hz)
-	end case;
-
-	-- Generate a StartCAL pulse when pushf is active for 1s.
-	if D= '0'	then
-		if pushf = '1' then
-			if rising_edge(clkslow) then
-				if  count1s = 100 then
-					StartCAL <= '1';  --
-					count1s  <= 0 ;-- clear counter
-				else
-					count1s <= count1s +1 ;-- increment counter
-				end if;
+	-- Generate a  pulse when pushf is active for >2s.
+	if pushf = '1' then
+		if rising_edge(clkslow) then -- 100Hz clock
+			if  count2s = 200 then -- wait 2s
+				  Push2s   <= '1';  -- Push2s active is push for more than 2s.
+			else
+				  count2s <= count2s +1 ;-- increment counter
 			end if;
-		else
-			count1s <= 0; -- reset counter when nPush button is not pressed
 		end if;
 	else
-		StartCAL <= '0';  --clear counter
+		count2s  <= 0  ; -- reset counter when nPush button is not pressed
+    Push2s   <= '0'; -- reset Push2s
 	end if;
+  --
+  -- DElay to avoid  changing SR when long push
+  if    CntEnd= '1'  Then -- end of count
+        Start <= '0'; -- reset
+  elsif rising_edge(Push2s) then
+        Start <= '1';
+  end if;
+  --
+  if rising_edge(clkslow) then
+      if    Start='0'  Then
+            Delay <=  0 ; -- reset delay counter
+            CntEnd <= '0' ;
+      elsif Push2s='0' then -- 100Hz clock
+            Delay <= Delay + 1 ; -- increment counter
+            if  Delay = 15 Then
+                CntEnd <= '1' ; -- delay end
+            end if;
+      end if;
+  end if;
+  Blank <= not CntEnd and Start ; -- Blank is longer than Push2s to disable SR short push detection.
 
-	if rising_edge(clkslow) then
-		CAL_pulse <= StartCAL and not Qtm; -- Output pulse=1 until counter maxval reached.
-		if 	StartCAL='1' then
-			if CALtime = Calmax then -- Counter maxval reached
-				Qtm <= '1'; --Stop output pulse
-				D <= '1'; -- Clear memorized edge
-				CALtime <= 0; -- Clear counter
-			else
-				Qtm <= '0'; -- Output pulse active
-				CALtime <= CALtime +1 ; -- increment counter
-			end if;
-		else
-			CALtime <= 0; -- clear counter when calib not active
-			D <= '0'; -- clear reset signal
-		end if;
-	end if;
+
 end process;
-
 end architecture ;

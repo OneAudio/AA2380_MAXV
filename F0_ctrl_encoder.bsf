@@ -132,8 +132,8 @@ agreement for further details.
 	(port
 		(pt 208 144)
 		(output)
-		(text "CAL_pulse" (rect 0 0 47 12)(font "Arial" ))
-		(text "CAL_pulse" (rect 140 139 187 151)(font "Arial" ))
+		(text "Push2s" (rect 0 0 29 12)(font "Arial" ))
+		(text "Push2s" (rect 158 139 187 151)(font "Arial" ))
 		(line (pt 208 144)(pt 192 144)(line_width 1))
 	)
 	(drawing
