@@ -158,11 +158,13 @@ end process;
 -- 192 k = 8x max / 96k = 16x max and 48k=32x max
 -- and no average in FIR.
 ----------------------------------------------------------
--- Config jumpers allow seletion of input coupling and bandwidth for each input channe :.
+-- Config jumpers allow seletion of input coupling and bandwidth for each input channel :.
 SEnDIFFL 	<= CONF(0) ;	--JPA config jumper "SEnDIFF" (single-ended-Differential) : Left
 HBWonL	  <= CONF(1) ;	--JPB config jumper "HBWon" ( Analog input filter bandwidth): Left
-SEnDIFFR 	<= CONF(2) ;	--JPC config jumper "SEnDIFF" (single-ended-Differential) : Right
-HBWonR	  <= CONF(3) ;	--JPD config jumper "HBWon" ( Analog input filter bandwidth) : Right
+SEnDIFFR 	<= CONF(0) ;	--JPC config jumper "SEnDIFF" (single-ended-Differential) : Right
+HBWonR	  <= CONF(1) ;	--JPD config jumper "HBWon" ( Analog input filter bandwidth) : Right
+
+
 
 -- Others jumpers on JP12 connector
 -- sel_AVG		<= UIO (2 downto 0) ;	-- send UIO jumper 0-1-2 to averaging value
