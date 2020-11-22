@@ -15,10 +15,12 @@
 # -> "Settings
 # -> "Compilation Process Settings"
 # -> "Save project output files in specified directory"
+
 # Now you can either place a .gitignore in the directory and allow the following
 # list of types:
-# !*.sof
-# !*.pof
+!*.sof
+!*.pof
+!*.hex
 # or you create an own submodule in the folder to keep binary files out of your
 # design.
 
@@ -33,20 +35,17 @@
 *.cmp
 *.done
 *.eqn
-*.hex
 *.html
 *.jdi
 *.jpg
 # *.mif
 *.pin
-*.pof
 *.ptf.*
 *.qar
 *.qarlog
 *.qws
 *.rpt
 *.smsg
-*.sof
 *.sld  # added by ON 10/09/2019
 *.zip  # added by ON 10/09/2019
 *.sopc_builder
