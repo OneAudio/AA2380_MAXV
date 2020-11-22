@@ -71,3 +71,40 @@ We see that LRCK is near 100% duty cycle and must be 50%!
 2/ The averaging values others than max avg are not working.
 (The avg set value is not send to ADC read function ?...)
 3/ Sine wave at input is not correctly reproduced (corrupted value..)
+------------------------------------------------------------------------------------
+
+
+
+
+
+***********************************************************************************
+                   SUITE DU DEVELLOPPEMENT DU PROJET "OSVA"  
+************************************************************************************
+Le 22/11/2002. On repart du travail précédent pour continuer le projet avec la 10M08
+------------------------------------------------------------------------------------
+Quartus 16.1.0 build 196 - 10/24/2016 SJ Lite Edition 
+Checksum :  002D6CCC ; Usercode : 002D6C92
+Remplissage : 537 LE /570 (94%)
+------------------------------------------------------------------------------------
+Position des relais au repos (non alimenté):
+> Filtre anti-repliement = 38.4 kHz (1= 384kHz)
+> Entrées en Single-Ended sur BNC de gauche (1= Différentielle) 
+JPA(CONF0)= si pas de jumper , différentielle car pull-up a 1.
+JPB(CONF1)= si pas de jumper Fcuttof= 384kHz car pull-up a 1.
+
+
+To do list :
+------------
+Mettre un retard sur la mise en route des relais (décalé 1s ?).
+Inversé le fonctionnement avec les jumpers (?).
+
+Faire la fonction qui envoie les données vers la carte 10M08 gros bloc).
+Repenser la commande des leds pour être simples !
+
+La fonction F1_ADCx2_DistributedReadAVG ne marche pas ...(à revoir ?)
+
+
+
+
+
+

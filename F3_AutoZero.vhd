@@ -51,9 +51,9 @@ begin
 ------------------------------------------------------------------
 -- Calibration pulse generator
 -- This pulse have fixed lenght of 65536 x FS(Sample rate) period.
--- For 192kHz = 1.360 s
--- For 96 kHz = 0.683 s
--- For 48 kHz = 0.341 s
+-- For  48 kHz = 1.360 s
+-- For  96 kHz = 0.683 s
+-- For 192 kHz = 0.341 s
 ------------------------------------------------------------------
 process (FS,Start_CAL,CIP,CalCNT,AVG_end) is
 begin

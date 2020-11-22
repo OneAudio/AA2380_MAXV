@@ -128,7 +128,7 @@ agreement for further details.
 )
 (pin
 	(input)
-	(rect 360 -272 528 -256)
+	(rect 376 -272 544 -256)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
 	(text "ADC1_BUSY" (rect 5 0 71 12)(font "Arial" ))
 	(pt 168 8)
@@ -141,11 +141,11 @@ agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 312 -272 360 -256))
+	(annotation_block (location)(rect 328 -272 376 -256))
 )
 (pin
 	(input)
-	(rect 360 -240 528 -224)
+	(rect 376 -240 544 -224)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
 	(text "ADC2_BUSY" (rect 5 0 71 12)(font "Arial" ))
 	(pt 168 8)
@@ -158,11 +158,11 @@ agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 312 -240 360 -224))
+	(annotation_block (location)(rect 328 -240 376 -224))
 )
 (pin
 	(input)
-	(rect 360 -256 528 -240)
+	(rect 376 -256 544 -240)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
 	(text "ADC1_SDO" (rect 5 0 64 12)(font "Arial" ))
 	(pt 168 8)
@@ -175,11 +175,11 @@ agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 312 -256 360 -240))
+	(annotation_block (location)(rect 328 -256 376 -240))
 )
 (pin
 	(input)
-	(rect 360 -224 528 -208)
+	(rect 376 -224 544 -208)
 	(text "INPUT" (rect 133 0 161 10)(font "Arial" (font_size 6)))
 	(text "ADC2_SDO" (rect 5 0 64 12)(font "Arial" ))
 	(pt 168 8)
@@ -192,7 +192,7 @@ agreement for further details.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 312 -224 360 -208))
+	(annotation_block (location)(rect 328 -224 376 -208))
 )
 (pin
 	(input)
@@ -604,7 +604,7 @@ agreement for further details.
 )
 (pin
 	(output)
-	(rect 1024 -224 1200 -208)
+	(rect 1040 -224 1216 -208)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "ADC1_SCK" (rect 90 0 147 12)(font "Arial" ))
 	(pt 0 8)
@@ -617,11 +617,11 @@ agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1200 -224 1248 -208))
+	(annotation_block (location)(rect 1216 -224 1264 -208))
 )
 (pin
 	(output)
-	(rect 1024 -192 1200 -176)
+	(rect 1040 -192 1216 -176)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "ADC2_SCK" (rect 90 0 147 12)(font "Arial" ))
 	(pt 0 8)
@@ -634,11 +634,11 @@ agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1200 -192 1248 -176))
+	(annotation_block (location)(rect 1216 -192 1264 -176))
 )
 (pin
 	(output)
-	(rect 1024 -256 1200 -240)
+	(rect 1040 -256 1216 -240)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "ADC1_CNV" (rect 90 0 150 12)(font "Arial" ))
 	(pt 0 8)
@@ -651,11 +651,11 @@ agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1200 -256 1248 -240))
+	(annotation_block (location)(rect 1216 -256 1264 -240))
 )
 (pin
 	(output)
-	(rect 1024 -240 1200 -224)
+	(rect 1040 -240 1216 -224)
 	(text "OUTPUT" (rect 1 0 39 10)(font "Arial" (font_size 6)))
 	(text "ADC2_CNV" (rect 90 0 150 12)(font "Arial" ))
 	(pt 0 8)
@@ -668,7 +668,7 @@ agreement for further details.
 		(line (pt 82 8)(pt 78 12))
 		(line (pt 78 12)(pt 82 8))
 	)
-	(annotation_block (location)(rect 1200 -240 1248 -224))
+	(annotation_block (location)(rect 1216 -240 1264 -224))
 )
 (pin
 	(output)
@@ -1266,7 +1266,7 @@ agreement for further details.
 	(annotation_block (location)(rect 1256 400 1304 416))
 )
 (symbol
-	(rect 968 -232 1016 -200)
+	(rect 984 -232 1032 -200)
 	(text "WIRE" (rect 1 0 24 10)(font "Arial" (font_size 6)))
 	(text "inst2" (rect 3 21 26 33)(font "Arial" ))
 	(port
@@ -1290,7 +1290,7 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 968 -200 1016 -168)
+	(rect 984 -200 1032 -168)
 	(text "WIRE" (rect 1 0 24 10)(font "Arial" (font_size 6)))
 	(text "inst7" (rect 3 21 26 33)(font "Arial" ))
 	(port
@@ -1374,7 +1374,7 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 576 -336 608 -320)
+	(rect 592 -336 624 -320)
 	(text "VCC" (rect 7 0 27 10)(font "Arial" (font_size 6)))
 	(text "inst10" (rect 3 5 32 17)(font "Arial" )(invisible))
 	(port
@@ -1659,7 +1659,7 @@ agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 128 80))
 	)
-	(annotation_block (parameter)(rect -136 -736 48 -664))
+	(annotation_block (parameter)(rect -120 -736 152 -664))
 )
 (symbol
 	(rect 16 184 64 216)
@@ -2284,9 +2284,9 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 632 -344 832 -168)
+	(rect 648 -344 848 -168)
 	(text "F1_ADCx2_DistributedRead" (rect 5 0 144 12)(font "Arial" ))
-	(text "inst1" (rect 8 160 30 177)(font "Intel Clear" ))
+	(text "inst12" (rect 8 160 36 177)(font "Intel Clear" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -2395,22 +2395,6 @@ agreement for further details.
 	(drawing
 		(rectangle (rect 16 16 184 160))
 	)
-)
-(connector
-	(pt 1024 -216)
-	(pt 1016 -216)
-)
-(connector
-	(pt 1024 -184)
-	(pt 1016 -184)
-)
-(connector
-	(pt 968 -184)
-	(pt 944 -184)
-)
-(connector
-	(pt 944 -184)
-	(pt 944 -216)
 )
 (connector
 	(text "Ready" (rect 800 -112 833 -100)(font "Arial" ))
@@ -2825,49 +2809,6 @@ agreement for further details.
 	(pt 1080 944)
 )
 (connector
-	(pt 944 -216)
-	(pt 968 -216)
-)
-(connector
-	(text "DATAL[23..0]" (rect 840 -328 906 -316)(font "Arial" ))
-	(pt 832 -312)
-	(pt 896 -312)
-	(bus)
-)
-(connector
-	(text "DATAR[23..0]" (rect 840 -312 908 -300)(font "Arial" ))
-	(pt 832 -296)
-	(pt 896 -296)
-	(bus)
-)
-(connector
-	(text "LRCK" (rect 848 -296 877 -284)(font "Arial" ))
-	(pt 832 -280)
-	(pt 896 -280)
-)
-(connector
-	(text "nFS" (rect 848 -280 868 -268)(font "Arial" ))
-	(pt 832 -264)
-	(pt 896 -264)
-)
-(connector
-	(pt 832 -248)
-	(pt 1024 -248)
-)
-(connector
-	(pt 832 -232)
-	(pt 1024 -232)
-)
-(connector
-	(pt 832 -216)
-	(pt 944 -216)
-)
-(connector
-	(text "128FS" (rect 864 -216 895 -204)(font "Arial" ))
-	(pt 832 -200)
-	(pt 896 -200)
-)
-(connector
 	(text "nFS" (rect -160 -648 -140 -636)(font "Arial" ))
 	(pt -128 -632)
 	(pt -168 -632)
@@ -3036,52 +2977,111 @@ agreement for further details.
 	(pt 1064 576)
 )
 (connector
-	(text "AVG[2..0]" (rect 312 -328 360 -316)(font "Arial" ))
-	(pt 400 -312)
-	(pt 304 -312)
+	(pt 1040 -216)
+	(pt 1032 -216)
+)
+(connector
+	(pt 1040 -184)
+	(pt 1032 -184)
+)
+(connector
+	(pt 960 -184)
+	(pt 960 -216)
+)
+(connector
+	(text "DATAL[23..0]" (rect 856 -328 922 -316)(font "Arial" ))
+	(pt 848 -312)
+	(pt 912 -312)
 	(bus)
 )
 (connector
-	(pt 592 -312)
-	(pt 592 -320)
-)
-(connector
-	(pt 632 -312)
-	(pt 592 -312)
-)
-(connector
-	(text "CLK100M" (rect 546 -312 593 -300)(font "Arial" ))
-	(pt 632 -296)
-	(pt 536 -296)
-)
-(connector
-	(text "SR[1..0]" (rect 544 -296 585 -284)(font "Arial" ))
-	(pt 632 -280)
-	(pt 536 -280)
+	(text "DATAR[23..0]" (rect 856 -312 924 -300)(font "Arial" ))
+	(pt 848 -296)
+	(pt 912 -296)
 	(bus)
 )
 (connector
-	(pt 528 -264)
-	(pt 632 -264)
+	(text "LRCK" (rect 864 -296 893 -284)(font "Arial" ))
+	(pt 848 -280)
+	(pt 912 -280)
 )
 (connector
-	(pt 528 -232)
-	(pt 632 -232)
+	(text "nFS" (rect 864 -280 884 -268)(font "Arial" ))
+	(pt 848 -264)
+	(pt 912 -264)
 )
 (connector
-	(pt 528 -248)
-	(pt 632 -248)
+	(text "128FS" (rect 880 -216 911 -204)(font "Arial" ))
+	(pt 848 -200)
+	(pt 912 -200)
 )
 (connector
-	(pt 528 -216)
-	(pt 632 -216)
+	(pt 848 -216)
+	(pt 960 -216)
 )
-(junction (pt 944 -216))
+(connector
+	(pt 960 -216)
+	(pt 984 -216)
+)
+(connector
+	(pt 960 -184)
+	(pt 984 -184)
+)
+(connector
+	(pt 848 -248)
+	(pt 1040 -248)
+)
+(connector
+	(pt 848 -232)
+	(pt 1040 -232)
+)
+(connector
+	(text "AVG[2..0]" (rect 272 -376 320 -364)(font "Arial" ))
+	(pt 264 -360)
+	(pt 360 -360)
+	(bus)
+)
+(connector
+	(pt 544 -264)
+	(pt 648 -264)
+)
+(connector
+	(pt 544 -248)
+	(pt 648 -248)
+)
+(connector
+	(pt 544 -232)
+	(pt 648 -232)
+)
+(connector
+	(pt 544 -216)
+	(pt 648 -216)
+)
+(connector
+	(pt 608 -312)
+	(pt 608 -320)
+)
+(connector
+	(pt 608 -312)
+	(pt 648 -312)
+)
+(connector
+	(text "CLK100M" (rect 562 -312 609 -300)(font "Arial" ))
+	(pt 552 -296)
+	(pt 648 -296)
+)
+(connector
+	(text "SR[1..0]" (rect 560 -296 601 -284)(font "Arial" ))
+	(pt 552 -280)
+	(pt 648 -280)
+	(bus)
+)
 (junction (pt 1016 824))
 (junction (pt 1016 840))
 (junction (pt 1048 944))
 (junction (pt 1048 976))
 (junction (pt 1048 992))
+(junction (pt 960 -216))
 (text "Set for PLL" (rect 968 952 1034 971)(font "Intel Clear" (font_size 8)))
 (text "Fout = 4x Fin" (rect 968 968 1044 987)(font "Intel Clear" (font_size 8)))
 (text "Z           Z            2X" (rect 1112 1040 1226 1059)(font "Intel Clear" (font_size 8)))
