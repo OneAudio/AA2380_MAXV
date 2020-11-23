@@ -103,6 +103,12 @@ Repenser la commande des leds pour être simples !
 
 La fonction F1_ADCx2_DistributedReadAVG ne marche pas ...(à revoir ?)
 
+23/11/20
+--------
+On ajoute une fonction qui permet la synchronisation des canaux L/R du
+module SPDIF. On modifie aussi les couleurs de Leds.
+Délai de 1s pour les relais au démarrage.
+A tester..
 
 
 

@@ -2,10 +2,17 @@
 -- AA2380V1 OSVA PROJECT.
 -- Date:15/05/19	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 98  LE.
+-- Intel MAXV 5M570 CPLD	Take 113  LE.
 -- Function F8 :  F8_SPDIF_TX.vhd
 -----------------------------------------------------------------
 -- parallel to serial SPDIF output.
+--
+-- Update the 23/11/2020
+-- We add LRsync input to allow proper synchronization
+-- of each channel to SPDIF frame.
+-- LRsync is a short pulse (<bit_clock period!) becoming high
+-- at each rising edge of LRCK (Left/Right clock)
+-- A=Left (FS=1), B=Right (FS=0).
 -----------------------------------------------------------------
 
 library ieee;
@@ -14,10 +21,11 @@ use ieee.std_logic_unsigned.all;
 
 entity F8_SPDIF_TX is
  port(
-  bit_clock : in std_logic; -- 128x Fsample (6.144MHz for 48K samplerate)
-  data_in : in std_logic_vector(23 downto 0);
+  LRsync      : in std_logic; -- Effective audio sampling frequency (for L/R sync)
+  bit_clock   : in std_logic; -- 128x Fsample (6.144MHz for 48K samplerate)
+  data_in     : in std_logic_vector(23 downto 0);
   address_out : out std_logic := '0'; -- 1 address bit means stereo only
-  spdif_out : out std_logic
+  spdif_out   : out std_logic
  );
 end entity F8_SPDIF_TX;
 
@@ -31,15 +39,19 @@ architecture behavioral of F8_SPDIF_TX is
  signal parity : std_logic;
  signal channel_status_shift : std_logic_vector(23 downto 0);
  signal channel_status : std_logic_vector(23 downto 0) := "001000000000000001000000";
- 
+
 begin
- 
- bit_clock_counter : process (bit_clock)
- begin
-  if bit_clock'event and bit_clock = '1' then
-   bit_counter <= bit_counter + 1;
+
+bit_clock_counter : process (bit_clock,LRsync)
+begin
+  if    LRsync='1' then
+        bit_counter <= "000000" ; -- reset bit counter for L/R synchronisation
+  else
+    if    bit_clock'event and bit_clock = '1' then
+          bit_counter <= bit_counter + 1;
+    end if;
   end if;
- end process bit_clock_counter;
+end process bit_clock_counter;
 
  data_latch : process (bit_clock)
  begin
@@ -101,7 +113,7 @@ begin
    end if;
   end if;
  end process data_output;
- 
+
  biphaser : process (bit_clock)
  begin
   if bit_clock'event and bit_clock = '1' then
@@ -111,6 +123,5 @@ begin
   end if;
  end process biphaser;
  spdif_out <= data_biphase;
- 
-end behavioral;
 
+end behavioral;
