@@ -10,10 +10,10 @@
 -- control signals.
 ------------------------------------------------------------------
 -- Averaging ratio is fixed as follow (SinC mode only) :
--- Fso=384 kHz Avg = 4 x (nFS= 1562.5 kHz)
--- Fso=192 kHz Avg = 8 x (nFS= 1562.5 kHz)
--- Fso= 96 kHz Avg = 16x (nFS= 1562.5 kHz)
--- Fso= 48 kHz Avg = 32x (nFS= 1562.5 kHz)
+-- Fso=384 kHz Avg = 4 x (nFS= 1536 kHz)
+-- Fso=192 kHz Avg = 8 x (nFS= 1536 kHz)
+-- Fso= 96 kHz Avg = 16x (nFS= 1536 kHz)
+-- Fso= 48 kHz Avg = 32x (nFS= 1536 kHz)
 -- NO FIR mode available here !
 -- (Note : nFS = AVG x Fso )
 -- 22/09/19 : Modif for Fso 50% duty-cycle
@@ -25,22 +25,28 @@ use IEEE.numeric_std.all;
 entity F1_ADCx2_DistributedRead is
 --
 port(
-  enable		: in  std_logic; -- enable input
-  CLOCK         : in  std_logic; -- 100MHz clock input
-  SR            : in  std_logic_vector(1 downto 0); -- selected output sampling rate (48,96 or 192kHz)
-  DOUTL	 	    : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Left channel
-  DOUTR	 	    : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Right channel
-  Fso		    : buffer std_logic ; -- effective output sampling rate
-  nFS			: out std_logic ; -- ADC sampling rate unaveraged
+
+  enable	      : in  std_logic; -- enable input
+  CLOCK         : in  std_logic; -- 98.304 MHz clock input (not 100M !)
+  SR            : in  std_logic_vector(1 downto 0); -- selected output effetive sampling rate (48,96 or 192kHz)
+  DOUTL	 	      : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Left channel
+  DOUTR	 	      : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Right channel
+  Fso		        : buffer std_logic ; -- effective output sampling rate
+  nFS			      : out std_logic ; -- ADC sampling rate unaveraged (equal Fso * averaging ratio)
+
   --- ADC i/o control signals
+  -- Left Channel ADC
   nCNVL         : out std_logic ; -- ADC start conv signal (inverted), Left channel
   BUSYL         : in std_logic  ; -- ADC BUSY signal, Left channel
   SDOL          : in std_logic  ; -- ADC data output, Left channel
+  -- Right Channel ADC
   nCNVR         : out std_logic ; -- ADC start conv signal (inverted), Right channel
   BUSYR         : in std_logic  ; -- ADC BUSY signal, Right channel
   SDOR          : in std_logic  ; -- ADC data output, Right channel
+  -- ADCs Clocks
   SCK           : out std_logic ; -- ADC clk_div4
-  CK128FS		: out std_logic   -- 128 Fso output for SPDIF (6.144M to 24.576M)
+  -- S/PDIF clock
+  CK128FS	    	: out std_logic   -- 128 Fso output for SPDIF (6.144M to 24.576M)
 );
 
 end F1_ADCx2_DistributedRead;
@@ -48,10 +54,10 @@ end F1_ADCx2_DistributedRead;
 architecture Behavioral of F1_ADCx2_DistributedRead is
 
 signal  clk_divider : unsigned (5 downto 0); -- clock divider counter
-signal  clk_div2	: std_logic ; --  49.152 MHz clock (50MHz with 100M clk)
-signal  clk_div4	: std_logic ; --  24.576 MHz clock (25MHz with 100M clk)
-signal  clk_div8	: std_logic ; --  12.288 MHz clock (12.5MHz with 100M clk)
-signal  clk_div16	: std_logic ; --   6.144 MHz clock (6.125MHz with 100M clk)
+signal  clk_div2	: std_logic ; --  49.152 MHz clock
+signal  clk_div4	: std_logic ; --  24.576 MHz clock
+signal  clk_div8	: std_logic ; --  12.288 MHz clock
+signal  clk_div16	: std_logic ; --   6.144 MHz clock
 
 signal  xFS  	    : std_logic ; -- output sampling clock
 
@@ -66,11 +72,11 @@ signal  ResetA      : std_logic ; --
 signal  ena_sck     : std_logic ; --
 signal  ena_shft    : std_logic ; --
 signal  enable_read : std_logic ; --
-signal  sckshift	: std_logic ; --
-signal  r_sck	    : std_logic ; --
+signal  sckshift	  : std_logic ; --
+signal  r_sck	      : std_logic ; --
 
-signal	r_DATAL      : std_logic_vector (23 downto 0) ; -- DATAL Left channel temp buffer
-signal	r_DATAR      : std_logic_vector (23 downto 0) ; -- DATAL Right channel temp buffer
+signal	r_DATAL     : std_logic_vector (23 downto 0) ; -- DATAL Left channel temp buffer
+signal	r_DATAR     : std_logic_vector (23 downto 0) ; -- DATAL Right channel temp buffer
 
 begin
 
@@ -86,7 +92,7 @@ begin
 		end if;
     --
     nCNVL 	<= not ResetA 	; -- ADC start convertion pulse (inverted),Left channel
-	  nCNVR	<= not ResetA 	; -- ADC start convertion pulse (inverted), Right channel
+	  nCNVR	  <= not ResetA 	; -- ADC start convertion pulse (inverted), Right channel
 	else
     nCNVL 	<= '1' 	; -- nCNV set to high,Left channel
 	  nCNVR 	<= '1' 	; -- nCNV set to high,Right channel
@@ -94,15 +100,15 @@ begin
 	end if;
 end process p_clk_divider;
 
--- Generate all 128Fso clocks
+-- Generate all 128 Fso clocks
 clk_div2    <= clk_divider(0); -- 50 MHz (128*384)
 clk_div4    <= clk_divider(1); -- 25 MHz (128*192)
 clk_div8  	<= clk_divider(2); -- 12.5 MHz (128*96)
 clk_div16	  <= clk_divider(3); -- 6.125 MHz (128*48)
 
-xFS         <= clk_divider(5); -- 1562.5 kHz (384x4/192x8/96x16/48x32)
+xFS         <= clk_divider(5); -- 15 kHz (384x4/192x8/96x16/48x32)
 
-nFS <= xFS ; -- nFS always equal 1562.5 kHz
+nFS <= xFS ; -- nFS always equal 1536 kHz
 
 ------------------------------------------------------------------
 -- Decoding 128FS frequencies and averaging value from  SR inputs
@@ -112,20 +118,20 @@ begin
   if rising_edge(clock) then
     case SR is
       when "00" => avg_max  <= 32 		; -- Fso= 48k,  averaging = 32x
-                   CK128FS	<= clk_div16; -- CK128FS = 6.144M (6.125M with 100M clk)
+                   CK128FS	<= clk_div16; -- CK128FS = 6.144M
       when "01" => avg_max  <= 16 		; -- Fso= 96k,  averaging = 16x
-  			           CK128FS	<= clk_div8	; -- CK128FS = 12.288M (12.5M with 100M clk)
+  			           CK128FS	<= clk_div8	; -- CK128FS = 12.288M
       when "10" => avg_max  <= 8  		; -- Fso=192k,  averaging = 8x
-  		             CK128FS	<= clk_div4	; -- CK128FS = 24.576M (25M with 100M clk)
+  		             CK128FS	<= clk_div4	; -- CK128FS = 24.576M
       when "11" => avg_max  <= 4  		; -- Fso=384k,  averaging = 4x
-  			           CK128FS	<= clk_div2	; -- CK128FS = 49.152M (50M with 100M clk)
+  			           CK128FS	<= clk_div2	; -- CK128FS = 49.152M
     end case;
   end if;
 end process;
 
 ------------------------------------------------------------------
 -- Enable SCK window for auto averaging process of ADC
--- xFS is ADC real sampling clock ) 1562.5kHz
+-- xFS is ADC real sampling clock ) 1536kHz
 ------------------------------------------------------------------
 process (xFS,avg_cnt,avg_max)
 begin
