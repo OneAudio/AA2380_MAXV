@@ -1726,7 +1726,7 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 32 -528 264 -416)
+	(rect 600 -800 832 -688)
 	(text "F3_AutoZero" (rect 5 0 68 12)(font "Arial" ))
 	(text "inst32" (rect 8 96 30 105)(font "Intel Clear" (font_size 5)))
 	(port
@@ -2315,7 +2315,7 @@ agreement for further details.
 	)
 )
 (symbol
-	(rect 504 -672 672 -592)
+	(rect 480 -656 648 -576)
 	(text "F10_LRCKsync" (rect 5 0 84 12)(font "Arial" ))
 	(text "inst3" (rect 8 64 20 70)(font "Intel Clear" (font_size 4)))
 	(port
@@ -2341,6 +2341,45 @@ agreement for further details.
 	)
 	(drawing
 		(rectangle (rect 16 16 152 64))
+	)
+)
+(symbol
+	(rect 192 -512 360 -432)
+	(text "TEST_Fixed_LR_values" (rect 5 0 123 12)(font "Arial" ))
+	(text "inst4" (rect 8 64 30 81)(font "Intel Clear" ))
+	(port
+		(pt 168 32)
+		(output)
+		(text "DATAL[23..0]" (rect 0 0 66 12)(font "Arial" ))
+		(text "DATAL[23..0]" (rect 92 27 158 39)(font "Arial" ))
+		(line (pt 168 32)(pt 152 32)(line_width 3))
+	)
+	(port
+		(pt 168 48)
+		(output)
+		(text "DATAR[23..0]" (rect 0 0 68 12)(font "Arial" ))
+		(text "DATAR[23..0]" (rect 90 43 158 55)(font "Arial" ))
+		(line (pt 168 48)(pt 152 48)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 152 64))
+	)
+)
+(symbol
+	(rect 696 -568 728 -536)
+	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
+	(text "inst6" (rect 3 21 25 38)(font "Intel Clear" )(invisible))
+	(port
+		(pt 16 0)
+		(output)
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(line (pt 16 8)(pt 16 0))
+	)
+	(drawing
+		(line (pt 8 8)(pt 16 16))
+		(line (pt 16 16)(pt 24 8))
+		(line (pt 8 8)(pt 24 8))
 	)
 )
 (connector
@@ -2634,45 +2673,6 @@ agreement for further details.
 	(pt 1080 944)
 )
 (connector
-	(text "nFS" (rect -80 -512 -60 -500)(font "Arial" ))
-	(pt 32 -496)
-	(pt -96 -496)
-)
-(connector
-	(text "DATAL[23..0]" (rect -88 -496 -22 -484)(font "Arial" ))
-	(pt 32 -480)
-	(pt -96 -480)
-	(bus)
-)
-(connector
-	(text "DATAR[23..0]" (rect -88 -480 -20 -468)(font "Arial" ))
-	(pt 32 -464)
-	(pt -96 -464)
-	(bus)
-)
-(connector
-	(text "CAL_pulse" (rect -94 -464 -41 -452)(font "Arial" ))
-	(pt 32 -448)
-	(pt -96 -448)
-)
-(connector
-	(text "DATAFL[23..0]" (rect 373 -496 446 -484)(font "Arial" ))
-	(pt 264 -480)
-	(pt 472 -480)
-	(bus)
-)
-(connector
-	(text "DATAFR[23..0]" (rect 373 -480 448 -468)(font "Arial" ))
-	(pt 264 -464)
-	(pt 472 -464)
-	(bus)
-)
-(connector
-	(text "CIP" (rect 272 -512 283 -503)(font "Intel Clear" (font_size 5)))
-	(pt 304 -496)
-	(pt 264 -496)
-)
-(connector
 	(text "SR[1..0]" (rect 392 -72 433 -60)(font "Arial" ))
 	(pt 376 -56)
 	(pt 440 -56)
@@ -2942,26 +2942,6 @@ agreement for further details.
 	(pt 696 -8)
 )
 (connector
-	(text "LRCK" (rect 432 -640 461 -628)(font "Arial" ))
-	(pt 504 -624)
-	(pt 424 -624)
-)
-(connector
-	(text "CLK100M" (rect 434 -656 481 -644)(font "Arial" ))
-	(pt 504 -640)
-	(pt 424 -640)
-)
-(connector
-	(text "LRsync" (rect 680 -656 718 -644)(font "Arial" ))
-	(pt 672 -640)
-	(pt 736 -640)
-)
-(connector
-	(text "LRsync" (rect 728 -544 766 -532)(font "Arial" ))
-	(pt 720 -528)
-	(pt 784 -528)
-)
-(connector
 	(pt 992 -512)
 	(pt 1032 -512)
 )
@@ -2984,11 +2964,6 @@ agreement for further details.
 	(text "I2S_BCLK" (rect 390 464 440 476)(font "Arial" ))
 	(pt 376 480)
 	(pt 472 480)
-)
-(connector
-	(text "ADDR_OUT" (rect 801 352 831 358)(font "Intel Clear" (font_size 4)))
-	(pt 800 360)
-	(pt 960 360)
 )
 (connector
 	(text "LRCK" (rect 816 360 845 372)(font "Arial" ))
@@ -3038,11 +3013,6 @@ agreement for further details.
 	(pt 848 464)
 )
 (connector
-	(text "128FS" (rect 760 464 791 476)(font "Arial" ))
-	(pt 752 480)
-	(pt 848 480)
-)
-(connector
 	(text "Ready" (rect 752 480 785 492)(font "Arial" ))
 	(pt 848 496)
 	(pt 752 496)
@@ -3051,6 +3021,91 @@ agreement for further details.
 	(text "CLKSLOW" (rect 760 496 813 508)(font "Arial" ))
 	(pt 752 512)
 	(pt 848 512)
+)
+(connector
+	(text "DATAFL[23..0]" (rect 373 -496 446 -484)(font "Arial" ))
+	(pt 360 -480)
+	(pt 472 -480)
+	(bus)
+)
+(connector
+	(text "DATAFR[23..0]" (rect 373 -480 448 -468)(font "Arial" ))
+	(pt 360 -464)
+	(pt 472 -464)
+	(bus)
+)
+(connector
+	(text "nFS" (rect 488 -784 508 -772)(font "Arial" ))
+	(pt 600 -768)
+	(pt 472 -768)
+)
+(connector
+	(text "DATAL[23..0]" (rect 480 -768 546 -756)(font "Arial" ))
+	(pt 600 -752)
+	(pt 472 -752)
+	(bus)
+)
+(connector
+	(text "DATAR[23..0]" (rect 480 -752 548 -740)(font "Arial" ))
+	(pt 600 -736)
+	(pt 472 -736)
+	(bus)
+)
+(connector
+	(text "CAL_pulse" (rect 474 -736 527 -724)(font "Arial" ))
+	(pt 600 -720)
+	(pt 472 -720)
+)
+(connector
+	(text "CIP" (rect 840 -784 851 -775)(font "Intel Clear" (font_size 5)))
+	(pt 872 -768)
+	(pt 832 -768)
+)
+(connector
+	(pt 832 -752)
+	(pt 888 -752)
+	(bus)
+)
+(connector
+	(pt 832 -736)
+	(pt 888 -736)
+	(bus)
+)
+(connector
+	(text "LRCK" (rect 408 -624 437 -612)(font "Arial" ))
+	(pt 480 -608)
+	(pt 400 -608)
+)
+(connector
+	(text "CLK100M" (rect 410 -640 457 -628)(font "Arial" ))
+	(pt 480 -624)
+	(pt 400 -624)
+)
+(connector
+	(text "LRsync" (rect 656 -640 694 -628)(font "Arial" ))
+	(pt 648 -624)
+	(pt 712 -624)
+)
+(connector
+	(pt 784 -528)
+	(pt 768 -528)
+)
+(connector
+	(pt 768 -528)
+	(pt 768 -584)
+)
+(connector
+	(pt 712 -568)
+	(pt 712 -584)
+)
+(connector
+	(pt 712 -584)
+	(pt 768 -584)
+)
+(connector
+	(text "128FS" (rect 816 344 847 356)(font "Arial" ))
+	(pt 960 360)
+	(pt 808 360)
 )
 (junction (pt 1016 824))
 (junction (pt 1016 840))
