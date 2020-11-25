@@ -7,12 +7,8 @@
 -----------------------------------------------------------------
 -- parallel to serial SPDIF output.
 --
--- Update the 23/11/2020
--- We add LRsync input to allow proper synchronization
--- of each channel to SPDIF frame.
--- LRsync is a short pulse (<bit_clock period!) becoming high
--- at each rising edge of LRCK (Left/Right clock)
--- A=Left (FS=1), B=Right (FS=0).
+-- The 25/11/2020 :
+-- add 2 inputs channels
 -----------------------------------------------------------------
 
 library ieee;
@@ -21,17 +17,17 @@ use ieee.std_logic_unsigned.all;
 
 entity F8_SPDIF_TX is
  port(
-  LRsync      : in std_logic; -- Effective audio sampling frequency (for L/R sync)
-  bit_clock   : in std_logic; -- 128x Fsample (6.144MHz for 48K samplerate)
-  data_in     : in std_logic_vector(23 downto 0);
-  address_out : out std_logic := '0'; -- 1 address bit means stereo only
-  spdif_out   : out std_logic
+  FSx128_CLK   : in std_logic; -- 128x Fsample (6.144MHz for 48K samplerate)
+  DATAL        : in std_logic_vector(23 downto 0);--Left Channel Data input
+  DATAR        : in std_logic_vector(23 downto 0);--Right Channel Data input
+  SPDIF_OUT    : out std_logic -- S/PDIF serial output
  );
 end entity F8_SPDIF_TX;
 
 architecture behavioral of F8_SPDIF_TX is
 
- signal data_in_buffer : std_logic_vector(23 downto 0);
+ signal DATAIN : std_logic_vector(23 downto 0);
+ signal DATAIN_buffer : std_logic_vector(23 downto 0);
  signal bit_counter : std_logic_vector(5 downto 0) := (others => '0');
  signal frame_counter : std_logic_vector(8 downto 0) := (others => '0');
  signal data_biphase : std_logic := '0';
@@ -39,26 +35,32 @@ architecture behavioral of F8_SPDIF_TX is
  signal parity : std_logic;
  signal channel_status_shift : std_logic_vector(23 downto 0);
  signal channel_status : std_logic_vector(23 downto 0) := "001000000000000001000000";
+  signal LR_Select : std_logic;
 
 begin
 
-bit_clock_counter : process (bit_clock,LRsync)
+Channel_selection : process (DATAL,DATAR,LR_Select)
 begin
-  if    LRsync='1' then
-        bit_counter <= "000000" ; -- reset bit counter for L/R synchronisation
-  else
-    if    bit_clock'event and bit_clock = '1' then
+  case (LR_Select) is
+      when '0' => DATAIN <= DATAL ;
+      when '1' => DATAIN <= DATAR ;
+  end case;
+end process Channel_selection;
+
+
+FSx128_CLK_counter : process (FSx128_CLK)
+begin
+  if    FSx128_CLK'event and FSx128_CLK = '1' then
           bit_counter <= bit_counter + 1;
-    end if;
   end if;
-end process bit_clock_counter;
+end process FSx128_CLK_counter;
 
- data_latch : process (bit_clock)
+ data_latch : process (FSx128_CLK)
  begin
-  if bit_clock'event and bit_clock = '1' then
-   parity <= data_in_buffer(23) xor data_in_buffer(22) xor data_in_buffer(21) xor data_in_buffer(20) xor data_in_buffer(19) xor data_in_buffer(18) xor data_in_buffer(17)  xor data_in_buffer(16) xor data_in_buffer(15) xor data_in_buffer(14) xor data_in_buffer(13) xor data_in_buffer(12) xor data_in_buffer(11) xor data_in_buffer(10) xor data_in_buffer(9) xor data_in_buffer(8) xor data_in_buffer(7) xor data_in_buffer(6) xor data_in_buffer(5) xor data_in_buffer(4) xor data_in_buffer(3) xor data_in_buffer(2) xor data_in_buffer(1) xor data_in_buffer(0) xor channel_status_shift(23);
+  if FSx128_CLK'event and FSx128_CLK = '1' then
+   parity <= DATAIN_buffer(23) xor DATAIN_buffer(22) xor DATAIN_buffer(21) xor DATAIN_buffer(20) xor DATAIN_buffer(19) xor DATAIN_buffer(18) xor DATAIN_buffer(17)  xor DATAIN_buffer(16) xor DATAIN_buffer(15) xor DATAIN_buffer(14) xor DATAIN_buffer(13) xor DATAIN_buffer(12) xor DATAIN_buffer(11) xor DATAIN_buffer(10) xor DATAIN_buffer(9) xor DATAIN_buffer(8) xor DATAIN_buffer(7) xor DATAIN_buffer(6) xor DATAIN_buffer(5) xor DATAIN_buffer(4) xor DATAIN_buffer(3) xor DATAIN_buffer(2) xor DATAIN_buffer(1) xor DATAIN_buffer(0) xor channel_status_shift(23);
    if bit_counter = "000011" then
-    data_in_buffer <= data_in;
+    DATAIN_buffer <= DATAIN;
    end if;
    if bit_counter = "111111" then
     if frame_counter = "101111111" then
@@ -70,39 +72,39 @@ end process bit_clock_counter;
   end if;
  end process data_latch;
 
- data_output : process (bit_clock)
+ data_output : process (FSx128_CLK)
  begin
-  if bit_clock'event and bit_clock = '1' then
+  if FSx128_CLK'event and FSx128_CLK = '1' then
    if bit_counter = "111111" then
     if frame_counter = "101111111" then -- next frame is 0, load preamble Z
-     address_out <= '0';
+     LR_Select <= '0';
      channel_status_shift <= channel_status;
      data_out_buffer <= "10011100";
     else
      if frame_counter(0) = '1' then -- next frame is even, load preamble X
       channel_status_shift <= channel_status_shift(22 downto 0) & '0';
       data_out_buffer <= "10010011";
-      address_out <= '0';
+      LR_Select <= '0';
      else -- next frame is odd, load preable Y
       data_out_buffer <= "10010110";
-      address_out <= '1';
+      LR_Select <= '1';
      end if;
     end if;
    else
     if bit_counter(2 downto 0) = "111" then -- load new part of data into buffer
      case bit_counter(5 downto 3) is
       when "000" =>
-       data_out_buffer <= '1' & data_in_buffer(0) & '1' & data_in_buffer(1) & '1' & data_in_buffer(2) & '1' & data_in_buffer(3);
+       data_out_buffer <= '1' & DATAIN_buffer(0) & '1' & DATAIN_buffer(1) & '1' & DATAIN_buffer(2) & '1' & DATAIN_buffer(3);
       when "001" =>
-       data_out_buffer <= '1' & data_in_buffer(4) & '1' & data_in_buffer(5) & '1' & data_in_buffer(6) & '1' & data_in_buffer(7);
+       data_out_buffer <= '1' & DATAIN_buffer(4) & '1' & DATAIN_buffer(5) & '1' & DATAIN_buffer(6) & '1' & DATAIN_buffer(7);
       when "010" =>
-       data_out_buffer <= '1' & data_in_buffer(8) & '1' & data_in_buffer(9) & '1' & data_in_buffer(10) & '1' & data_in_buffer(11);
+       data_out_buffer <= '1' & DATAIN_buffer(8) & '1' & DATAIN_buffer(9) & '1' & DATAIN_buffer(10) & '1' & DATAIN_buffer(11);
       when "011" =>
-       data_out_buffer <= '1' & data_in_buffer(12) & '1' & data_in_buffer(13) & '1' & data_in_buffer(14) & '1' & data_in_buffer(15);
+       data_out_buffer <= '1' & DATAIN_buffer(12) & '1' & DATAIN_buffer(13) & '1' & DATAIN_buffer(14) & '1' & DATAIN_buffer(15);
       when "100" =>
-       data_out_buffer <= '1' & data_in_buffer(16) & '1' & data_in_buffer(17) & '1' & data_in_buffer(18) & '1' & data_in_buffer(19);
+       data_out_buffer <= '1' & DATAIN_buffer(16) & '1' & DATAIN_buffer(17) & '1' & DATAIN_buffer(18) & '1' & DATAIN_buffer(19);
       when "101" =>
-       data_out_buffer <= '1' & data_in_buffer(20) & '1' & data_in_buffer(21) & '1' & data_in_buffer(22) & '1' & data_in_buffer(23);
+       data_out_buffer <= '1' & DATAIN_buffer(20) & '1' & DATAIN_buffer(21) & '1' & DATAIN_buffer(22) & '1' & DATAIN_buffer(23);
       when "110" =>
        data_out_buffer <= "10101" & channel_status_shift(23) & "1" & parity;
       when others =>
@@ -114,14 +116,14 @@ end process bit_clock_counter;
   end if;
  end process data_output;
 
- biphaser : process (bit_clock)
+ biphaser : process (FSx128_CLK)
  begin
-  if bit_clock'event and bit_clock = '1' then
+  if FSx128_CLK'event and FSx128_CLK = '1' then
    if data_out_buffer(data_out_buffer'left) = '1' then
     data_biphase <= not data_biphase;
    end if;
   end if;
  end process biphaser;
- spdif_out <= data_biphase;
+ SPDIF_OUT <= data_biphase;
 
 end behavioral;

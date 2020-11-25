@@ -44,7 +44,7 @@ begin
   else
       if  rising_edge(CLK) THEN
           cnt <=cnt+1;
-          if  cnt<15  THEN
+          if  cnt<1  THEN
               Pulse <= '0';
           else
               Pulse <= '1';
