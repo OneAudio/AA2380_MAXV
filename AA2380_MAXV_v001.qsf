@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "MAX V"
 set_global_assignment -name DEVICE 5M570ZT100C5
-set_global_assignment -name TOP_LEVEL_ENTITY AA2380_MAXV
+set_global_assignment -name TOP_LEVEL_ENTITY F12_SPI_interface
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "9.1 SP2"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:54:12  MARCH 19, 2019"
 set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Lite Edition"
@@ -152,6 +152,16 @@ set_location_assignment PIN_28 -to UIO_1
 set_location_assignment PIN_29 -to UIO_2
 set_location_assignment PIN_30 -to UIO_3
 set_global_assignment -name VHDL_FILE F1_ADCx2_DistributedReadAVG.vhd
+set_global_assignment -name VHDL_FILE F3_AutoZero.vhd
+set_global_assignment -name VHDL_FILE F10_LRCK_synch.vhd
+set_global_assignment -name VHDL_FILE F10_LRCKsynch.vhd
+set_global_assignment -name VHDL_FILE F10_LRCKsync.vhd
+set_global_assignment -name VHDL_FILE F11_ISOinterface.vhd
+set_global_assignment -name VHDL_FILE spi_slave.vhd
+set_global_assignment -name VHDL_FILE spi_master.vhd
+set_global_assignment -name VHDL_FILE grp_debouncer.vhd
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_push
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Ta
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Tb
@@ -172,9 +182,4 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[8]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[7]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[6]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO
-set_global_assignment -name VHDL_FILE F3_AutoZero.vhd
-set_global_assignment -name VHDL_FILE F10_LRCK_synch.vhd
-set_global_assignment -name VHDL_FILE F10_LRCKsynch.vhd
-set_global_assignment -name VHDL_FILE F10_LRCKsync.vhd
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_global_assignment -name VHDL_FILE F12_SPI_interface.vhd
