@@ -183,3 +183,4 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[7]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[6]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO
 set_global_assignment -name VHDL_FILE F12_SPI_interface.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE F12_SPI_interface.vwf
