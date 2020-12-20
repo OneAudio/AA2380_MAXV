@@ -55,7 +55,13 @@ port(
   Test_CK_cycle	 : out integer range 0 to 24;
   Test_SEL_RDCLK : out integer range 0 to 15;
   Test_SEL_nFS  : out integer range 0 to 7 ;
-  Test_CNVA : out std_logic
+  Test_CNVA : out std_logic;
+  Test_ADC_CLK : out std_logic;
+  Test_ADC_SHIFT : out std_logic;
+  Test_AVGen_READ : out std_logic;
+  Test_CNVen_SHFT : out std_logic;
+  Test_AVGen_SCK : out std_logic;
+  Test_CNVen_SCK : out std_logic
 
 );
 
@@ -104,7 +110,14 @@ Test_SEL_nFS <= SEL_nFS ; -- TEST
 Test_ReadCLK <= ReadCLK ; -- TEST
 Test_CK_cycle <= CK_cycle;  -- TEST
 Test_SEL_RDCLK <= SEL_RDCLK ; -- TEST
-Test_CNVA <= CNVA ;
+Test_CNVA <= CNVA ; -- TEST
+Test_ADC_CLK <= ADC_CLK  ; -- TEST
+Test_ADC_SHIFT <= ADC_SHIFT ; -- TEST
+Test_AVGen_READ <= AVGen_READ ; -- TEST
+Test_CNVen_SHFT <= CNVen_SHFT ;
+Test_AVGen_SCK <= AVGen_SCK ; -- TEST
+Test_CNVen_SCK <= CNVen_SCK ; -- TEST
+
 ------------------------------------------------------------------
 -- Generate the flag "OutOfRange" .
 -- This flag indicate that combination of sampling Rate and averaging
