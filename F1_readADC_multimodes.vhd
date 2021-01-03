@@ -4,7 +4,7 @@
 -- Design notes, please read : "SPECIF_SPI_LTC2380-24.vhd" and
 -- "F1_readADC_multimodes.xls"
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take (65) LE.
+-- Intel MAXV 5M570 CPLD	Take 298 LE.
 -- Function F1 :  F1_readADC_multimodes.vhd
 -- Function to read data from two LT2380-24 ADC using any of the two modes :
 -- #############################################################################
@@ -132,7 +132,7 @@ Test_CNVen_SCK <= CNVen_SCK ; -- TEST
 RangeCheck : process(SR,AVG)
 begin
   --
-  if    SR+(7-AVG) > 7 then -- condition to detect OutOfRange mode
+  if    SR+AVG > 7 then -- condition to detect OutOfRange mode
         OutOfRange <= 1 ; -- detect bad SR/AVG combination => value is OutOfRange
   else
         OutOfRange <= 0 ; -- SR/AVG in the range.

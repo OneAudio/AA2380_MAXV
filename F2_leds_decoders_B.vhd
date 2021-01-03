@@ -2,7 +2,7 @@
 -- AA2380V1 OSVA PROJECT.
 -- Date: 03/01/21	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take xx LE.
+-- Intel MAXV 5M570 CPLD	Take 5 LE.
 -- Function F2 "B" :  F2_leds_decoders_B.vhd
 -- It decode signals and drive Leds & relays accordingly.
 --_______________________________________________________________
@@ -33,11 +33,12 @@ port(
 	AVG				: in  std_logic_vector(2 downto 0) ; -- averaging ratio (1x to 128x)
 	SE_DIFF		: in  std_logic ; -- Single-ended / Différential mode
 	HBWon			: in  std_logic ; -- High bandwidth filter mode
-	OutOfRange: in  std_logic ; -- OutOfRange indicator (no data output available)
+	AQMODE		: in  std_logic ; -- acquisition mode indicator (normal or distributed read)
+	OutOfRange: in  std_logic ; -- Ready signal (1s startup delay)
 	--LEDS (AA2380PAN)
 	PAN_A			: out std_logic ;	-- D9 CPLD pin 83, AA2380PAN led A (top left)
-	PAN_B			: out std_logic ;	-- D8 CPLD pin 81, AA2380PAN led C
-	PAN_C			: out std_logic ;	-- D7 CPLD pin 77, AA2380PAN led B
+	PAN_B			: out std_logic ;	-- D8 CPLD pin 81, AA2380PAN led B
+	PAN_C			: out std_logic ;	-- D7 CPLD pin 77, AA2380PAN led C
 	PAN_D			: out std_logic ;	-- D6 CPLD pin 89, AA2380PAN led D
 	PAN_E			: out std_logic ;	-- D5 CPLD pin 86, AA2380PAN led E
 	PAN_F			: out std_logic ;	-- D4 CPLD pin 84, AA2380PAN led F
@@ -62,7 +63,7 @@ port(
 	SE_DIFF_R		: out std_logic 	-- Ch2 (Right) single-ended input mode
 );
 
-end F2_leds_decoders;
+end F2_leds_decoders_B;
 
 architecture Behavioral of F2_leds_decoders_B is
 
@@ -72,6 +73,7 @@ begin
 ------------------------------------------------------------------
 -- Sampling frequency decoding 12k(000) to 1536k(111)
 -- 3 upper leds of AA2380PAN (Leds are active high)
+-- (Note : Signals of leds D9/D7 are crossed !)
 ------------------------------------------------------------------
 PAN_A <= SR(2) ; -- MSB
 PAN_B <= SR(1) ; --
@@ -87,8 +89,8 @@ PAN_F <= AVG(0) ; -- LSB
 -- Indicate Ready, SEnDIFF and HBWon
 -- 3 bottom leds of AA2380PAN PCB (Leds are active high)
 ------------------------------------------------------------------
-PAN_G <= Ready 		; -- Led for Ready signal
-PAN_H <= SEnDIFF	; -- Led for Single-Ended / Différential mode
+PAN_G <= AQMODE		; -- Led for Ready signal
+PAN_H <= SE_DIFF	; -- Led for Single-Ended / Différential mode
 PAN_I <= HBWon		; -- Led for high bandwidth mode
 ------------------------------------------------------------------
 -- TRicolors LED (Red+Green+Blue)
@@ -102,7 +104,7 @@ PAN_I <= HBWon		; -- Led for high bandwidth mode
 -- Both red leds are on when calib is in progress
 -- All these leds are active LOW !
 
-process(Ready,HBWon,SE_DIFF,OutOfRange) is
+process(Ready,HBWon,SE_DIFF,OutOfRange,CLKSLOW) is
 begin
 	if 	Ready= '0'	then
 		nLeft_Gre 	<= '1'  ; -- leds all off
@@ -117,9 +119,9 @@ begin
 		nLeft_Red		<= 	not (OutOfRange and CLKSLOW )			; --(red)
 		nLeft_Blu		<= 	not (HBWon 	 and not OutOfRange)	; --(Blue)
 		-- Right channel LED
-		nRight_Gre	<=  not (SE_DIFF and not OutOfRange)	; --(Green)
+		nRight_Gre	<=  not (SE_DIFF and  not OutOfRange)	; --(Green)
 		nRight_Red	<=  not (OutOfRange and CLKSLOW )			; --(red)
-		nRight_Blu	<=  not (HBWon 	 and not OutOfRange)	; --(Blue)
+		nRight_Blu	<=  not (HBWon 	 and  not OutOfRange)	; --(Blue)
 	end if;
 end process;
 

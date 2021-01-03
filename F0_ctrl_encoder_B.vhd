@@ -2,7 +2,7 @@
 -- AA2380V1 OSVA PROJECT.
 -- Date: 24/12/2020	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take XX LE.
+-- Intel MAXV 5M570 CPLD	Take 18 LE.
 -- Function F0 :  FO_ctrl_encoder_B.vhd
 --
 -----------------------------------------------------------------
@@ -49,41 +49,32 @@ Port (
     HBWonR	  : buffer std_logic ; -- High bandwidth analog input filter type (0= Low bandwidth 1=High bandwidth) : Right channel
     AQMODE    : buffer std_logic ; -- ADC reading mode selection (0=Normal 1=Distributed Read)
     SRnAVG   	: buffer std_logic   -- Output to indicate is SR or AVG is selected (0=SR 1=AVG).
-		   --TEST SIGNALS
---       Blank : buffer std_logic --
+   --TEST SIGNALS
+
     );
  end F0_ctrl_encoder_B;
 
 architecture select_mode of F0_ctrl_encoder_B is
 
-signal sel_ENC	        : integer range 0 to 7 ; -- counter for SR selection
-signal count2s 		     	: integer range 0 to 255 ; -- counter for 2s nPush detection
-signal delay            : integer range 0 to 31 ; --delay
 signal rotary_in        : STD_LOGIC_vector (1 downto 0)  ; -- Vector of the two encoder tracks
 signal delay_rotary_q1  : STD_LOGIC  ; --
 signal pushf   	    		: STD_LOGIC  ; -- Filtered nPush button
 signal Rotate  		     	: STD_LOGIC  ; -- pulse output of encoder
-signal SELencoder 	    : integer range 0 to 7 ; -- AVG/SR select counter
+signal SEL_SR      	    : integer range 0 to 7 ; -- SR select counter
+signal SEL_AVG      	  : integer range 0 to 7 ; -- AVG select counter
 signal Dir				    	: STD_LOGIC ;
-signal CntEnd         	: STD_LOGIC ;
-signal Start	         	: STD_LOGIC ;
-signal blank	         	: STD_LOGIC ;
-
 
 begin
-
-
 ----------------------------------------------------------
 -- Filtering of nPush button
 -- sampled at 100Hz with clkslow
 ---------------------------------------------------------
 process (clkslow)
 begin
-    if rising_edge(clkslow) then
-    Pushf <= not nPush; -- nPush is inverted and Filtered
+    if  rising_edge(clkslow) then
+        Pushf <= not nPush; -- nPush is inverted and Filtered
     end if;
 end process;
-
 ----------------------------------------------------------
 -- New rotary encoder function from Xilinx app note
 -- (Works fine !)
@@ -109,64 +100,40 @@ end process rotary_filter;
 
 
 -- Coder rotating select averaging ratio.
--- To avoid bad combination of AVG/SR, we check
--- that the SUM SR+AVG is always < 8.
+-- To avoid bad combination of AVG/SR.
 --
-process (Dir,Rotate,SELencoder)
+process (Dir,Rotate,SEL_SR,SEL_AVG,SRnAVG)
 begin
     if SRnAVG='0' then
-      if  rising_edge(Rotate) then
-          if    Dir='0' and SEL_SR > 0 then
-                SEL_SR <= SEL_SR - 1 ;
-          elsif Dir='1' and SELencoder < 7 then
-                SEL_SR <= SEL_SR + 1 ;
-          end if;
-    else
-      if  rising_edge(Rotate) then
-          if    Dir='0' and SELencoder > 0 then
-                SEL_AVG <= SEL_AVG - 1 ;
-          elsif Dir='1' and SELencoder < 7 then
-                SEL_AVG <= SEL_AVG + 1 ;
-          end if;
-    end if;
+        if  rising_edge(Rotate) then
+            if    Dir='1' and SEL_SR > 0 then
+                  SEL_SR <= SEL_SR - 1 ;
+            elsif Dir='0' and SEL_SR < 7 then
+                  SEL_SR <= SEL_SR + 1 ;
+            end if;
+        end if;
+		else
+  			if  rising_edge(Rotate) then
+    				if      Dir='1' and SEL_AVG > 0 then
+    						    SEL_AVG <= SEL_AVG - 1 ;
+    				elsif   Dir='0' and SEL_AVG < 7 then
+    						    SEL_AVG <= SEL_AVG + 1 ;
+    				end if;
+  			end if;
+		end if;
+    SR  <= std_logic_vector(to_unsigned(SEL_SR,3))  ; --
+    AVG <= std_logic_vector(to_unsigned(SEL_AVG,3)) ; --
 end process;
 ---------------------------------------------------------
 -- Each short pulse on encoder nPush button allow
 -- to select sampling rate sequencially.
 ---------------------------------------------------------
-process (Pushf,SRnAVG,SEL_SR,SEL_AVG)
+process (Pushf,SRnAVG)
 begin
-    if	 falling_edge(Pushf)	then      -- SR change when push is released
-		     SRnAVG <= not SRnAVG ;         -- Toggle SR/AVG setting
-	  end if;
-  end if;
-	-- if SRnAVG='0'	then -- Sampling Rate setting with encoder
-	-- 	case SEL_SR is
-	-- 		when       0 => SR <= "000" ; -- 12 kHz
-	-- 		when       1 => SR <= "001" ; -- 24 kHz
-	-- 		when       2 => SR <= "010" ; -- 48 kHz
-	-- 		when       3 => SR <= "011" ; -- 96 kHz
-	-- 		when       4 => SR <= "100" ; -- 192 kHz
-	-- 		when       5 => SR <= "101" ; -- 384 kHz
-	-- 		when       6 => SR <= "110" ; -- 768 kHz
-	-- 		when       7 => SR <= "111" ; -- 1536 kHz
-	-- 	end case;
-	-- else  				   -- Averaging Ratio setting with encoder
-  --   case SEL_AVG is
-  --     when       0 => AVG <= "000" ; -- x 1
-  --     when       1 => AVG <= "001" ; -- x 3
-  --     when       2 => AVG <= "010" ; -- x 4
-  --     when       3 => AVG <= "011" ; -- x 8
-  --     when       4 => AVG <= "100" ; -- x 16
-  --     when       5 => AVG <= "101" ; -- x 32
-  --     when       6 => AVG <= "110" ; -- x 64
-  --     when       7 => AVG <= "111" ; -- x 128
-  --   end case;
-	-- end if;
+    if	 falling_edge(Pushf)	then     -- SR change when push is released
+  		   SRnAVG <= not SRnAVG ;        -- Toggle SR/AVG setting
+    end if;
 end process;
-
-----------------------------------------------------------
---
 ----------------------------------------------------------
 -- Config jumpers allow seletion of input coupling and bandwidth for each input channel :.
 SEnDIFFL 	<= CONF(0) ;	--JPA config jumper "SEnDIFF" (single-ended-Differential) : Left
@@ -178,9 +145,4 @@ HBWonR	  <= CONF(1) ;	--JPB config jumper "HBWon" ( Analog input filter bandwidt
 -- Jumper mounted  => Normal Read
 AQMODE    <= CONF(3) ;  --JPD config jumper to select conversion mode :
 
-
-
--
-
-end process;
 end architecture ;
