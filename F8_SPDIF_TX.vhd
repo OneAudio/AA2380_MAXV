@@ -1,6 +1,6 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date:15/05/19	Designer: O.N
+-- Date: 29/01/21	Designer: O.N
 -----------------------------------------------------------------
 -- Intel MAXV 5M570 CPLD	Take 113  LE.
 -- Function F8 :  F8_SPDIF_TX.vhd
@@ -9,6 +9,7 @@
 --
 -- The 25/11/2020 :
 -- add 2 inputs channels
+-- the 29/01/21 invert LR select for 1=Left, 0= Right
 -----------------------------------------------------------------
 
 library ieee;
@@ -42,8 +43,8 @@ begin
 Channel_selection : process (DATAL,DATAR,LR_Select)
 begin
   case (LR_Select) is
-      when '0' => DATAIN <= DATAL ;
-      when '1' => DATAIN <= DATAR ;
+      when '0' => DATAIN <= DATAR ;
+      when '1' => DATAIN <= DATAL ;
   end case;
 end process Channel_selection;
 

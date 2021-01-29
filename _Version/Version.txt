@@ -75,8 +75,6 @@ We see that LRCK is near 100% duty cycle and must be 50%!
 
 
 
-
-
 ***********************************************************************************
                    SUITE DU DEVELLOPPEMENT DU PROJET "OSVA"  
 ************************************************************************************
@@ -109,6 +107,66 @@ On ajoute une fonction qui permet la synchronisation des canaux L/R du
 module SPDIF. On modifie aussi les couleurs de Leds.
 Délai de 1s pour les relais au démarrage.
 A tester..
+
+
+
+ 
+------------------------------------------------------------------------------------
+Le 20/01/2021.- Mise au point version Beta -- GIT comit n° : a029cbb
+CPLD : 5M570ZT100  Remplissage : 73 %  Checksum: 002F325E
+------------------------------------------------------------------------------------
+Cette version permet de tester les différentes fonctions finale.
+En oarticulier le module "F1_readADC_multimodes" qui autorise de nombreuses combinaisons
+de SR/AVG entre 32kHz et 1536kHz.
+
+La carte codeur permet de choisir le sample rate (leds vert/jaune/orange) et si on appui 
+sur le codeur alors on choisi la valeur de moyennage (que fait l'ADC) entre x1 et x128.
+Certaines combinaisons ne son pas possible (limite de Fs x avg <= 1536kHz).
+
+Résultat :
+Le pilotage du codeur et des leds de la carte AA2380PAN semble OK.
+On arrive à faire fonctionner la sortie SPDIF (actuellement la seule que l'on peut utiliser),
+et on voit bien le SNR qui s'améliore lorsque la moyenne augmente.
+
+Les modes normal et distribué fonctionnement, mais pas complèetement :
+
+1) Lorsque la moyenne est égale à 1 (qq soit Fs), il semble que le données soit corrompus,
+le résultat de mesure est anormal : on mesure un niveau trés faible valeur numérique fixe.
+
+2) Il semble que seule la voie de droite soit fonctionnelle. ?
+(On la retrouve sur les 2 voies avec le soft d'analyse).
+
+3) En mode distribué, le signal de sortie passe à zéro lorsque Fs x avg = 768kHz (au lieu de 1536).
+Cela semble mieux se passer en mode normal.
+
+(A voir avec des vrais signaux !).
+
+------------------------------------------------------------------------------------
+Le 29/01/2021.- Mise au point version Beta -- GIT comit n° : 
+CPLD : 5M570ZT100  Remplissage :  %  Checksum: 
+------------------------------------------------------------------------------------
+Correction pour avoir les 2 cannaux LR --> OK
+Correction avoir les canneaux LR dans le bon sens (idem voies physque OSVA et logiciel PC avec signal S/PDIF) --> OK
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

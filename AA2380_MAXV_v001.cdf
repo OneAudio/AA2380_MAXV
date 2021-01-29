@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(5M570ZT100) Path("C:/Git/AA2380_MAXV/") File("AA2380_MAXV_v001.pof") MfrSpec(OpMask(1) SEC_Device(5M570ZT100) Child_OpMask(2 1 1));
+		Device PartName(5M570ZT100) Path("C:/GIT/AA2380_MAXV/") File("AA2380_MAXV_v001.pof") MfrSpec(OpMask(1) SEC_Device(5M570ZT100) Child_OpMask(2 1 1));
 
 ChainEnd;
 
