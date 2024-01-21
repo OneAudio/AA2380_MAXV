@@ -41,7 +41,7 @@ set_global_assignment -name DEVICE 5M570ZT100C5
 set_global_assignment -name TOP_LEVEL_ENTITY AA2380_MAXV
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "9.1 SP2"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:54:12  MARCH 19, 2019"
-set_global_assignment -name LAST_QUARTUS_VERSION "16.1.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.0 Lite Edition"
 set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_blast_fpga
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -143,10 +143,6 @@ set_location_assignment PIN_44 -to CONF[3]
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
 set_global_assignment -name OPTIMIZATION_MODE "HIGH PERFORMANCE EFFORT"
 set_global_assignment -name AUTO_PACKED_REGISTERS_MAX "MINIMIZE AREA"
-set_location_assignment PIN_40 -to UIO[9]
-set_location_assignment PIN_38 -to UIO[8]
-set_location_assignment PIN_36 -to UIO[7]
-set_location_assignment PIN_35 -to UIO[6]
 set_location_assignment PIN_26 -to UIO_0
 set_location_assignment PIN_28 -to UIO_1
 set_location_assignment PIN_29 -to UIO_2
@@ -180,11 +176,10 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC1_BUSY
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC1_SDO
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC2_BUSY
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC2_SDO
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[9]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[8]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[7]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO[6]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO
 set_global_assignment -name VHDL_FILE "modele others/spdif_transmitter.vhd"
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_location_assignment PIN_35 -to UIO_6
+set_location_assignment PIN_36 -to UIO_7
+set_location_assignment PIN_38 -to UIO_8
+set_location_assignment PIN_40 -to UIO_9
