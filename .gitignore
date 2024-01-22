@@ -70,8 +70,8 @@ _output_files/
 PLLJ_PLLSPE_INFO.txt
 
 # Added ignored folders :
-modele_others/
-modele_10M08evm/
-modeles_AT2380/
+# modele_others/
+# modele_10M08evm/
+# modeles_AT2380/
 
 
