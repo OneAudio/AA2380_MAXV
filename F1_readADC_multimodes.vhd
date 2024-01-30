@@ -104,11 +104,12 @@ signal TCLK23        : integer range 0 to 23 ; --
 --signal r_DATAL	 	   : std_logic_vector(23 downto 0);
 signal r_DATAR	 	   : std_logic_vector(23 downto 0);
 
-signal AVG_count    : integer range 0 to 127 ; -- sample average counter
+signal AVG_count    : integer range 1 to 128 ; -- sample average counter
 signal dAVG         : integer range 1 to 128 ; --
 
 signal T_CNVen_SCK  : std_logic ; --
 signal T_CNVen_SHFT : std_logic ; --
+signal ResetAVGread : std_logic ; --
 
 --
 
@@ -289,6 +290,7 @@ begin
                 when 9  => ReadCLK <= MCLK_divider(3)  ; -- 6.144M
                 when 8  => ReadCLK <= MCLK_divider(4)  ; -- 3.072M
                 when 7  => ReadCLK <= MCLK_divider(5)  ; -- 1.536M
+                when 6  => ReadCLK <= MCLK_divider(4)  ; -- 0.768M ** added the 30/01/24 for proper work at avg=0 and aqmode=1
                 when others => ReadCLK <= '0'           ;
             end case;
        else                      -- Mode Normal
@@ -440,7 +442,7 @@ begin
     if  OutOfRange= 1  then
         AVGen_SCK   <= '0'  ; --
         AVGen_READ  <= '0'  ; --
-        AVG_count   <=  0   ; --
+        AVG_count   <=  1   ; --
     else
         if rising_edge(nFS) then
             --
@@ -479,14 +481,22 @@ end process AVG_cycles;
 ------------------------------------------------------------------
 ---- window to limit the reading of the only 23 first clock cycle AVGen_READ
 --------------------------------------------------------------------
-process (AVGen_READ,ADC_CLK,TCLK23)
+-- ** MODIF DU 30/01/24 pour régler le problème lorsque  AVG=0 pas de moyennage 
+process (AVGen_READ,ADC_CLK,TCLK23,CNVA,AVG,ResetAVGread)
 begin
   -- the TCLK23 counter is reset outside "AVGen_READ" window.
-	if	    AVGen_READ = '0' then -- Replace "CNVen_SCK"
-		      TCLK23 <= 0			;
-	elsif   rising_edge(ADC_CLK) and TCLK23 < 23 then
-          TCLK23 <= TCLK23 + 1 ;
-	end if;
+    if      AVG=0 then
+            ResetAVGread <= not CNVA ;
+    else
+            ResetAVGread <= AVGen_READ	;
+    end if;
+
+    if	ResetAVGread = '0'  then --
+ 		      TCLK23 <= 0	 ;
+    elsif   rising_edge(ADC_CLK) and TCLK23 < 23 then
+        TCLK23 <= TCLK23 + 1 ;
+    end if;
+
 end process;
 
 ------------------------------------------------------------------

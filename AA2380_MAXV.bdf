@@ -2463,7 +2463,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 264 -384 504 -272)
+	(rect 264 -352 504 -240)
 	(text "F20_EmulateADCII" (rect 5 0 100 12)(font "Arial" ))
 	(text "inst5" (rect 8 96 30 113)(font "Intel Clear" ))
 	(port
@@ -2520,7 +2520,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 200 -320 248 -288)
+	(rect 200 -288 248 -256)
 	(text "WIRE" (rect 1 0 24 10)(font "Arial" (font_size 6)))
 	(text "inst9" (rect 3 21 25 38)(font "Intel Clear" ))
 	(port
@@ -2544,7 +2544,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 200 -352 248 -320)
+	(rect 200 -320 248 -288)
 	(text "WIRE" (rect 1 0 24 10)(font "Arial" (font_size 6)))
 	(text "inst10" (rect 3 21 31 38)(font "Intel Clear" ))
 	(port
@@ -2568,9 +2568,9 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 120 -416 232 -368)
+	(rect 304 -536 416 -488)
 	(text "LPM_CONSTANT" (rect 4 0 125 16)(font "Arial" (font_size 10)))
-	(text "inst11" (rect 3 37 31 54)(font "Intel Clear" ))
+	(text "inst36" (rect 3 37 31 54)(font "Intel Clear" ))
 	(port
 		(pt 112 32)
 		(output)
@@ -2596,7 +2596,143 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 64 40)(pt 64 24))
 		(line (pt 16 40)(pt 16 24))
 	)
-	(annotation_block (parameter)(rect 232 -464 390 -413))
+	(annotation_block (parameter)(rect 144 -536 302 -485))
+)
+(symbol
+	(rect 304 -592 416 -544)
+	(text "LPM_CONSTANT" (rect 4 0 125 16)(font "Arial" (font_size 10)))
+	(text "inst12" (rect 3 37 31 54)(font "Intel Clear" ))
+	(port
+		(pt 112 32)
+		(output)
+		(text "result[LPM_WIDTH-1..0]" (rect 75 19 208 33)(font "Arial" (font_size 8)))
+		(text "result[]" (rect 75 19 113 33)(font "Arial" (font_size 8)))
+		(line (pt 64 32)(pt 112 32)(line_width 3))
+	)
+	(parameter
+		"LPM_CVALUE"
+		"320EA7"
+		"Unsigned value to which outputs will be set"
+		(type "PARAMETER_UNSIGNED_HEX")	)
+	(parameter
+		"LPM_WIDTH"
+		"24"
+		"Width of output, any integer > 0"
+		" 1" " 2" " 3" " 4" " 5" " 6" " 7" " 8" " 9" "10" "11" "12" "13" "14" "15" "16" "20" "24" "28" "32" 
+		(type "PARAMETER_UNKNOWN")	)
+	(drawing
+		(text "(cvalue)" (rect 21 26 68 40)(font "Arial" (font_size 8)))
+		(line (pt 16 24)(pt 64 24))
+		(line (pt 16 40)(pt 64 40))
+		(line (pt 64 40)(pt 64 24))
+		(line (pt 16 40)(pt 16 24))
+	)
+	(annotation_block (parameter)(rect 144 -592 301 -541))
+)
+(symbol
+	(rect 264 -464 504 -352)
+	(text "F20_EmulateADCII" (rect 5 0 100 12)(font "Arial" ))
+	(text "inst11" (rect 8 96 36 113)(font "Intel Clear" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "DATAi[23..0]" (rect 0 0 62 12)(font "Arial" ))
+		(text "DATAi[23..0]" (rect 21 27 83 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "CNV" (rect 0 0 24 12)(font "Arial" ))
+		(text "CNV" (rect 21 43 45 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "SCK" (rect 0 0 22 12)(font "Arial" ))
+		(text "SCK" (rect 21 59 43 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64))
+	)
+	(port
+		(pt 240 32)
+		(output)
+		(text "SDO" (rect 0 0 23 12)(font "Arial" ))
+		(text "SDO" (rect 200 27 223 39)(font "Arial" ))
+		(line (pt 240 32)(pt 224 32))
+	)
+	(port
+		(pt 240 48)
+		(output)
+		(text "tst_CLEAR_REG" (rect 0 0 84 12)(font "Arial" ))
+		(text "tst_CLEAR_REG" (rect 148 43 232 55)(font "Arial" ))
+		(line (pt 240 48)(pt 224 48))
+	)
+	(port
+		(pt 240 64)
+		(output)
+		(text "tst_CLEAR_MOY" (rect 0 0 86 12)(font "Arial" ))
+		(text "tst_CLEAR_MOY" (rect 147 59 233 71)(font "Arial" ))
+		(line (pt 240 64)(pt 224 64))
+	)
+	(port
+		(pt 240 80)
+		(output)
+		(text "tst_SCK_count[5..0]" (rect 0 0 100 12)(font "Arial" ))
+		(text "tst_SCK_count[5..0]" (rect 135 75 235 87)(font "Arial" ))
+		(line (pt 240 80)(pt 224 80)(line_width 3))
+	)
+	(drawing
+		(rectangle (rect 16 16 224 96))
+	)
+)
+(symbol
+	(rect 200 -400 248 -368)
+	(text "WIRE" (rect 1 0 24 10)(font "Arial" (font_size 6)))
+	(text "inst37" (rect 3 21 31 38)(font "Intel Clear" ))
+	(port
+		(pt 0 16)
+		(input)
+		(text "IN" (rect 2 7 13 19)(font "Courier New" (bold))(invisible))
+		(text "IN" (rect 2 7 13 19)(font "Courier New" (bold))(invisible))
+		(line (pt 0 16)(pt 14 16))
+	)
+	(port
+		(pt 48 16)
+		(output)
+		(text "OUT" (rect 32 7 49 19)(font "Courier New" (bold))(invisible))
+		(text "OUT" (rect 32 7 49 19)(font "Courier New" (bold))(invisible))
+		(line (pt 32 16)(pt 48 16))
+	)
+	(drawing
+		(line (pt 14 7)(pt 32 16))
+		(line (pt 14 25)(pt 14 7))
+		(line (pt 14 25)(pt 32 16))
+	)
+)
+(symbol
+	(rect 200 -432 248 -400)
+	(text "WIRE" (rect 1 0 24 10)(font "Arial" (font_size 6)))
+	(text "inst38" (rect 3 21 31 38)(font "Intel Clear" ))
+	(port
+		(pt 0 16)
+		(input)
+		(text "IN" (rect 2 7 13 19)(font "Courier New" (bold))(invisible))
+		(text "IN" (rect 2 7 13 19)(font "Courier New" (bold))(invisible))
+		(line (pt 0 16)(pt 14 16))
+	)
+	(port
+		(pt 48 16)
+		(output)
+		(text "OUT" (rect 32 7 49 19)(font "Courier New" (bold))(invisible))
+		(text "OUT" (rect 32 7 49 19)(font "Courier New" (bold))(invisible))
+		(line (pt 32 16)(pt 48 16))
+	)
+	(drawing
+		(line (pt 14 7)(pt 32 16))
+		(line (pt 14 25)(pt 14 7))
+		(line (pt 14 25)(pt 32 16))
+	)
 )
 (connector
 	(pt 8 200)
@@ -2908,11 +3044,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 776 424)
 )
 (connector
-	(text "AQMODE" (rect 787 424 833 441)(font "Intel Clear" ))
-	(pt 960 440)
-	(pt 776 440)
-)
-(connector
 	(text "OutOfRange" (rect 688 56 748 73)(font "Intel Clear" ))
 	(pt 680 72)
 	(pt 760 72)
@@ -2935,18 +3066,6 @@ https://fpgasoftware.intel.com/eula.
 	(text "128FS" (rect 672 -608 703 -596)(font "Arial" ))
 	(pt 672 -592)
 	(pt 752 -592)
-)
-(connector
-	(text "DATAL[23..0]" (rect 672 -592 738 -580)(font "Arial" ))
-	(pt 672 -576)
-	(pt 752 -576)
-	(bus)
-)
-(connector
-	(text "DATAR[23..0]" (rect 672 -576 740 -564)(font "Arial" ))
-	(pt 672 -560)
-	(pt 752 -560)
-	(bus)
 )
 (connector
 	(text "LRCK" (rect 992 -464 1021 -452)(font "Arial" ))
@@ -3110,11 +3229,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 776 504)
 )
 (connector
-	(text "ADC1_SDO" (rect 790 504 844 521)(font "Intel Clear" ))
-	(pt 912 520)
-	(pt 776 520)
-)
-(connector
 	(text "ADC1_BUSY" (rect 784 456 844 473)(font "Intel Clear" ))
 	(pt 776 472)
 	(pt 960 472)
@@ -3145,51 +3259,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 728 -336)
 )
 (connector
-	(pt 264 -320)
-	(pt 256 -320)
-)
-(connector
-	(pt 264 -336)
-	(pt 248 -336)
-)
-(connector
-	(pt 256 -320)
-	(pt 256 -304)
-)
-(connector
-	(pt 256 -304)
-	(pt 248 -304)
-)
-(connector
-	(text "ADC1_CNV" (rect 135 -352 189 -335)(font "Intel Clear" ))
-	(pt 128 -336)
-	(pt 200 -336)
-)
-(connector
-	(text "ADC1_SCK" (rect 136 -320 189 -303)(font "Intel Clear" ))
-	(pt 200 -304)
-	(pt 128 -304)
-)
-(connector
-	(pt 504 -352)
-	(pt 728 -352)
-)
-(connector
-	(text "ADC2_SDO" (rect 631 -336 685 -319)(font "Intel Clear" ))
-	(pt 624 -320)
-	(pt 728 -320)
-)
-(connector
-	(text "clearREG" (rect 525 -352 568 -335)(font "Intel Clear" ))
-	(pt 504 -336)
-	(pt 568 -336)
-)
-(connector
-	(text "clearMOY" (rect 526 -336 574 -319)(font "Intel Clear" ))
-	(pt 504 -320)
-	(pt 568 -320)
-)
-(connector
 	(pt 960 656)
 	(pt 1080 656)
 )
@@ -3216,14 +3285,130 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1080 -368)
 )
 (connector
-	(pt 264 -352)
-	(pt 232 -352)
+	(text "DATAL[23..0]" (rect 672 -592 738 -580)(font "Arial" ))
+	(pt 752 -576)
+	(pt 672 -576)
 	(bus)
 )
 (connector
-	(pt 232 -352)
-	(pt 232 -384)
+	(text "DATAR[23..0]" (rect 672 -576 740 -564)(font "Arial" ))
+	(pt 752 -560)
+	(pt 672 -560)
 	(bus)
+)
+(connector
+	(pt 728 -352)
+	(pt 592 -352)
+)
+(connector
+	(pt 264 -288)
+	(pt 256 -288)
+)
+(connector
+	(pt 256 -288)
+	(pt 256 -272)
+)
+(connector
+	(pt 256 -272)
+	(pt 248 -272)
+)
+(connector
+	(pt 264 -400)
+	(pt 256 -400)
+)
+(connector
+	(pt 256 -400)
+	(pt 256 -384)
+)
+(connector
+	(pt 248 -384)
+	(pt 256 -384)
+)
+(connector
+	(text "clearREG" (rect 509 -320 552 -303)(font "Intel Clear" ))
+	(pt 504 -304)
+	(pt 552 -304)
+)
+(connector
+	(text "clearMOY" (rect 510 -304 558 -287)(font "Intel Clear" ))
+	(pt 504 -288)
+	(pt 552 -288)
+)
+(connector
+	(text "DATAB[23..0]" (rect 152 -336 219 -324)(font "Arial" ))
+	(pt 152 -320)
+	(pt 264 -320)
+	(bus)
+)
+(connector
+	(pt 248 -304)
+	(pt 264 -304)
+)
+(connector
+	(pt 248 -416)
+	(pt 264 -416)
+)
+(connector
+	(text "ADC1_SCK" (rect 145 -400 198 -383)(font "Intel Clear" ))
+	(pt 145 -384)
+	(pt 200 -384)
+)
+(connector
+	(text "ADC1_CNV" (rect 144 -432 198 -415)(font "Intel Clear" ))
+	(pt 145 -416)
+	(pt 200 -416)
+)
+(connector
+	(text "ADC2_CNV" (rect 151 -320 205 -303)(font "Intel Clear" ))
+	(pt 152 -304)
+	(pt 200 -304)
+)
+(connector
+	(text "ADC2_SCK" (rect 152 -288 205 -271)(font "Intel Clear" ))
+	(pt 152 -272)
+	(pt 200 -272)
+)
+(connector
+	(text "DATAA[23..0]" (rect 432 -576 499 -564)(font "Arial" ))
+	(pt 416 -560)
+	(pt 488 -560)
+	(bus)
+)
+(connector
+	(text "DATAB[23..0]" (rect 432 -520 499 -508)(font "Arial" ))
+	(pt 416 -504)
+	(pt 488 -504)
+	(bus)
+)
+(connector
+	(text "DATAA[23..0]" (rect 145 -448 212 -436)(font "Arial" ))
+	(pt 145 -432)
+	(pt 264 -432)
+	(bus)
+)
+(connector
+	(text "SDOB" (rect 534 -336 562 -319)(font "Intel Clear" ))
+	(pt 504 -320)
+	(pt 728 -320)
+)
+(connector
+	(pt 592 -352)
+	(pt 592 -432)
+)
+(connector
+	(text "SDOA" (rect 528 -448 556 -431)(font "Intel Clear" ))
+	(pt 504 -432)
+	(pt 592 -432)
+)
+(connector
+	(text "SDOA" (rect 790 504 818 521)(font "Intel Clear" ))
+	(pt 912 520)
+	(pt 776 520)
+)
+(connector
+	(text "SDOB" (rect 787 424 815 441)(font "Intel Clear" ))
+	(pt 960 440)
+	(pt 776 440)
 )
 (junction (pt 1016 824))
 (junction (pt 1016 840))
