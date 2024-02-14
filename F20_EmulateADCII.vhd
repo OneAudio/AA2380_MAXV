@@ -100,7 +100,7 @@ tst_SCK_count  <= SCK_count ; -- TEst output
 ------------------------------------------------------------------
 Emulate_SDO : process(CNV,DATAi,SCK,SRDATA,SSCK,CLEAR_REG,QA,QB,CLEAR_MOY,SCK_count)
 begin
-      -- Reset if no SCK betweeb 2 CNV conversion pulse.
+      -- Reset if no SCK between 2 CNV conversion pulse.
       if    SCK='1'            then
             QA  <= '0';
             QB  <= '0';
@@ -111,7 +111,8 @@ begin
       CLEAR_MOY <=  QB and CNV  ;
       --
       -- Check number of SCK shift
-      if      CNV='1' and SCK_count=23 then
+       if      (CNV='1' and SCK_count=23) or CLEAR_MOY='1'  then -- ON le 08/02/24 : on reset aussi le compteur SCK_count si clear_moy est actif
+--     if      CNV='1' and SCK_count=23 then
                SCK_count <= 0   ;
                CLEAR_REG <= '0'  ;
       elsif    rising_edge(SCK) then
@@ -124,6 +125,7 @@ begin
 
       -- Shift register update  
       if    CLEAR_MOY='1' or  CLEAR_REG='1' then
+      --if    CNV='1'  then -- test
             SRDATA <= DATAi;
       elsif rising_edge(SCK)   then
             SRDATA <= SRDATA(22 downto 0) & '0'  ; -- décalage d'un bit à chaque front montant de SCK

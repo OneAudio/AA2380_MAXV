@@ -258,11 +258,13 @@ begin
     -- Set number of clock cycles for Normal and DIstributed Read modes.
     if  AQMODE = '1' then -- Distributed read Mode
         case AVG is
+        -- new table values the 10/02/2024
             when 0       => CK_cycle <= 24; -- 24 cycles if no averaging
             when 1       => CK_cycle <= 24; -- 24 clock cycles
-            when 2       => CK_cycle <= 12; -- 12 clock cycles
-            when 3       => CK_cycle <= 6 ; -- 6  clock cycles
-            when others  => CK_cycle <= 3 ; -- otherwise 3 clock cycles
+            when 2       => CK_cycle <= 8 ; -- 8 clock cycles
+            when 3       => CK_cycle <= 4 ; -- 4  clock cycles
+            when 4       => CK_cycle <= 2 ; -- 2  clock cycles
+            when others  => CK_cycle <= 1 ; -- otherwise 1 clock cycles
         end case;
     else
          CK_cycle <= 24; -- always 24 clocks cycles in NormalRead mode.
@@ -276,24 +278,27 @@ begin
         SEL_RDCLK <=  0   ; -- reset SEL_RDCLK
     else
         if AVG= 0 then
-            SEL_RDCLK <= SEL_nFS + (7-AVG) -1 ; -- substract 1 to get same result as  with AVG=1..
+            SEL_RDCLK <= SEL_nFS + (7-AVG) - 1 ; -- substract 1 to get same result as  with AVG=1..
+            -- SEL_nFS=(SR+AVG), valeur entre 0 et 7 pour nFS= 12k à 1536kHz
+            -- SEL_RDCLK = (SR+AVG)+(7-AVG)-1 soit ==> SR+6
         else
             SEL_RDCLK <= SEL_nFS + (7-AVG)    ; -- result value = 0 to 14
+            -- SEL_RDCLK = (SR+AVG)+(7-AVG)-1 soit ==> SR+7
         end if;
         --
         if  AQMODE = '1' then    -- Distributed read Mode
             case  SEL_RDCLK is
-                when 13 => ReadCLK <= MCLK             ; -- 98.304M
-                when 12 => ReadCLK <= MCLK_divider(0)  ; -- 49.152M
-                when 11 => ReadCLK <= MCLK_divider(1)  ; -- 24.576M
+                when 6  => ReadCLK <= MCLK_divider(2)  ; -- 12.288M ** added the 30/01/24 for proper work at avg=0 and aqmode=1
+                when 7  => ReadCLK <= MCLK_divider(2)  ; -- 12.288M 
+                when 8  => ReadCLK <= MCLK_divider(2)  ; -- 12.288M 
+                when 9  => ReadCLK <= MCLK_divider(2)  ; -- 12.288M 
                 when 10 => ReadCLK <= MCLK_divider(2)  ; -- 12.288M
-                when 9  => ReadCLK <= MCLK_divider(3)  ; -- 6.144M
-                when 8  => ReadCLK <= MCLK_divider(4)  ; -- 3.072M
-                when 7  => ReadCLK <= MCLK_divider(5)  ; -- 1.536M
-                when 6  => ReadCLK <= MCLK_divider(4)  ; -- 0.768M ** added the 30/01/24 for proper work at avg=0 and aqmode=1
+                when 11 => ReadCLK <= MCLK_divider(1)  ; -- 24.576M 
+                when 12 => ReadCLK <= MCLK_divider(0)  ; -- 49.152M
+                when 13 => ReadCLK <= MCLK             ; -- 98.304M
                 when others => ReadCLK <= '0'           ;
             end case;
-       else                      -- Mode Normal
+       else                      -- Mode Normal.  (Note SEL_nFS= AVG + SR)
             case  SEL_nFS is
               when 0 => ReadCLK <= MCLK_divider(6)  ; -- 0.768K
               when 1 => ReadCLK <= MCLK_divider(5)  ; -- 1.536M
@@ -391,6 +396,9 @@ begin
 	    end if;
   else
       CNVclk_cnt <= 0;  -- Reset tclk_cnt when BUSY is high
+      -- test 11/02/24
+      CNVen_SHFT <= '0' ; -- shift window always disable when busy active
+      CNVen_SCK  <= '0' ; -- sck window always disable when busy active
   end if;
 end process;
 

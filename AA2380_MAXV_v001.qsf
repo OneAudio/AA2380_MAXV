@@ -141,7 +141,7 @@ set_location_assignment PIN_42 -to CONF[1]
 set_location_assignment PIN_43 -to CONF[2]
 set_location_assignment PIN_44 -to CONF[3]
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
-set_global_assignment -name OPTIMIZATION_MODE "HIGH PERFORMANCE EFFORT"
+set_global_assignment -name OPTIMIZATION_MODE "AGGRESSIVE PERFORMANCE"
 set_global_assignment -name AUTO_PACKED_REGISTERS_MAX "MINIMIZE AREA"
 set_location_assignment PIN_26 -to UIO_0
 set_location_assignment PIN_28 -to UIO_1
