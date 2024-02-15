@@ -161,6 +161,15 @@ set_global_assignment -name VECTOR_WAVEFORM_FILE F12_SPI_interface.vwf
 set_global_assignment -name VHDL_FILE F2_leds_decoders_B.vhd
 set_global_assignment -name VHDL_FILE F0_ctrl_encoder_B.vhd
 set_global_assignment -name VHDL_FILE F1_readADC_multimodes.vhd
+set_global_assignment -name VHDL_FILE "modele others/spdif_transmitter.vhd"
+set_location_assignment PIN_35 -to UIO_6
+set_location_assignment PIN_36 -to UIO_7
+set_location_assignment PIN_38 -to UIO_8
+set_location_assignment PIN_40 -to UIO_9
+set_global_assignment -name VHDL_FILE F20_EmulateADCII.vhd
+set_global_assignment -name VHDL_FILE F20_EmulateADC.vhd
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_push
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Ta
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Tb
@@ -176,11 +185,3 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC1_BUSY
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC1_SDO
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC2_BUSY
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC2_SDO
-set_global_assignment -name VHDL_FILE "modele others/spdif_transmitter.vhd"
-set_location_assignment PIN_35 -to UIO_6
-set_location_assignment PIN_36 -to UIO_7
-set_location_assignment PIN_38 -to UIO_8
-set_location_assignment PIN_40 -to UIO_9
-set_global_assignment -name VHDL_FILE F20_EmulateADCII.vhd
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"

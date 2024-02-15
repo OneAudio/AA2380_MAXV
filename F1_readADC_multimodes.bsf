@@ -4,26 +4,26 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 2016  Intel Corporation. All rights reserved.
+Copyright (C) 2023  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
-and other software and tools, and its AMPP partner logic 
+and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
 to the terms and conditions of the Intel Program License 
 Subscription Agreement, the Intel Quartus Prime License Agreement,
-the Intel MegaCore Function License Agreement, or other 
-applicable license agreement, including, without limitation, 
-that your use is for the sole purpose of programming logic 
-devices manufactured by Intel and sold by Intel or its 
-authorized distributors.  Please refer to the applicable 
-agreement for further details.
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 264 416)
+	(rect 16 16 264 544)
 	(text "F1_readADC_multimodes" (rect 5 0 111 12)(font "Arial" ))
-	(text "inst" (rect 8 384 20 396)(font "Arial" ))
+	(text "inst" (rect 8 512 20 524)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -111,137 +111,193 @@ agreement for further details.
 	(port
 		(pt 248 80)
 		(output)
-		(text "DOUTR[23..0]" (rect 0 0 60 12)(font "Arial" ))
-		(text "DOUTR[23..0]" (rect 167 75 227 87)(font "Arial" ))
+		(text "r_DATAL[23..0]" (rect 0 0 69 12)(font "Arial" ))
+		(text "r_DATAL[23..0]" (rect 158 75 227 87)(font "Arial" ))
 		(line (pt 248 80)(pt 232 80)(line_width 3))
 	)
 	(port
 		(pt 248 96)
 		(output)
-		(text "nCNVL" (rect 0 0 33 12)(font "Arial" ))
-		(text "nCNVL" (rect 194 91 227 103)(font "Arial" ))
-		(line (pt 248 96)(pt 232 96)(line_width 1))
+		(text "DOUTR[23..0]" (rect 0 0 60 12)(font "Arial" ))
+		(text "DOUTR[23..0]" (rect 167 91 227 103)(font "Arial" ))
+		(line (pt 248 96)(pt 232 96)(line_width 3))
 	)
 	(port
 		(pt 248 112)
 		(output)
-		(text "SCKL" (rect 0 0 25 12)(font "Arial" ))
-		(text "SCKL" (rect 202 107 227 119)(font "Arial" ))
+		(text "nCNVL" (rect 0 0 33 12)(font "Arial" ))
+		(text "nCNVL" (rect 194 107 227 119)(font "Arial" ))
 		(line (pt 248 112)(pt 232 112)(line_width 1))
 	)
 	(port
 		(pt 248 128)
 		(output)
-		(text "nCNVR" (rect 0 0 35 12)(font "Arial" ))
-		(text "nCNVR" (rect 192 123 227 135)(font "Arial" ))
+		(text "SCKL" (rect 0 0 25 12)(font "Arial" ))
+		(text "SCKL" (rect 202 123 227 135)(font "Arial" ))
 		(line (pt 248 128)(pt 232 128)(line_width 1))
 	)
 	(port
 		(pt 248 144)
 		(output)
-		(text "SCKR" (rect 0 0 28 12)(font "Arial" ))
-		(text "SCKR" (rect 199 139 227 151)(font "Arial" ))
+		(text "nCNVR" (rect 0 0 35 12)(font "Arial" ))
+		(text "nCNVR" (rect 192 139 227 151)(font "Arial" ))
 		(line (pt 248 144)(pt 232 144)(line_width 1))
 	)
 	(port
 		(pt 248 160)
 		(output)
-		(text "Fsox128" (rect 0 0 33 12)(font "Arial" ))
-		(text "Fsox128" (rect 194 155 227 167)(font "Arial" ))
+		(text "SCKR" (rect 0 0 28 12)(font "Arial" ))
+		(text "SCKR" (rect 199 155 227 167)(font "Arial" ))
 		(line (pt 248 160)(pt 232 160)(line_width 1))
 	)
 	(port
 		(pt 248 176)
 		(output)
-		(text "TEst_OutOfRange" (rect 0 0 77 12)(font "Arial" ))
-		(text "TEst_OutOfRange" (rect 150 171 227 183)(font "Arial" ))
+		(text "Fsox128" (rect 0 0 33 12)(font "Arial" ))
+		(text "Fsox128" (rect 194 171 227 183)(font "Arial" ))
 		(line (pt 248 176)(pt 232 176)(line_width 1))
 	)
 	(port
 		(pt 248 192)
 		(output)
-		(text "Test_SpdifOK" (rect 0 0 57 12)(font "Arial" ))
-		(text "Test_SpdifOK" (rect 170 187 227 199)(font "Arial" ))
+		(text "TEst_OutOfRange" (rect 0 0 77 12)(font "Arial" ))
+		(text "TEst_OutOfRange" (rect 150 187 227 199)(font "Arial" ))
 		(line (pt 248 192)(pt 232 192)(line_width 1))
 	)
 	(port
 		(pt 248 208)
 		(output)
-		(text "Test_ReadCLK" (rect 0 0 66 12)(font "Arial" ))
-		(text "Test_ReadCLK" (rect 161 203 227 215)(font "Arial" ))
+		(text "Test_SpdifOK" (rect 0 0 57 12)(font "Arial" ))
+		(text "Test_SpdifOK" (rect 170 203 227 215)(font "Arial" ))
 		(line (pt 248 208)(pt 232 208)(line_width 1))
 	)
 	(port
 		(pt 248 224)
 		(output)
-		(text "Test_CK_cycle[4..0]" (rect 0 0 86 12)(font "Arial" ))
-		(text "Test_CK_cycle[4..0]" (rect 141 219 227 231)(font "Arial" ))
-		(line (pt 248 224)(pt 232 224)(line_width 3))
+		(text "Test_ReadCLK" (rect 0 0 66 12)(font "Arial" ))
+		(text "Test_ReadCLK" (rect 161 219 227 231)(font "Arial" ))
+		(line (pt 248 224)(pt 232 224)(line_width 1))
 	)
 	(port
 		(pt 248 240)
 		(output)
-		(text "Test_SEL_RDCLK[3..0]" (rect 0 0 103 12)(font "Arial" ))
-		(text "Test_SEL_RDCLK[3..0]" (rect 124 235 227 247)(font "Arial" ))
+		(text "Test_CK_cycle[4..0]" (rect 0 0 86 12)(font "Arial" ))
+		(text "Test_CK_cycle[4..0]" (rect 141 235 227 247)(font "Arial" ))
 		(line (pt 248 240)(pt 232 240)(line_width 3))
 	)
 	(port
 		(pt 248 256)
 		(output)
-		(text "Test_SEL_nFS[2..0]" (rect 0 0 84 12)(font "Arial" ))
-		(text "Test_SEL_nFS[2..0]" (rect 143 251 227 263)(font "Arial" ))
+		(text "Test_SEL_RDCLK[3..0]" (rect 0 0 103 12)(font "Arial" ))
+		(text "Test_SEL_RDCLK[3..0]" (rect 124 251 227 263)(font "Arial" ))
 		(line (pt 248 256)(pt 232 256)(line_width 3))
 	)
 	(port
 		(pt 248 272)
 		(output)
-		(text "Test_CNVA" (rect 0 0 54 12)(font "Arial" ))
-		(text "Test_CNVA" (rect 173 267 227 279)(font "Arial" ))
-		(line (pt 248 272)(pt 232 272)(line_width 1))
+		(text "Test_SEL_nFS[2..0]" (rect 0 0 84 12)(font "Arial" ))
+		(text "Test_SEL_nFS[2..0]" (rect 143 267 227 279)(font "Arial" ))
+		(line (pt 248 272)(pt 232 272)(line_width 3))
 	)
 	(port
 		(pt 248 288)
 		(output)
-		(text "Test_ADC_CLK" (rect 0 0 71 12)(font "Arial" ))
-		(text "Test_ADC_CLK" (rect 156 283 227 295)(font "Arial" ))
+		(text "Test_CNVA" (rect 0 0 54 12)(font "Arial" ))
+		(text "Test_CNVA" (rect 173 283 227 295)(font "Arial" ))
 		(line (pt 248 288)(pt 232 288)(line_width 1))
 	)
 	(port
 		(pt 248 304)
 		(output)
-		(text "Test_ADC_SHIFT" (rect 0 0 79 12)(font "Arial" ))
-		(text "Test_ADC_SHIFT" (rect 148 299 227 311)(font "Arial" ))
+		(text "Test_ADC_CLK" (rect 0 0 71 12)(font "Arial" ))
+		(text "Test_ADC_CLK" (rect 156 299 227 311)(font "Arial" ))
 		(line (pt 248 304)(pt 232 304)(line_width 1))
 	)
 	(port
 		(pt 248 320)
 		(output)
-		(text "Test_AVGen_READ" (rect 0 0 93 12)(font "Arial" ))
-		(text "Test_AVGen_READ" (rect 134 315 227 327)(font "Arial" ))
+		(text "Test_ADC_SHIFT" (rect 0 0 79 12)(font "Arial" ))
+		(text "Test_ADC_SHIFT" (rect 148 315 227 327)(font "Arial" ))
 		(line (pt 248 320)(pt 232 320)(line_width 1))
 	)
 	(port
 		(pt 248 336)
 		(output)
-		(text "Test_CNVen_SHFT" (rect 0 0 86 12)(font "Arial" ))
-		(text "Test_CNVen_SHFT" (rect 141 331 227 343)(font "Arial" ))
+		(text "Test_AVGen_READ" (rect 0 0 93 12)(font "Arial" ))
+		(text "Test_AVGen_READ" (rect 134 331 227 343)(font "Arial" ))
 		(line (pt 248 336)(pt 232 336)(line_width 1))
 	)
 	(port
 		(pt 248 352)
 		(output)
-		(text "Test_AVGen_SCK" (rect 0 0 82 12)(font "Arial" ))
-		(text "Test_AVGen_SCK" (rect 145 347 227 359)(font "Arial" ))
+		(text "Test_CNVen_SHFT" (rect 0 0 86 12)(font "Arial" ))
+		(text "Test_CNVen_SHFT" (rect 141 347 227 359)(font "Arial" ))
 		(line (pt 248 352)(pt 232 352)(line_width 1))
 	)
 	(port
 		(pt 248 368)
 		(output)
-		(text "Test_CNVen_SCK" (rect 0 0 81 12)(font "Arial" ))
-		(text "Test_CNVen_SCK" (rect 146 363 227 375)(font "Arial" ))
+		(text "Test_AVGen_SCK" (rect 0 0 82 12)(font "Arial" ))
+		(text "Test_AVGen_SCK" (rect 145 363 227 375)(font "Arial" ))
 		(line (pt 248 368)(pt 232 368)(line_width 1))
 	)
+	(port
+		(pt 248 384)
+		(output)
+		(text "Test_CNVen_SCK" (rect 0 0 81 12)(font "Arial" ))
+		(text "Test_CNVen_SCK" (rect 146 379 227 391)(font "Arial" ))
+		(line (pt 248 384)(pt 232 384)(line_width 1))
+	)
+	(port
+		(pt 248 400)
+		(output)
+		(text "Test_CNVclk_cnt[5..0]" (rect 0 0 94 12)(font "Arial" ))
+		(text "Test_CNVclk_cnt[5..0]" (rect 133 395 227 407)(font "Arial" ))
+		(line (pt 248 400)(pt 232 400)(line_width 3))
+	)
+	(port
+		(pt 248 416)
+		(output)
+		(text "Test_AVG_count[6..0]" (rect 0 0 94 12)(font "Arial" ))
+		(text "Test_AVG_count[6..0]" (rect 133 411 227 423)(font "Arial" ))
+		(line (pt 248 416)(pt 232 416)(line_width 3))
+	)
+	(port
+		(pt 248 432)
+		(output)
+		(text "Test_TCLK23[4..0]" (rect 0 0 80 12)(font "Arial" ))
+		(text "Test_TCLK23[4..0]" (rect 147 427 227 439)(font "Arial" ))
+		(line (pt 248 432)(pt 232 432)(line_width 3))
+	)
+	(port
+		(pt 248 448)
+		(output)
+		(text "Test_TCNVen_SCK" (rect 0 0 87 12)(font "Arial" ))
+		(text "Test_TCNVen_SCK" (rect 140 443 227 455)(font "Arial" ))
+		(line (pt 248 448)(pt 232 448)(line_width 1))
+	)
+	(port
+		(pt 248 464)
+		(output)
+		(text "Test_TCNVen_SHFT" (rect 0 0 92 12)(font "Arial" ))
+		(text "Test_TCNVen_SHFT" (rect 135 459 227 471)(font "Arial" ))
+		(line (pt 248 464)(pt 232 464)(line_width 1))
+	)
+	(port
+		(pt 248 480)
+		(output)
+		(text "MCLK_div_Clear" (rect 0 0 73 12)(font "Arial" ))
+		(text "MCLK_div_Clear" (rect 154 475 227 487)(font "Arial" ))
+		(line (pt 248 480)(pt 232 480)(line_width 1))
+	)
+	(port
+		(pt 248 496)
+		(output)
+		(text "DATA_Latch" (rect 0 0 57 12)(font "Arial" ))
+		(text "DATA_Latch" (rect 170 491 227 503)(font "Arial" ))
+		(line (pt 248 496)(pt 232 496)(line_width 1))
+	)
 	(drawing
-		(rectangle (rect 16 16 232 384)(line_width 1))
+		(rectangle (rect 16 16 232 512)(line_width 1))
 	)
 )
