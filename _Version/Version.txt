@@ -148,11 +148,37 @@ CPLD : 5M570ZT100  Remplissage :  %  Checksum:
 Correction pour avoir les 2 cannaux LR --> OK
 Correction avoir les canneaux LR dans le bon sens (idem voies physque OSVA et logiciel PC avec signal S/PDIF) --> OK
 
- 
+----------------------------------------------------------------------------------
+ -- REPRISE DU PROJET 2024
+-----------------------------------------------------------------------------------
+Le 18/02/2024.- Mise au point version Beta -- GIT comit n° :e5fce74 ; Tag V0.01 
+CPLD : 5M570ZT100  Remplissage :  %  Checksum: 002DB32A
+------------------------------------------------------------------------------------
+Version intermiédaire, avec valeurs DC fixe généré en interne pour test et validation.
+Valeurs : x320EA7 et x9C9F4D (voies L/R). Un module interne simule l'ADC LTC2380-24.
 
+Les problèmes à résoudre dans cette version:
+1) Mode normal (non distribué): strap JPD on monté=1
+----------------------------------------------------
+__ Si pas de moyenne, seul Fs=1536kHz pose problème (il semble y avoir 25 coups de clocks au lieu de 24 !)
+Sortie S/PDIF toujours ok car Fsmax=192k.
+__ Avec une moyenne c'est uniquement les combinaisons qui donnent nFS=1536k (le SR réel maxi)
+qui ne sont pas mu correctement. On remarque des doubles impulsions sur le signal data_latch ! (surement une partie du problème).
 
+2) Mode distribuée : strap JPD monté=0
+--------------------------------------
+__Si pas de moyenne, seul Fs=1536kHz pose problème (il y abien pourtant ici 24 coups de clocks)
+Sortie S/PDIF toujours ok car Fsmax=192k.
+__Avec une moyenne c'est uniquement les combinaisons qui donnent nFS=1536k (le SR réel maxi)
+qui ne sont pas mu correctement. On remarque des doubles impulsions sur le signal data_latch ! (surement une partie du problème).
 
-
+NOTE IMPORTANTE :
+-----------------
+On remarque un comportement différents si on compile avec ou sans les signaux de test !
+Faire bien attention, les timings sont criiques lorsque le SR devient important.
+clock a  10ns !!!
+La prioritée est de faire un bloc de génération des horloges  partir du 100MHz
+mais avec un clock enable pour éviter les retard de divisions.
 
 
 

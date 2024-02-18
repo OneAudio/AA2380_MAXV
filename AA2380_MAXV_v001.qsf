@@ -65,25 +65,6 @@ set_location_assignment PIN_15 -to OUT_PIN4
 set_location_assignment PIN_16 -to IN_PIN1
 set_global_assignment -name OPTIMIZE_HOLD_TIMING "IO PATHS AND MINIMUM TPD PATHS"
 set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
-set_global_assignment -name VHDL_FILE F0_ctrl_encoder.vhd
-set_global_assignment -name VECTOR_WAVEFORM_FILE F0_ctrl_encoder.vwf
-set_global_assignment -name BDF_FILE AA2380_MAXV.bdf
-set_global_assignment -name VHDL_FILE F1_ADCx2_DistributedRead.vhd
-set_global_assignment -name VHDL_FILE F2_leds_decoders.vhd
-set_global_assignment -name VECTOR_WAVEFORM_FILE F2_leds_decoders.vwf
-set_global_assignment -name VHDL_FILE F3_digital_HPF.vhd
-set_global_assignment -name VECTOR_WAVEFORM_FILE F3_digital_HPF.vwf
-set_global_assignment -name VHDL_FILE F4_LR_DATAMUX.vhd
-set_global_assignment -name VHDL_FILE F3_digital_HPF_fast.vhd
-set_global_assignment -name VHDL_FILE F5_Parr_to_I2S.vhd
-set_global_assignment -name VECTOR_WAVEFORM_FILE F5_Parr_to_I2S.vwf
-set_global_assignment -name VECTOR_WAVEFORM_FILE F3_digital_HPF_fast.vwf
-set_global_assignment -name VHDL_FILE F7_Ready.vhd
-set_global_assignment -name VHDL_FILE F8_SPDIF_TX.vhd
-set_global_assignment -name VHDL_FILE F6_SDRwidget.vhd
-set_global_assignment -name VECTOR_WAVEFORM_FILE F6_SDRwidget.vwf
-set_global_assignment -name VHDL_FILE F9_ADCx2_FastRead.vhd
-set_global_assignment -name VECTOR_WAVEFORM_FILE F9_ADCx2_FastRead.vwf
 set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE F9_ADCx2_FastRead.vwf
 set_location_assignment PIN_73 -to ADC1_BUSY
 set_location_assignment PIN_74 -to ADC1_CNV
@@ -147,29 +128,10 @@ set_location_assignment PIN_26 -to UIO_0
 set_location_assignment PIN_28 -to UIO_1
 set_location_assignment PIN_29 -to UIO_2
 set_location_assignment PIN_30 -to UIO_3
-set_global_assignment -name VHDL_FILE F1_ADCx2_DistributedReadAVG.vhd
-set_global_assignment -name VHDL_FILE F3_AutoZero.vhd
-set_global_assignment -name VHDL_FILE F10_LRCK_synch.vhd
-set_global_assignment -name VHDL_FILE F10_LRCKsynch.vhd
-set_global_assignment -name VHDL_FILE F10_LRCKsync.vhd
-set_global_assignment -name VHDL_FILE F11_ISOinterface.vhd
-set_global_assignment -name VHDL_FILE spi_slave.vhd
-set_global_assignment -name VHDL_FILE spi_master.vhd
-set_global_assignment -name VHDL_FILE grp_debouncer.vhd
-set_global_assignment -name VHDL_FILE F12_SPI_interface.vhd
-set_global_assignment -name VECTOR_WAVEFORM_FILE F12_SPI_interface.vwf
-set_global_assignment -name VHDL_FILE F2_leds_decoders_B.vhd
-set_global_assignment -name VHDL_FILE F0_ctrl_encoder_B.vhd
-set_global_assignment -name VHDL_FILE F1_readADC_multimodes.vhd
-set_global_assignment -name VHDL_FILE "modele others/spdif_transmitter.vhd"
 set_location_assignment PIN_35 -to UIO_6
 set_location_assignment PIN_36 -to UIO_7
 set_location_assignment PIN_38 -to UIO_8
 set_location_assignment PIN_40 -to UIO_9
-set_global_assignment -name VHDL_FILE F20_EmulateADCII.vhd
-set_global_assignment -name VHDL_FILE F20_EmulateADC.vhd
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_push
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Ta
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Tb
@@ -185,3 +147,39 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC1_BUSY
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC1_SDO
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC2_BUSY
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ADC2_SDO
+set_global_assignment -name VHDL_FILE F0_ctrl_encoder.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE F0_ctrl_encoder.vwf
+set_global_assignment -name BDF_FILE AA2380_MAXV.bdf
+set_global_assignment -name VHDL_FILE F2_leds_decoders.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE F2_leds_decoders.vwf
+set_global_assignment -name VHDL_FILE F3_digital_HPF.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE F3_digital_HPF.vwf
+set_global_assignment -name VHDL_FILE F4_LR_DATAMUX.vhd
+set_global_assignment -name VHDL_FILE F3_digital_HPF_fast.vhd
+set_global_assignment -name VHDL_FILE F5_Parr_to_I2S.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE F5_Parr_to_I2S.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE F3_digital_HPF_fast.vwf
+set_global_assignment -name VHDL_FILE F7_Ready.vhd
+set_global_assignment -name VHDL_FILE F8_SPDIF_TX.vhd
+set_global_assignment -name VHDL_FILE F6_SDRwidget.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE F6_SDRwidget.vwf
+set_global_assignment -name VHDL_FILE F9_ADCx2_FastRead.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE F9_ADCx2_FastRead.vwf
+set_global_assignment -name VHDL_FILE F3_AutoZero.vhd
+set_global_assignment -name VHDL_FILE F10_LRCK_synch.vhd
+set_global_assignment -name VHDL_FILE F10_LRCKsynch.vhd
+set_global_assignment -name VHDL_FILE F10_LRCKsync.vhd
+set_global_assignment -name VHDL_FILE F11_ISOinterface.vhd
+set_global_assignment -name VHDL_FILE spi_slave.vhd
+set_global_assignment -name VHDL_FILE spi_master.vhd
+set_global_assignment -name VHDL_FILE grp_debouncer.vhd
+set_global_assignment -name VHDL_FILE F12_SPI_interface.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE F12_SPI_interface.vwf
+set_global_assignment -name VHDL_FILE F2_leds_decoders_B.vhd
+set_global_assignment -name VHDL_FILE F0_ctrl_encoder_B.vhd
+set_global_assignment -name VHDL_FILE F1_readADC_multimodes.vhd
+set_global_assignment -name VHDL_FILE "modele others/spdif_transmitter.vhd"
+set_global_assignment -name VHDL_FILE F20_EmulateADCII.vhd
+set_global_assignment -name VHDL_FILE F20_EmulateADC.vhd
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"

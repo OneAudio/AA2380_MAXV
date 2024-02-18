@@ -44,13 +44,14 @@ port(
   BUSYR         : in std_logic  ; -- ADC BUSY signal, Right channel
   SDOR          : in std_logic  ; -- ADC data output, Right channel
   SCK           : out std_logic ; -- ADC clk_div4
-  CK128FS		    : out std_logic   -- 128 Fso output for SPDIF (6.144M to 24.576M)
+  CK128FS		    : out std_logic ;  -- 128 Fso output for SPDIF (6.144M to 24.576M)
   -- Test signals
 --  TST_enable_sck  : out std_logic ; --
 --  TST_ena_sck     : out std_logic ; --
 --  TST_enable_read : out std_logic ; --
 --  TST_ena_shft    : out std_logic ; --
 --  TST_avg_cnt     : out integer range 1 to 32
+ TST_sckshift   : out std_logic  --
 );
 
 end F1_ADCx2_DistributedReadAVG;
@@ -91,6 +92,7 @@ signal  Average    : integer range 0 to 128 ; --Real decimal value of averaging
 begin
 
 
+TST_sckshift <= sckshift;
 
   -- ----------------------------------------------------------------
   -- Generate new nFS ADC sampling frequency depending on the selecte end case;end process;d

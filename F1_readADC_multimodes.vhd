@@ -36,7 +36,7 @@ port(
   Fso		    : buffer  std_logic ; -- effective output sampling rate (12,24,48,96,192,384,768,1536 kHz)
   nFS			: buffer std_logic ; -- ADC sampling rate unaveraged (equal Fso * averaging ratio)
   DOUTL	 	    : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Left channel
-  r_DATAL       : buffer std_logic_vector(23 downto 0);
+  --r_DATAL       : buffer std_logic_vector(23 downto 0);
   DOUTR	 	      : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Right channel
   --- ADC i/o control signals
   -- Left Channel ADC control
@@ -108,6 +108,8 @@ signal AVGen_READ    : std_logic ; --
 signal TCLK23        : integer range 0 to 23 ; --
 
 signal r_DATAR	 	 : std_logic_vector(23 downto 0);
+signal r_DATAL	 	 : std_logic_vector(23 downto 0);
+
 
 signal AVG_count    : integer range 1 to 128 ; -- sample average counter
 signal dAVG         : integer range 1 to 128 ; --
@@ -251,33 +253,33 @@ begin
           Fsox128 <= '0' ; -- No Fsox128 clock
     else
         case  SEL_nFS is
-              when 0 => nFS <= MCLK_divider(12) ; -- 12kHz ()
-              when 1 => nFS <= MCLK_divider(11) ; --
-              when 2 => nFS <= MCLK_divider(10) ; --
-              when 3 => nFS <= MCLK_divider(9) ; --
-              when 4 => nFS <= MCLK_divider(8) ; --
-              when 5 => nFS <= MCLK_divider(7) ; --
-              when 6 => nFS <= MCLK_divider(6) ; --
-              when 7 => nFS <= MCLK_divider(5) ; -- 1536k
+              when 0 => nFS <= MCLK_divider(12) ; -- 12 kHz ()
+              when 1 => nFS <= MCLK_divider(11) ; -- 24 kHz
+              when 2 => nFS <= MCLK_divider(10) ; -- 48 kHz
+              when 3 => nFS <= MCLK_divider(9)  ; -- 96 kHz
+              when 4 => nFS <= MCLK_divider(8)  ; -- 192 kHz
+              when 5 => nFS <= MCLK_divider(7)  ; -- 384 kHz
+              when 6 => nFS <= MCLK_divider(6)  ; -- 768 kHz
+              when 7 => nFS <= MCLK_divider(5)  ; -- 1536 kHz
         end case ;
         -- Select FSo Clock value from SR input
         case  SR   is
               when 0 => FSo     <= MCLK_divider(12); -- 12kHz
-                        Fsox128 <= MCLK_divider(5) ; --
-              when 1 => FSo     <= MCLK_divider(11); --
-                        Fsox128 <= MCLK_divider(4) ; --
-              when 2 => FSo     <= MCLK_divider(10); --
-                        Fsox128 <= MCLK_divider(3) ; --
-              when 3 => FSo     <= MCLK_divider(9) ; --
-                        Fsox128 <= MCLK_divider(2) ; --
-              when 4 => FSo     <= MCLK_divider(8) ; --
-                        Fsox128 <= MCLK_divider(1) ; --
-              when 5 => FSo     <= MCLK_divider(7) ; --
-                        Fsox128 <= '0'             ; --
-              when 6 => FSo     <= MCLK_divider(6) ; --
-                        Fsox128 <= '0'             ; --
+                        Fsox128 <= MCLK_divider(5) ; -- 1.536MHz
+              when 1 => FSo     <= MCLK_divider(11); -- 24kHz
+                        Fsox128 <= MCLK_divider(4) ; -- 3.072MHz
+              when 2 => FSo     <= MCLK_divider(10); -- 48kHz
+                        Fsox128 <= MCLK_divider(3) ; -- 6.144MHz
+              when 3 => FSo     <= MCLK_divider(9) ; -- 96kHz
+                        Fsox128 <= MCLK_divider(2) ; -- 12.288MHz
+              when 4 => FSo     <= MCLK_divider(8) ; -- 192kHz
+                        Fsox128 <= MCLK_divider(1) ; -- 24.576MHz
+              when 5 => FSo     <= MCLK_divider(7) ; -- 384kHz
+                        Fsox128 <= '0'             ; -- no S/PDIF clock
+              when 6 => FSo     <= MCLK_divider(6) ; -- 768kHz
+                        Fsox128 <= '0'             ; -- no S/PDIF clock
               when 7 => FSo     <= MCLK_divider(5) ; -- 1536 kHz
-                        Fsox128 <= '0'             ; --
+                        Fsox128 <= '0'             ; -- no S/PDIF clock
         end case ;
     end if;
     --
