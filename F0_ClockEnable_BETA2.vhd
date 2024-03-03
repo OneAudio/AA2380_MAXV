@@ -4,7 +4,7 @@
 -- Generate clock enable signal instead of creating another clock domain
 -- Assume that the input clock : CK98M304
 --------------------------------------------------------------------------------
--- O.N - 02/03/2024 -- take 182 LE
+-- O.N - 02/03/2024 -- take 189 LE
 --------------------------------------------------------------------------------
 -- NOTES sur les différents signaux d'horloges nécessaires :
 -- RANGE of clocks:
@@ -45,9 +45,9 @@ port(
     AQMODE        :	in std_logic    ;          -- Aquisition mode ; 0= Normal Read - 1= Distributed Reading
     -- Outputs used CLOCKs
     ReadCLK       :	out std_logic   ;  -- clock used to read data (50% duty cycle output)
-    nFS           :	out std_logic   ;  -- Fso x AVG ratio (12kHz to 1536kHz) (100ns pulse output)
-    Fso           :	out std_logic   ;  -- Effective output sampling rate (12kHz to 1536kHz) (100ns pulse output)
-    Fso128        :	out std_logic   ;  -- 128.Fso bit clock for S/PDIF output (100ns pulse output)    
+    nFS           :	out std_logic   ;  -- Fso x AVG ratio (12kHz to 1536kHz) (80ns pulse output)
+    Fso           :	out std_logic   ;  -- Effective output sampling rate (12kHz to 1536kHz) (10ns pulse output)
+    Fso128        :	out std_logic   ;  -- 128.Fso bit clock for S/PDIF output (10ns pulse output)    
     OutOfRange    :	out std_logic   ; --
     -- test outputs
     -- TSTcounter_ReadCLK :out integer range 1 to 8192 ;
@@ -203,20 +203,23 @@ end process;
 process(CK98M304)
 begin
   if(rising_edge(CK98M304)) then
-    ---- nFS clock counter (100ns pulse output)
+    ---- nFS clock counter (80ns pulse output)
         if  clearAll='1' then
             counter_nFS <= 1 ;
             clken_nFS <= '1';
         else
             if(counter_nFS =SetCnt_nFS ) then
-                clken_nFS <= '1';
+                clken_nFS <= '1' ;
                 counter_nFS <= 1 ;
+            elsif (counter_nFS <8) then
+                clken_nFS <= '1' ;
+                counter_nFS <= counter_nFS + 1 ;
             else
                 clken_nFS <= '0';
                 counter_nFS <= counter_nFS + 1 ;
             end if;
         end if;
-    ---- FSo clock counter (100ns pulse output)
+    ---- FSo clock counter (10ns pulse output)
         if  clearAll='1' then
             counter_Fso <= 1 ;
             clken_FSo <= '1';
@@ -229,7 +232,7 @@ begin
                 counter_Fso <= counter_Fso + 1 ;    
             end if;
         end if;
-    ---- FSo128 clock counter (100ns pulse output)
+    ---- FSo128 clock counter (10ns pulse output)
         if  clearAll='1' then
             counter_Fso128 <= 1 ;
             clken_FSo128 <= '1';
