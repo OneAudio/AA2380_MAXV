@@ -20,7 +20,7 @@
 ## PROGRAM "Quartus Prime"
 ## VERSION "Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition"
 
-## DATE    "Sun Feb 11 15:21:25 2024"
+## DATE    "Sat Mar  2 15:54:03 2024"
 
 ##
 ## DEVICE  "5M570ZT100C5"
@@ -39,13 +39,7 @@ set_time_format -unit ns -decimal_places 3
 # Create Clock
 #**************************************************************
 
-create_clock -name {F1_readADC_multimodes:inst4|MCLK_divider[10]} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F1_readADC_multimodes:inst4|MCLK_divider[10]}]
-create_clock -name {CLK100M} -period 1.000 -waveform { 0.000 0.500 } [get_ports {CLK100M}]
-create_clock -name {F0_ctrl_encoder_B:inst1|Rotate} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F0_ctrl_encoder_B:inst1|Rotate}]
-create_clock -name {F7_Ready:inst|CLKSLOW} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F7_Ready:inst|CLKSLOW}]
-create_clock -name {F0_ctrl_encoder_B:inst1|pushf} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F0_ctrl_encoder_B:inst1|pushf}]
-create_clock -name {F1_readADC_multimodes:inst4|MCLK_divider[1]} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F1_readADC_multimodes:inst4|MCLK_divider[1]}]
-create_clock -name {F1_readADC_multimodes:inst4|CNVA} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F1_readADC_multimodes:inst4|CNVA}]
+create_clock -name {CK98M304} -period 10.000 -waveform { 0.000 5.000 } [get_ports { CK98M304 }]
 
 
 #**************************************************************
