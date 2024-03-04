@@ -311,13 +311,13 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect -208 -576 -160 -552))
+	(annotation_block (location)(rect -216 -592 -168 -568))
 )
 (pin
 	(input)
 	(rect -152 -576 16 -560)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "ADCL_SDO" (rect 5 0 65 12)(font "Arial" ))
+	(text "ADCL_SDO" (rect 5 0 64 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -328,7 +328,7 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect -208 -560 -160 -536))
+	(annotation_block (location)(rect -216 -576 -168 -552))
 )
 (pin
 	(input)
@@ -345,13 +345,13 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 117 12)(pt 121 8))
 	)
 	(text "VCC" (rect 136 7 156 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect -208 -544 -160 -520))
+	(annotation_block (location)(rect -216 -560 -168 -536))
 )
 (pin
 	(input)
 	(rect -152 -544 16 -528)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "ADCR_SDO" (rect 5 0 67 12)(font "Arial" ))
+	(text "ADCR_SDO" (rect 5 0 66 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -362,7 +362,7 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect -208 -528 -160 -504))
+	(annotation_block (location)(rect -216 -544 -168 -520))
 )
 (pin
 	(output)
@@ -1882,7 +1882,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect -192 -400 -48 -304)
+	(rect -184 -392 -40 -296)
 	(text "F7_Ready" (rect 5 0 56 12)(font "Arial" ))
 	(text "inst" (rect 8 80 25 92)(font "Arial" ))
 	(port
@@ -1924,7 +1924,7 @@ https://fpgasoftware.intel.com/eula.
 	(drawing
 		(rectangle (rect 16 16 128 80))
 	)
-	(annotation_block (parameter)(rect -192 -480 8 -400))
+	(annotation_block (parameter)(rect -184 -472 16 -392))
 )
 (symbol
 	(rect 928 -800 1144 -688)
@@ -2052,7 +2052,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 944 504 992 536)
+	(rect 952 504 1000 536)
 	(text "WIRE" (rect 1 0 24 10)(font "Arial" (font_size 6)))
 	(text "inst35" (rect 3 21 32 33)(font "Arial" ))
 	(port
@@ -2076,7 +2076,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 288 -400 480 -288)
+	(rect 312 -768 504 -656)
 	(text "F20_EmulateADCII" (rect 5 0 100 12)(font "Arial" ))
 	(text "inst5" (rect 8 96 31 108)(font "Arial" ))
 	(port
@@ -2119,7 +2119,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 344 -592 456 -544)
+	(rect 368 -960 480 -912)
 	(text "LPM_CONSTANT" (rect 4 0 125 16)(font "Arial" (font_size 10)))
 	(text "inst36" (rect 3 37 37 51)(font "Arial" (font_size 8)))
 	(port
@@ -2147,10 +2147,10 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 64 40)(pt 64 24))
 		(line (pt 16 40)(pt 16 24))
 	)
-	(annotation_block (parameter)(rect 184 -592 342 -541))
+	(annotation_block (parameter)(rect 208 -960 366 -909))
 )
 (symbol
-	(rect 344 -648 456 -600)
+	(rect 368 -1016 480 -968)
 	(text "LPM_CONSTANT" (rect 4 0 125 16)(font "Arial" (font_size 10)))
 	(text "inst12" (rect 3 37 37 51)(font "Arial" (font_size 8)))
 	(port
@@ -2178,10 +2178,10 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 64 40)(pt 64 24))
 		(line (pt 16 40)(pt 16 24))
 	)
-	(annotation_block (parameter)(rect 184 -648 341 -597))
+	(annotation_block (parameter)(rect 208 -1016 365 -965))
 )
 (symbol
-	(rect 288 -512 480 -400)
+	(rect 312 -880 504 -768)
 	(text "F20_EmulateADCII" (rect 5 0 100 12)(font "Arial" ))
 	(text "inst11" (rect 8 96 37 108)(font "Arial" ))
 	(port
@@ -2224,7 +2224,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 208 -320 256 -288)
+	(rect 232 -688 280 -656)
 	(text "WIRE" (rect 1 0 24 10)(font "Arial" (font_size 6)))
 	(text "inst9" (rect 3 21 26 33)(font "Arial" ))
 	(port
@@ -2248,7 +2248,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 208 -432 256 -400)
+	(rect 232 -800 280 -768)
 	(text "WIRE" (rect 1 0 24 10)(font "Arial" (font_size 6)))
 	(text "inst37" (rect 3 21 32 33)(font "Arial" ))
 	(port
@@ -2272,7 +2272,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 208 -464 256 -432)
+	(rect 232 -832 280 -800)
 	(text "NOT" (rect 1 0 21 10)(font "Arial" (font_size 6)))
 	(text "inst39" (rect 3 21 32 33)(font "Arial" ))
 	(port
@@ -2297,7 +2297,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 208 -352 256 -320)
+	(rect 232 -720 280 -688)
 	(text "NOT" (rect 1 0 21 10)(font "Arial" (font_size 6)))
 	(text "inst40" (rect 3 21 32 33)(font "Arial" ))
 	(port
@@ -2322,7 +2322,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 400 408 600 552)
+	(rect 368 -584 568 -440)
 	(text "F0_ClockEnable_BETA2" (rect 5 0 124 12)(font "Arial" ))
 	(text "inst4" (rect 8 128 31 140)(font "Arial" ))
 	(port
@@ -2357,42 +2357,42 @@ https://fpgasoftware.intel.com/eula.
 		(pt 200 32)
 		(output)
 		(text "ReadCLK" (rect 0 0 47 12)(font "Arial" ))
-		(text "ReadCLK" (rect 140 27 179 39)(font "Arial" ))
+		(text "ReadCLK" (rect 140 27 187 39)(font "Arial" ))
 		(line (pt 200 32)(pt 184 32))
 	)
 	(port
 		(pt 200 48)
 		(output)
 		(text "nFS" (rect 0 0 20 12)(font "Arial" ))
-		(text "nFS" (rect 163 43 179 55)(font "Arial" ))
+		(text "nFS" (rect 163 43 183 55)(font "Arial" ))
 		(line (pt 200 48)(pt 184 48))
 	)
 	(port
 		(pt 200 64)
 		(output)
 		(text "Fso" (rect 0 0 18 12)(font "Arial" ))
-		(text "Fso" (rect 164 59 179 71)(font "Arial" ))
+		(text "Fso" (rect 164 59 182 71)(font "Arial" ))
 		(line (pt 200 64)(pt 184 64))
 	)
 	(port
 		(pt 200 80)
 		(output)
 		(text "Fso128" (rect 0 0 36 12)(font "Arial" ))
-		(text "Fso128" (rect 149 75 179 87)(font "Arial" ))
+		(text "Fso128" (rect 149 75 185 87)(font "Arial" ))
 		(line (pt 200 80)(pt 184 80))
 	)
 	(port
 		(pt 200 96)
 		(output)
 		(text "OutOfRange" (rect 0 0 62 12)(font "Arial" ))
-		(text "OutOfRange" (rect 127 91 179 103)(font "Arial" ))
+		(text "OutOfRange" (rect 127 91 189 103)(font "Arial" ))
 		(line (pt 200 96)(pt 184 96))
 	)
 	(port
 		(pt 200 112)
 		(output)
 		(text "XclearAll" (rect 0 0 41 12)(font "Arial" ))
-		(text "XclearAll" (rect 145 107 179 119)(font "Arial" ))
+		(text "XclearAll" (rect 145 107 186 119)(font "Arial" ))
 		(line (pt 200 112)(pt 184 112))
 	)
 	(drawing
@@ -2484,135 +2484,165 @@ https://fpgasoftware.intel.com/eula.
 		(pt 248 32)
 		(output)
 		(text "DOUTL[23..0]" (rect 0 0 68 12)(font "Arial" ))
-		(text "DOUTL[23..0]" (rect 170 27 227 39)(font "Arial" ))
+		(text "DOUTL[23..0]" (rect 170 27 238 39)(font "Arial" ))
 		(line (pt 248 32)(pt 232 32)(line_width 3))
 	)
 	(port
 		(pt 248 48)
 		(output)
 		(text "DOUTR[23..0]" (rect 0 0 70 12)(font "Arial" ))
-		(text "DOUTR[23..0]" (rect 168 43 227 55)(font "Arial" ))
+		(text "DOUTR[23..0]" (rect 168 43 238 55)(font "Arial" ))
 		(line (pt 248 48)(pt 232 48)(line_width 3))
 	)
 	(port
 		(pt 248 64)
 		(output)
 		(text "nCNVL" (rect 0 0 35 12)(font "Arial" ))
-		(text "nCNVL" (rect 198 59 227 71)(font "Arial" ))
+		(text "nCNVL" (rect 198 59 233 71)(font "Arial" ))
 		(line (pt 248 64)(pt 232 64))
 	)
 	(port
 		(pt 248 80)
 		(output)
 		(text "SCKL" (rect 0 0 28 12)(font "Arial" ))
-		(text "SCKL" (rect 204 75 227 87)(font "Arial" ))
+		(text "SCKL" (rect 204 75 232 87)(font "Arial" ))
 		(line (pt 248 80)(pt 232 80))
 	)
 	(port
 		(pt 248 96)
 		(output)
 		(text "nCNVR" (rect 0 0 37 12)(font "Arial" ))
-		(text "nCNVR" (rect 196 91 227 103)(font "Arial" ))
+		(text "nCNVR" (rect 196 91 233 103)(font "Arial" ))
 		(line (pt 248 96)(pt 232 96))
 	)
 	(port
 		(pt 248 112)
 		(output)
 		(text "SCKR" (rect 0 0 30 12)(font "Arial" ))
-		(text "SCKR" (rect 202 107 227 119)(font "Arial" ))
+		(text "SCKR" (rect 202 107 232 119)(font "Arial" ))
 		(line (pt 248 112)(pt 232 112))
 	)
 	(port
 		(pt 248 128)
 		(output)
 		(text "Test_CK_cycle[4..0]" (rect 0 0 101 12)(font "Arial" ))
-		(text "Test_CK_cycle[4..0]" (rect 142 123 227 135)(font "Arial" ))
+		(text "Test_CK_cycle[4..0]" (rect 142 123 243 135)(font "Arial" ))
 		(line (pt 248 128)(pt 232 128)(line_width 3))
 	)
 	(port
 		(pt 248 144)
 		(output)
 		(text "Test_ADC_CLK" (rect 0 0 77 12)(font "Arial" ))
-		(text "Test_ADC_CLK" (rect 162 139 227 151)(font "Arial" ))
+		(text "Test_ADC_CLK" (rect 162 139 239 151)(font "Arial" ))
 		(line (pt 248 144)(pt 232 144))
 	)
 	(port
 		(pt 248 160)
 		(output)
 		(text "Test_ADC_SHIFT" (rect 0 0 88 12)(font "Arial" ))
-		(text "Test_ADC_SHIFT" (rect 153 155 227 167)(font "Arial" ))
+		(text "Test_ADC_SHIFT" (rect 153 155 241 167)(font "Arial" ))
 		(line (pt 248 160)(pt 232 160))
 	)
 	(port
 		(pt 248 176)
 		(output)
 		(text "Test_AVGen_READ" (rect 0 0 97 12)(font "Arial" ))
-		(text "Test_AVGen_READ" (rect 145 171 227 183)(font "Arial" ))
+		(text "Test_AVGen_READ" (rect 145 171 242 183)(font "Arial" ))
 		(line (pt 248 176)(pt 232 176))
 	)
 	(port
 		(pt 248 192)
 		(output)
 		(text "Test_CNVen_SHFT" (rect 0 0 96 12)(font "Arial" ))
-		(text "Test_CNVen_SHFT" (rect 146 187 227 199)(font "Arial" ))
+		(text "Test_CNVen_SHFT" (rect 146 187 242 199)(font "Arial" ))
 		(line (pt 248 192)(pt 232 192))
 	)
 	(port
 		(pt 248 208)
 		(output)
 		(text "Test_AVGen_SCK" (rect 0 0 89 12)(font "Arial" ))
-		(text "Test_AVGen_SCK" (rect 152 203 227 215)(font "Arial" ))
+		(text "Test_AVGen_SCK" (rect 152 203 241 215)(font "Arial" ))
 		(line (pt 248 208)(pt 232 208))
 	)
 	(port
 		(pt 248 224)
 		(output)
 		(text "Test_CNVen_SCK" (rect 0 0 90 12)(font "Arial" ))
-		(text "Test_CNVen_SCK" (rect 151 219 227 231)(font "Arial" ))
+		(text "Test_CNVen_SCK" (rect 151 219 241 231)(font "Arial" ))
 		(line (pt 248 224)(pt 232 224))
 	)
 	(port
 		(pt 248 240)
 		(output)
 		(text "Test_CNVclk_cnt[5..0]" (rect 0 0 112 12)(font "Arial" ))
-		(text "Test_CNVclk_cnt[5..0]" (rect 133 235 227 247)(font "Arial" ))
+		(text "Test_CNVclk_cnt[5..0]" (rect 133 235 245 247)(font "Arial" ))
 		(line (pt 248 240)(pt 232 240)(line_width 3))
 	)
 	(port
 		(pt 248 256)
 		(output)
 		(text "Test_AVG_count[6..0]" (rect 0 0 108 12)(font "Arial" ))
-		(text "Test_AVG_count[6..0]" (rect 136 251 227 263)(font "Arial" ))
+		(text "Test_AVG_count[6..0]" (rect 136 251 244 263)(font "Arial" ))
 		(line (pt 248 256)(pt 232 256)(line_width 3))
 	)
 	(port
 		(pt 248 272)
 		(output)
 		(text "Test_TCLK23[4..0]" (rect 0 0 92 12)(font "Arial" ))
-		(text "Test_TCLK23[4..0]" (rect 150 267 227 279)(font "Arial" ))
+		(text "Test_TCLK23[4..0]" (rect 150 267 242 279)(font "Arial" ))
 		(line (pt 248 272)(pt 232 272)(line_width 3))
 	)
 	(port
 		(pt 248 288)
 		(output)
 		(text "Test_TCNVen_SCK" (rect 0 0 96 12)(font "Arial" ))
-		(text "Test_TCNVen_SCK" (rect 146 283 227 295)(font "Arial" ))
+		(text "Test_TCNVen_SCK" (rect 146 283 242 295)(font "Arial" ))
 		(line (pt 248 288)(pt 232 288))
 	)
 	(port
 		(pt 248 304)
 		(output)
 		(text "Test_TCNVen_SHFT" (rect 0 0 102 12)(font "Arial" ))
-		(text "Test_TCNVen_SHFT" (rect 141 299 227 311)(font "Arial" ))
+		(text "Test_TCNVen_SHFT" (rect 141 299 243 311)(font "Arial" ))
 		(line (pt 248 304)(pt 232 304))
 	)
 	(drawing
 		(rectangle (rect 16 16 232 320))
 	)
 )
-(connector
-	(pt 8 200)
-	(pt 16 200)
+(symbol
+	(rect 128 40 160 72)
+	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
+	(text "inst6" (rect 3 21 25 38)(font "Intel Clear" )(invisible))
+	(port
+		(pt 16 0)
+		(output)
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(line (pt 16 8)(pt 16 0))
+	)
+	(drawing
+		(line (pt 8 8)(pt 16 16))
+		(line (pt 16 16)(pt 24 8))
+		(line (pt 8 8)(pt 24 8))
+	)
+)
+(symbol
+	(rect 760 392 792 424)
+	(text "GND" (rect 8 16 29 26)(font "Arial" (font_size 6)))
+	(text "inst10" (rect 3 21 31 38)(font "Intel Clear" )(invisible))
+	(port
+		(pt 16 0)
+		(output)
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(text "1" (rect 18 0 23 12)(font "Courier New" (bold))(invisible))
+		(line (pt 16 8)(pt 16 0))
+	)
+	(drawing
+		(line (pt 8 8)(pt 16 16))
+		(line (pt 16 16)(pt 24 8))
+		(line (pt 8 8)(pt 24 8))
+	)
 )
 (connector
 	(text "SDR_DFS[0]" (rect 114 184 178 196)(font "Arial" ))
@@ -2887,21 +2917,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 80 160)
 )
 (connector
-	(text "CLKSLOW" (rect -40 -368 13 -356)(font "Arial" ))
-	(pt 8 -352)
-	(pt -48 -352)
-)
-(connector
-	(text "Ready" (rect -24 -384 9 -372)(font "Arial" ))
-	(pt -48 -368)
-	(pt 8 -368)
-)
-(connector
-	(text "CLK100M" (rect -246 -384 -199 -372)(font "Arial" ))
-	(pt -192 -368)
-	(pt -248 -368)
-)
-(connector
 	(pt 1144 -768)
 	(pt 1224 -768)
 )
@@ -2918,44 +2933,16 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(pt 8 -8)
-	(pt 16 -8)
-)
-(connector
 	(pt 16 -8)
 	(pt 168 -8)
-)
-(connector
-	(pt 8 -40)
-	(pt 16 -40)
 )
 (connector
 	(pt 16 -40)
 	(pt 168 -40)
 )
 (connector
-	(pt 8 -24)
-	(pt 16 -24)
-)
-(connector
 	(pt 16 -24)
 	(pt 168 -24)
-)
-(connector
-	(pt 8 216)
-	(pt 16 216)
-)
-(connector
-	(pt 16 216)
-	(pt 64 216)
-)
-(connector
-	(pt 8 264)
-	(pt 16 264)
-)
-(connector
-	(pt 16 264)
-	(pt 64 264)
 )
 (connector
 	(pt 1000 360)
@@ -2992,15 +2979,6 @@ https://fpgasoftware.intel.com/eula.
 (connector
 	(pt 1048 440)
 	(pt 1080 440)
-)
-(connector
-	(pt 992 520)
-	(pt 1080 520)
-)
-(connector
-	(text "UIO_8" (rect 688 56 717 73)(font "Intel Clear" ))
-	(pt 680 72)
-	(pt 760 72)
 )
 (connector
 	(text "DATAR[23..0]" (rect 1112 -568 1180 -556)(font "Arial" ))
@@ -3067,177 +3045,9 @@ https://fpgasoftware.intel.com/eula.
 	(pt 752 -504)
 )
 (connector
-	(text "SDOL" (rect 760 -456 787 -439)(font "Intel Clear" ))
-	(pt 754 -440)
-	(pt 856 -440)
-)
-(connector
-	(text "SDOR" (rect 760 -424 788 -407)(font "Intel Clear" ))
-	(pt 754 -408)
-	(pt 856 -408)
-)
-(connector
-	(text "AVG[2..0]" (rect 352 456 400 468)(font "Arial" ))
-	(pt 336 472)
-	(pt 400 472)
-	(bus)
-)
-(connector
-	(text "SR[2..0]" (rect 352 440 393 452)(font "Arial" ))
-	(pt 336 456)
-	(pt 400 456)
-	(bus)
-)
-(connector
-	(text "AQMODE" (rect 350 472 397 484)(font "Arial" ))
-	(pt 336 488)
-	(pt 400 488)
-)
-(connector
-	(text "CLK100M" (rect 338 424 385 436)(font "Arial" ))
-	(pt 400 440)
-	(pt 336 440)
-)
-(connector
-	(pt 288 -432)
-	(pt 264 -432)
-)
-(connector
-	(pt 264 -432)
-	(pt 264 -416)
-)
-(connector
-	(pt 256 -416)
-	(pt 264 -416)
-)
-(connector
-	(pt 288 -320)
-	(pt 264 -320)
-)
-(connector
-	(pt 264 -320)
-	(pt 264 -304)
-)
-(connector
-	(pt 264 -304)
-	(pt 256 -304)
-)
-(connector
-	(pt 256 -448)
-	(pt 288 -448)
-)
-(connector
-	(pt 256 -336)
-	(pt 288 -336)
-)
-(connector
-	(text "SDOL" (rect 494 -496 521 -479)(font "Intel Clear" ))
-	(pt 480 -480)
-	(pt 528 -480)
-)
-(connector
-	(text "SDOR" (rect 494 -384 522 -367)(font "Intel Clear" ))
-	(pt 480 -368)
-	(pt 528 -368)
-)
-(connector
-	(text "DATAXR[23..0]" (rect 160 -384 234 -372)(font "Arial" ))
-	(pt 160 -368)
-	(pt 288 -368)
-	(bus)
-)
-(connector
-	(text "DATAXL[23..0]" (rect 153 -496 224 -484)(font "Arial" ))
-	(pt 153 -480)
-	(pt 288 -480)
-	(bus)
-)
-(connector
-	(text "DATAXL[23..0]" (rect 472 -632 543 -620)(font "Arial" ))
-	(pt 456 -616)
-	(pt 528 -616)
-	(bus)
-)
-(connector
-	(text "DATAXR[23..0]" (rect 472 -576 546 -564)(font "Arial" ))
-	(pt 456 -560)
-	(pt 528 -560)
-	(bus)
-)
-(connector
-	(text "ReadCLK" (rect 614 424 658 441)(font "Intel Clear" ))
-	(pt 600 440)
-	(pt 1000 440)
-)
-(connector
-	(text "nFS" (rect 614 440 631 457)(font "Intel Clear" ))
-	(pt 600 456)
-	(pt 952 456)
-)
-(connector
-	(text "FSo" (rect 610 456 627 473)(font "Intel Clear" ))
-	(pt 600 472)
-	(pt 1000 472)
-)
-(connector
-	(text "FSo128" (rect 607 472 642 489)(font "Intel Clear" ))
-	(pt 600 488)
-	(pt 952 488)
-)
-(connector
-	(text "OutOfRange" (rect 607 488 667 505)(font "Intel Clear" ))
-	(pt 600 504)
-	(pt 1000 504)
-)
-(connector
-	(text "xClearAll" (rect 609 504 653 521)(font "Intel Clear" ))
-	(pt 600 520)
-	(pt 944 520)
-)
-(connector
 	(text "FSo128" (rect 848 -784 885 -772)(font "Arial" ))
 	(pt 848 -768)
 	(pt 928 -768)
-)
-(connector
-	(text "ADCL_CNV" (rect 152 -464 206 -447)(font "Intel Clear" ))
-	(pt 153 -448)
-	(pt 208 -448)
-)
-(connector
-	(text "ADCR_CNV" (rect 159 -352 214 -335)(font "Intel Clear" ))
-	(pt 160 -336)
-	(pt 208 -336)
-)
-(connector
-	(text "ADCL_SCK" (rect 153 -432 206 -415)(font "Intel Clear" ))
-	(pt 153 -416)
-	(pt 208 -416)
-)
-(connector
-	(text "ADCR_SCK" (rect 160 -320 214 -303)(font "Intel Clear" ))
-	(pt 160 -304)
-	(pt 208 -304)
-)
-(connector
-	(text "CNVenable_SHFT" (rect 853 344 937 361)(font "Intel Clear" ))
-	(pt 848 360)
-	(pt 952 360)
-)
-(connector
-	(text "CNVenable_SCK" (rect 856 360 936 377)(font "Intel Clear" ))
-	(pt 848 376)
-	(pt 1000 376)
-)
-(connector
-	(text "AVGenable_READ" (rect 856 376 943 393)(font "Intel Clear" ))
-	(pt 848 392)
-	(pt 952 392)
-)
-(connector
-	(text "AVGenable_SCK" (rect 859 392 939 409)(font "Intel Clear" ))
-	(pt 848 408)
-	(pt 1000 408)
 )
 (connector
 	(text "ADCL_BUSY" (rect 761 -472 821 -455)(font "Intel Clear" ))
@@ -3248,16 +3058,6 @@ https://fpgasoftware.intel.com/eula.
 	(text "ADCR_BUSY" (rect 757 -440 818 -423)(font "Intel Clear" ))
 	(pt 754 -424)
 	(pt 856 -424)
-)
-(connector
-	(text "FSo" (rect 152 -480 169 -463)(font "Intel Clear" ))
-	(pt 152 -464)
-	(pt 288 -464)
-)
-(connector
-	(text "FSo" (rect 160 -368 177 -351)(font "Intel Clear" ))
-	(pt 160 -352)
-	(pt 288 -352)
 )
 (connector
 	(text "CNVenable_SCK" (rect 1128 -392 1208 -375)(font "Intel Clear" ))
@@ -3279,16 +3079,268 @@ https://fpgasoftware.intel.com/eula.
 	(pt 1104 -392)
 	(pt 1200 -392)
 )
+(connector
+	(text "ADCL_SDO" (rect 760 -456 814 -439)(font "Intel Clear" ))
+	(pt 754 -440)
+	(pt 856 -440)
+)
+(connector
+	(text "ADCR_SDO" (rect 760 -424 815 -407)(font "Intel Clear" ))
+	(pt 754 -408)
+	(pt 856 -408)
+)
+(connector
+	(pt 312 -800)
+	(pt 288 -800)
+)
+(connector
+	(pt 288 -800)
+	(pt 288 -784)
+)
+(connector
+	(pt 280 -784)
+	(pt 288 -784)
+)
+(connector
+	(pt 312 -688)
+	(pt 288 -688)
+)
+(connector
+	(pt 288 -688)
+	(pt 288 -672)
+)
+(connector
+	(pt 288 -672)
+	(pt 280 -672)
+)
+(connector
+	(pt 280 -816)
+	(pt 312 -816)
+)
+(connector
+	(pt 280 -704)
+	(pt 312 -704)
+)
+(connector
+	(text "SDOL" (rect 518 -864 545 -847)(font "Intel Clear" ))
+	(pt 504 -848)
+	(pt 552 -848)
+)
+(connector
+	(text "SDOR" (rect 518 -752 546 -735)(font "Intel Clear" ))
+	(pt 504 -736)
+	(pt 552 -736)
+)
+(connector
+	(text "DATAXR[23..0]" (rect 184 -752 258 -740)(font "Arial" ))
+	(pt 184 -736)
+	(pt 312 -736)
+	(bus)
+)
+(connector
+	(text "DATAXL[23..0]" (rect 177 -864 248 -852)(font "Arial" ))
+	(pt 177 -848)
+	(pt 312 -848)
+	(bus)
+)
+(connector
+	(text "DATAXL[23..0]" (rect 496 -1000 567 -988)(font "Arial" ))
+	(pt 480 -984)
+	(pt 552 -984)
+	(bus)
+)
+(connector
+	(text "DATAXR[23..0]" (rect 496 -944 570 -932)(font "Arial" ))
+	(pt 480 -928)
+	(pt 552 -928)
+	(bus)
+)
+(connector
+	(text "ADCL_CNV" (rect 176 -832 230 -815)(font "Intel Clear" ))
+	(pt 177 -816)
+	(pt 232 -816)
+)
+(connector
+	(text "ADCR_CNV" (rect 183 -720 238 -703)(font "Intel Clear" ))
+	(pt 184 -704)
+	(pt 232 -704)
+)
+(connector
+	(text "ADCL_SCK" (rect 177 -800 230 -783)(font "Intel Clear" ))
+	(pt 177 -784)
+	(pt 232 -784)
+)
+(connector
+	(text "ADCR_SCK" (rect 184 -688 238 -671)(font "Intel Clear" ))
+	(pt 184 -672)
+	(pt 232 -672)
+)
+(connector
+	(text "FSo" (rect 176 -848 193 -831)(font "Intel Clear" ))
+	(pt 176 -832)
+	(pt 312 -832)
+)
+(connector
+	(text "FSo" (rect 184 -736 201 -719)(font "Intel Clear" ))
+	(pt 184 -720)
+	(pt 312 -720)
+)
+(connector
+	(text "AVG[2..0]" (rect 320 -536 368 -524)(font "Arial" ))
+	(pt 304 -520)
+	(pt 368 -520)
+	(bus)
+)
+(connector
+	(text "SR[2..0]" (rect 320 -552 361 -540)(font "Arial" ))
+	(pt 304 -536)
+	(pt 368 -536)
+	(bus)
+)
+(connector
+	(text "AQMODE" (rect 318 -520 365 -508)(font "Arial" ))
+	(pt 304 -504)
+	(pt 368 -504)
+)
+(connector
+	(text "CLK100M" (rect 306 -568 353 -556)(font "Arial" ))
+	(pt 368 -552)
+	(pt 304 -552)
+)
+(connector
+	(text "ReadCLK" (rect 582 -568 626 -551)(font "Intel Clear" ))
+	(pt 568 -552)
+	(pt 632 -552)
+)
+(connector
+	(text "nFS" (rect 582 -552 599 -535)(font "Intel Clear" ))
+	(pt 568 -536)
+	(pt 632 -536)
+)
+(connector
+	(text "FSo" (rect 578 -536 595 -519)(font "Intel Clear" ))
+	(pt 568 -520)
+	(pt 632 -520)
+)
+(connector
+	(text "FSo128" (rect 575 -520 610 -503)(font "Intel Clear" ))
+	(pt 568 -504)
+	(pt 632 -504)
+)
+(connector
+	(text "OutOfRange" (rect 575 -504 635 -487)(font "Intel Clear" ))
+	(pt 568 -488)
+	(pt 632 -488)
+)
+(connector
+	(text "xClearAll" (rect 577 -488 621 -471)(font "Intel Clear" ))
+	(pt 568 -472)
+	(pt 632 -472)
+)
+(connector
+	(text "OutOfRange" (rect 688 56 748 73)(font "Intel Clear" ))
+	(pt 680 72)
+	(pt 760 72)
+)
+(connector
+	(pt 1080 520)
+	(pt 1000 520)
+)
+(connector
+	(text "nFS" (rect 862 488 879 505)(font "Intel Clear" ))
+	(pt 1000 504)
+	(pt 848 504)
+)
+(connector
+	(text "FSo" (rect 858 504 875 521)(font "Intel Clear" ))
+	(pt 952 520)
+	(pt 848 520)
+)
+(connector
+	(text "CNVenable_SCK" (rect 856 440 936 457)(font "Intel Clear" ))
+	(pt 848 456)
+	(pt 952 456)
+)
+(connector
+	(text "AVGenable_SCK" (rect 859 472 939 489)(font "Intel Clear" ))
+	(pt 848 488)
+	(pt 952 488)
+)
+(connector
+	(text "CNVenable_SHFT" (rect 853 424 937 441)(font "Intel Clear" ))
+	(pt 848 440)
+	(pt 1000 440)
+)
+(connector
+	(text "AVGenable_READ" (rect 856 456 943 473)(font "Intel Clear" ))
+	(pt 848 472)
+	(pt 1000 472)
+)
+(connector
+	(pt 16 264)
+	(pt 64 264)
+)
+(connector
+	(pt 16 216)
+	(pt 64 216)
+)
+(connector
+	(pt 168 24)
+	(pt 144 24)
+	(bus)
+)
+(connector
+	(pt 144 24)
+	(pt 144 40)
+	(bus)
+)
+(connector
+	(text "CLKSLOW" (rect -32 -360 21 -348)(font "Arial" ))
+	(pt 16 -344)
+	(pt -40 -344)
+)
+(connector
+	(text "Ready" (rect -16 -376 17 -364)(font "Arial" ))
+	(pt -40 -360)
+	(pt 16 -360)
+)
+(connector
+	(text "CLK100M" (rect -238 -376 -191 -364)(font "Arial" ))
+	(pt -240 -360)
+	(pt -184 -360)
+)
+(connector
+	(text "OutOfRange" (rect 847 376 907 393)(font "Intel Clear" ))
+	(pt 840 392)
+	(pt 952 392)
+)
+(connector
+	(text "xClearAll" (rect 849 392 893 409)(font "Intel Clear" ))
+	(pt 840 408)
+	(pt 1000 408)
+)
+(connector
+	(pt 776 360)
+	(pt 952 360)
+)
+(connector
+	(pt 1000 376)
+	(pt 776 376)
+)
+(connector
+	(pt 776 392)
+	(pt 776 376)
+)
+(connector
+	(pt 776 376)
+	(pt 776 360)
+)
 (junction (pt 1016 824))
 (junction (pt 1016 840))
 (junction (pt 1048 944))
 (junction (pt 1048 976))
 (junction (pt 1048 992))
-(junction (pt 16 216))
-(junction (pt 16 264))
-(junction (pt 16 -40))
-(junction (pt 16 -24))
-(junction (pt 16 -8))
+(junction (pt 776 376))
 (text "Set for PLL" (rect 968 952 1034 971)(font "Intel Clear" (font_size 8)))
 (text "Fout = 4x Fin" (rect 968 968 1044 987)(font "Intel Clear" (font_size 8)))
 (text "Z           Z            2X" (rect 1112 1040 1226 1059)(font "Intel Clear" (font_size 8)))
