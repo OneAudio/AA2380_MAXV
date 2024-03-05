@@ -219,7 +219,7 @@ begin
                 counter_nFS <= counter_nFS + 1 ;
             end if;
         end if;
-    ---- FSo clock counter (10ns pulse output)
+    ---- FSo clock counter (80ns pulse output)
         if  clearAll='1' then
             counter_Fso <= 1 ;
             clken_FSo <= '1';
@@ -227,6 +227,9 @@ begin
             if(counter_Fso =SetCnt_Fso ) then
                 clken_FSo <= '1';
                 counter_Fso <= 1 ;
+            elsif (counter_Fso <8) then
+                clken_FSo <= '1' ;
+                counter_Fso <= counter_Fso + 1 ;
             else
                 clken_FSo <= '0';
                 counter_Fso <= counter_Fso + 1 ;    
