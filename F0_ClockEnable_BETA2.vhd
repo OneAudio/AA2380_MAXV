@@ -4,7 +4,7 @@
 -- Generate clock enable signal instead of creating another clock domain
 -- Assume that the input clock : CK98M304
 --------------------------------------------------------------------------------
--- O.N - 02/03/2024 -- take 189 LE
+-- O.N - 02/03/2024 -- take 192 LE
 --------------------------------------------------------------------------------
 -- NOTES sur les différents signaux d'horloges nécessaires :
 -- RANGE of clocks:
@@ -169,21 +169,24 @@ begin
         SetCnt_ReadCLK <= SetCnt_nFS / 64 ; -- Read clock is 64x time faster than nFS frequency
     else
         -- Distributed reading aquisition mode of ADC (LTC2380-24)
-        -- (24 data samples read in the whole Fso cycle) 
+        -- (24 data samples read in the whole Fso cycle)
+-- NOTE DU 06/03/2024 à 18h00 ;
+-- Est il pertinent d'utiliser le SR seulement pour définir la valeur de lhorloge ReadCLK ?
+-- Ici, par ex en mode distribué à 384kHz et AVG=2, la fréquence est trop faible pour lue !
         case SR is
-            when 0 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8)
-            when 1 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8)
-            when 2 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8)
-            when 3 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8)
-            when 4 => SetCnt_ReadCLK <= 4 ; -- 24.576 MHz (= 98.304/4)
-            when 5 => SetCnt_ReadCLK <= 4 ; -- 24.576 MHz (= 98.304/4)
-            when 6 => SetCnt_ReadCLK <= 2 ; -- 49.152 MHz (= 98.304/2)
+            when 0 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8) -- SR=12kHz
+            when 1 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8) -- SR=24kHz
+            when 2 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8) -- SR=48kHz
+            when 3 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8) -- SR=96kHz
+            when 4 => SetCnt_ReadCLK <= 4 ; -- 24.576 MHz (= 98.304/4) -- SR=192kHz
+            when 5 => SetCnt_ReadCLK <= 4 ; -- 24.576 MHz (= 98.304/4) -- SR=384kHz
+            when 6 => SetCnt_ReadCLK <= 2 ; -- 49.152 MHz (= 98.304/2) -- SR=768kHz
             when others => SetCnt_ReadCLK <= 2 ; -- 
         end case;
     end if;
     -- Generate Bypass conditions where ReadClock is the main fast clock (98.304MHz).
     -- This is the ReadCLK mux command signal to choose direct (bypass) or divided clock.
-    if  (AQMODE='1' and SR>6) or (AQMODE='0' and (AVG+SR)>6 ) then
+    if  (AVG+SR)>6 then
         Bypass <= '1';-- clock bypasse on
     else
         Bypass <= '0';-- clock bypasse off

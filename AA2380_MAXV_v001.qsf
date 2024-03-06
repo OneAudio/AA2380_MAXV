@@ -175,8 +175,6 @@ set_location_assignment PIN_74 -to ADCL_CNV
 set_location_assignment PIN_72 -to ADCL_SCK
 set_location_assignment PIN_56 -to ADCR_CNV
 set_location_assignment PIN_54 -to ADCR_SCK
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_location_assignment PIN_73 -to ADCL_BUSY
 set_location_assignment PIN_71 -to ADCL_SDO
 set_location_assignment PIN_55 -to ADCR_BUSY
@@ -185,3 +183,5 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCL_BUSY
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCL_SDO
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCR_BUSY
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCR_SDO
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"

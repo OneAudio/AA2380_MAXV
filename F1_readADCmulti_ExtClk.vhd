@@ -1,10 +1,10 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date: 03/03/24	Designer: O.N
+-- Date: 06/03/24	Designer: O.N
 -- Design notes, please read : "SPECIF_SPI_LTC2380-24.vhd" and
 -- "F1_readADCmulti_ExtClk.xls"
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take (334) 247 LE
+-- Intel MAXV 5M570 CPLD	Take 248 LE
 -- Function F1 :  F1_readADCmulti_ExtClk.vhd
 -- Function to read data from two LT2380-24 ADC using any of the two modes :
 -- #############################################################################
@@ -31,6 +31,7 @@ port(
     nFS           :	in std_logic   ;  -- Fso x AVG ratio (12kHz to 1536kHz) (100ns pulse output)
     Fso           :	in std_logic   ;  -- Effective output sampling rate (12kHz to 1536kHz) (100ns pulse output)
     OutOfRange    :	in std_logic   ; --    
+    Clear         :	in std_logic   ; -- Clear input (set all counters to 0 for synch)
     -- Inputs ports
     AVG           : in  integer range 0 to 7; -- Averaging ratio 4 bits, (1,2,4,8,16,32,64,128, ...)
     AQMODE        : in  std_logic; -- ADC acquisision mode 2 bits (00=NormalRead,01=DistributedRead,others TBD)
@@ -236,9 +237,12 @@ RDenable : process (ReadCLK,AVGen_SCK,CNVen_SHFT,CNVen_SCK,AVGen_READ,T_CNVen_SH
 begin
     -- To avoid glitchs when combinate clock & pulse synch to same clock,
     -- when must use "clock-enable" module below.
-    if  falling_edge(ReadCLK) then
-        T_CNVen_SCK  <= CNVen_SCK  ; -- signal "CNVen_SCK" synch to falling edge of ReadCLK
-        T_CNVen_SHFT <= CNVen_SHFT ; -- signal "CNVen_SHFT" synch to falling edge of ReadCLK
+    if      AVGen_SCK='0'   then -- Condition to reset ADC_CLK and ADC_SHIFT outside AVGen_SCK window
+            T_CNVen_SCK <= '0';
+            T_CNVen_SHFT<= '0';
+    elsif   falling_edge(ReadCLK) then
+            T_CNVen_SCK  <= CNVen_SCK  ; -- signal "CNVen_SCK" synch to falling edge of ReadCLK
+            T_CNVen_SHFT <= CNVen_SHFT ; -- signal "CNVen_SHFT" synch to falling edge of ReadCLK
     end if;
     -- Now combinations below will not produce glitches !
     ADC_CLK   <= T_CNVen_SCK  and ReadCLK and AVGen_SCK ;
@@ -272,12 +276,15 @@ SCKL <= ADC_CLK ; --
 -- Donc, le signal est actif tout le temps SAUF la dernière conversion de la moyenne.
 --
 ----------------------------------------------------------------------------
-AVG_cycles : process(nFS,AQMODE,dAVG,AVG_count,OutOfRange)
+AVG_cycles : process(nFS,AQMODE,dAVG,AVG_count,OutOfRange,Clear)
 begin
-    if  OutOfRange='1' then
-        AVGen_SCK   <= '0'  ; --
-        AVGen_READ  <= '0'  ; --
-        AVG_count   <=  1   ; --
+    -- Signals and counter are reset if outofrange, or if clear input is active.
+    -- Clear input is active when SR or AVG are new value. It is required
+    -- to ensure synchronous averaging cycle with FSo pulses.
+    if      OutOfRange='1' or Clear='1' then
+            AVGen_SCK   <= '0'  ; --
+            AVGen_READ  <= '0'  ; --
+            AVG_count   <=  1   ; --
     else
         if rising_edge(nFS) then
             --
@@ -326,7 +333,7 @@ begin
             ResetAVGread <= AVGen_READ	;
     end if;
 
-    if	ResetAVGread = '0'  then --
+    if	ResetAVGread = '0' then --
  		      TCLK23 <= 0	 ;
     elsif   rising_edge(ADC_CLK) and TCLK23 < 23 then
         TCLK23 <= TCLK23 + 1 ;
