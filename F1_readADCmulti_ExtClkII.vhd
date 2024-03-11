@@ -1,6 +1,6 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date: 06/03/24	Designer: O.N
+-- Date: 10/03/24	Designer: O.N
 -- Design notes, please read : "SPECIF_SPI_LTC2380-24.vhd" and
 -- "F1_readADCmulti_ExtClk.xls"
 -----------------------------------------------------------------
@@ -22,7 +22,7 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
-entity F1_readADCmulti_ExtClk is
+entity F1_readADCmulti_ExtClkII is
 --
 port(
     -- Inputs Clocks
@@ -33,6 +33,7 @@ port(
     OutOfRange    :	in std_logic   ; --    
     Clear         :	in std_logic   ; -- Clear input (set all counters to 0 for synch)
     -- Inputs ports
+    SR            : in  integer range 0 to 7; -- Effective ouput Sampling rate (12kHz to 1536kHz)  
     AVG           : in  integer range 0 to 7; -- Averaging ratio 4 bits, (1,2,4,8,16,32,64,128, ...)
     AQMODE        : in  std_logic; -- ADC acquisision mode 2 bits (00=NormalRead,01=DistributedRead,others TBD)
     --ITLV          : in  std_logic; -- Allow simultaneous acquisision or interleaved (0=simultaneous 1= interleaved)
@@ -62,15 +63,15 @@ port(
     Test_CNVen_SCK    : out std_logic ;
     Test_CNVclk_cnt   : out integer range 0 to 32 ;
     Test_AVG_count    : out integer range 0 to 127;
-    Test_TCLK23       : out integer range 0 to 23;
-    Test_TCNVen_SCK   : out std_logic ;
-    Test_TCNVen_SHFT  : out std_logic
+    Test_TCLK23       : out integer range 0 to 23
+    -- Test_TCNVen_SCK   : out std_logic ;
+    -- Test_TCNVen_SHFT  : out std_logic
   --
 );
 
-end F1_readADCmulti_ExtClk;
+end F1_readADCmulti_ExtClkII;
 
-architecture Behavioral of F1_readADCmulti_ExtClk is
+architecture Behavioral of F1_readADCmulti_ExtClkII is
 --
 --
 --
@@ -103,6 +104,9 @@ signal AVGlatch     : integer range 0 to 7; --
 signal SRLatch      : integer range 0 to 7; --
 --
 
+signal ReadADCclock : std_logic ; --
+
+
 begin
 
 --- Copy of signals for tests purpose
@@ -117,8 +121,8 @@ Test_CNVclk_cnt   <= CNVclk_cnt ; -- TEST
 Test_AVG_count    <= AVG_count  ; -- TEST
 Test_TCLK23       <= TCLK23     ; -- TEST
 
-Test_TCNVen_SCK   <= T_CNVen_SCK  ; -- TEST
-Test_TCNVen_SHFT  <= T_CNVen_SHFT ; -- TEST
+-- Test_TCNVen_SCK   <= T_CNVen_SCK  ; -- TEST
+-- Test_TCNVen_SHFT  <= T_CNVen_SHFT ; -- TEST
 
 ------------------------------------------------------------------
 
@@ -192,7 +196,7 @@ end process ReadCLK_Cycle;
 -- In AQU mode "0" (Normal read),
 --
 ------------------------------------------------------------------
-ADC_clocks : process (MCLK,BUSYL,BUSYR,CK_cycle,ReadCLK,CNVclk_cnt,sBUSYL,sBUSYR)
+ADC_clocks : process (MCLK,BUSYL,BUSYR,CK_cycle,ReadCLK,CNVclk_cnt,sBUSYL,sBUSYR,SR)
 begin
   ---- Generate synchronous to MCLK BUSY flag (delay 1 period max:10ns@100M)
 --   if rising_edge(MCLK) then
@@ -209,18 +213,17 @@ begin
     			end if;
                 --
                 -- ADC clock pulse window
-    			if    CNVclk_cnt>=0 and  CNVclk_cnt < CK_cycle  then -- changer pour fonctionne a 1536kHs (pas fini !)
-    				    CNVen_SCK  <= '1' ; -- Enable window for clock
-    			else
-    				    CNVen_SCK  <= '0' ; -- Disable window for clock
-    			end if;
-                --
+                if    CNVclk_cnt>0 and  CNVclk_cnt <= CK_cycle  then
+                        CNVen_SCK  <= '1' ; -- Enable window for clock
+                else
+                        CNVen_SCK  <= '0' ; -- Disable window for clock
+                end if;
     			-- ADC read data clock window (for shift register data read)
-    			if    CNVclk_cnt < (CK_cycle) then
-    				    CNVen_SHFT <= '1' ; -- Enable serial data read window
-    			else
-    				    CNVen_SHFT <= '0' ; -- Disable serial data read window
-    			end if;
+                if      CNVclk_cnt < (CK_cycle)  then
+                        CNVen_SHFT <= '1' ; -- Enable serial data read window
+                else
+                        CNVen_SHFT <= '0' ; -- Disable serial data read window
+                end if;
 		    --
 	    end if;
   else
@@ -234,23 +237,27 @@ end process;
 -------------------------------------------------------
 -- Combination of enable and clocks with clock enable
 -------------------------------------------------------
-RDenable : process (ReadCLK,AVGen_SCK,CNVen_SHFT,CNVen_SCK,AVGen_READ,T_CNVen_SHFT,T_CNVen_SCK)
+RDenable : process (ReadCLK,AVGen_SCK,CNVen_SHFT,CNVen_SCK,AVGen_READ,T_CNVen_SHFT,T_CNVen_SCK,SR,ADC_CLK)
 begin
     -- To avoid glitchs when combinate clock & pulse synch to same clock,
     -- when must use "clock-enable" module below.
-    -- if      AVGen_SCK='0'   then -- Condition to reset ADC_CLK and ADC_SHIFT outside AVGen_SCK window
-    --         T_CNVen_SCK <= '0';
-    --         T_CNVen_SHFT<= '0';
-    -- elsif   falling_edge(ReadCLK) then
-    --         T_CNVen_SCK  <= CNVen_SCK  ; -- signal "CNVen_SCK" synch to falling edge of ReadCLK
-    --         T_CNVen_SHFT <= CNVen_SHFT ; -- signal "CNVen_SHFT" synch to falling edge of ReadCLK
-    -- end if;
+    if      AVGen_SCK='0'   then -- Condition to reset ADC_CLK and ADC_SHIFT outside AVGen_SCK window
+            T_CNVen_SCK <= '0';
+            T_CNVen_SHFT<= '0';
+    elsif   falling_edge(ReadCLK) then
+            T_CNVen_SCK  <= CNVen_SCK  ; -- signal "CNVen_SCK" synch to falling edge of ReadCLK
+            T_CNVen_SHFT <= CNVen_SHFT ; -- signal "CNVen_SHFT" synch to falling edge of ReadCLK
+    end if;
     -- Now combinations below will not produce glitches !
-    -- ADC_CLK   <= CNVen_SCK  and ReadCLK and AVGen_SCK ;
-    -- ADC_SHIFT <= CNVen_SHFT and ReadCLK and AVGen_READ ;
+    ADC_CLK   <= T_CNVen_SCK  and ReadCLK and AVGen_SCK ;
+    ADC_SHIFT <= T_CNVen_SHFT and ReadCLK and AVGen_READ ;
 
-    ADC_CLK   <= CNVen_SCK  and ReadCLK and AVGen_SCK ; 
-    ADC_SHIFT <= ADC_CLK ; -- changer pour fonctionne a 1536kHs (pas fini !)
+-- On ajoute un mux pour utiliser le signal "ADC_CLK" pour la lecture des data de l'ADC lorsque la clock
+-- est de 100MHz (FS=1536kHz), et "ADC_SHIFT" pour toutes les autres fréquences d'échantillonnage plus faible).
+case SR is
+    when 7      => ReadADCclock <= ADC_CLK       ; -- Lecture des données avec le front montant de la clock envoyé à l'ADC (SCK)
+    when others => ReadADCclock <= not ADC_SHIFT ; -- Lecture des données avec un horloge décalé de  d'une période en avance sur SCK.(
+end case;
 
 end process RDenable;
 
@@ -348,11 +355,14 @@ end process;
 
 ------------------------------------------------------------------
 -- ADC Data reading Channel L+R
---
+-- Modifié le 11/03/2024
+-- Le signal ReadADCclock vient du MUX.
+-- La clock est dirférente à haute vitesse pour tenir compte du delai
+-- d'arrivée des donnée de l'ADC.
 ------------------------------------------------------------------
 ADCserial_read : process(ADC_SHIFT,TCLK23)
 begin
-	if    falling_edge(ADC_SHIFT) then --stored data of SDO is send to bit 0 to 23 of DATAO
+	if    rising_edge(ReadADCclock) then --stored data of SDO is send to bit 0 to 23 of DATAO
                 case TCLK23 is
                 when  0  => r_DATAL(23)  <= SDOL ; -- MSB Left channel
                             r_DATAR(23)  <= SDOR ; -- MSB Right channel
