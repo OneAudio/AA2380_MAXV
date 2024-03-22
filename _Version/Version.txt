@@ -181,6 +181,21 @@ La prioritée est de faire un bloc de génération des horloges  partir du 100MH
 mais avec un clock enable pour éviter les retard de divisions.
 
 
+----------------------------------------------------------------------------------
+Le 22/03/2024.- version de test intermédiaire -- GIT comit n° : ; Tag V0.02 
+CPLD : 5M570ZT100  Remplissage : 93%  Checksum: 002E045A Usercode:002E041C
+------------------------------------------------------------------------------------
+Cette nouvelle version est fortement retravaillée.
+Tester uniquement avec un module d'émulation de l'ADC dans le CPLD pour tester la relecture des données
+à toutes les fréquences d'échantillonnage et dans tous les mode (Normal et distribué).
+Ici, les tests de relecture sont concluant entre FS=12kHz et Fs=1536kHz dans le mode distribué et 
+dans toutes les valeurs de moyennage entre 1 et 128.
+En mode normal, seule la position 1536kHz moyenne=1 semble parfois poser des problèmes de lecture.
+Les problèmes de la version v0.01 ont été resolus sauf ce qui est indiqué ci-dessus).
+
+Il faut maintenant vérifie avec l'ADC réel que ça foncionne bien !!!
+------------------------------------------------------------------------------------
+
 
 
 
