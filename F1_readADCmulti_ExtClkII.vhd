@@ -254,7 +254,7 @@ begin
 
 -- On ajoute un mux pour utiliser le signal "ADC_CLK" pour la lecture des data de l'ADC lorsque la clock
 -- est de 100MHz (FS=1536kHz), et "ADC_SHIFT" pour toutes les autres fréquences d'échantillonnage plus faible).
-case SR is
+case (AVG+SR) is
     when 7      => ReadADCclock <= ADC_CLK       ; -- Lecture des données avec le front montant de la clock envoyé à l'ADC (SCK)
     when others => ReadADCclock <= not ADC_SHIFT ; -- Lecture des données avec un horloge décalé de  d'une période en avance sur SCK.(
 end case;

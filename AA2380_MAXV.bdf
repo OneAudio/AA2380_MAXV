@@ -3364,11 +3364,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 848 472)
 )
 (connector
-	(text "ReadCLK" (rect 862 392 906 409)(font "Intel Clear" ))
-	(pt 848 408)
-	(pt 1000 408)
-)
-(connector
 	(text "CNVenable_SCK" (rect 860 440 940 457)(font "Intel Clear" ))
 	(pt 952 456)
 	(pt 848 456)
@@ -3438,6 +3433,11 @@ https://fpgasoftware.intel.com/eula.
 	(pt 840 656)
 	(pt 944 656)
 )
+(connector
+	(text "ReadCLK" (rect 862 392 906 409)(font "Intel Clear" ))
+	(pt 848 408)
+	(pt 1000 408)
+)
 (junction (pt 1016 824))
 (junction (pt 1016 840))
 (junction (pt 1048 944))
@@ -3450,4 +3450,5 @@ https://fpgasoftware.intel.com/eula.
 (text "0           0            4X" (rect 1112 1056 1226 1075)(font "Intel Clear" (font_size 8)))
 (text "H           H            8X" (rect 1112 1072 1228 1091)(font "Intel Clear" (font_size 8)))
 (text "S1        S0     CLK Multiplier" (rect 1112 1024 1274 1043)(font "Intel Clear" (font_size 8)))
+(text "xClearAll" (rect 713 528 757 545)(font "Intel Clear" ))
 (rectangle (rect 1088 1024 1264 1096))

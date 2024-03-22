@@ -20,7 +20,7 @@
 ## PROGRAM "Quartus Prime"
 ## VERSION "Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition"
 
-## DATE    "Wed Mar 13 17:42:55 2024"
+## DATE    "Wed Mar 13 17:37:57 2024"
 
 ##
 ## DEVICE  "5M570ZT100C5"
@@ -33,14 +33,14 @@
 
 set_time_format -unit ns -decimal_places 3
 
-
+set_operating_conditions MIN_fast
 
 #**************************************************************
 # Create Clock
 #**************************************************************
 
 create_clock -name {CK98M304} -period 10.000 -waveform { 0.000 5.000 } [get_ports { CK98M304 }]
-create_clock -name {clockDIV[3]} -period 80.000 -waveform { 0.000 40.000 } [get_registers { clockDIV[3] }]
+
 
 
 #**************************************************************

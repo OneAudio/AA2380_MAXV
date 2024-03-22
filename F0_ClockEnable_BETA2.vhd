@@ -140,7 +140,7 @@ begin
         when 5 => SetCnt_nFS <= 256  ; --
         when 6 => SetCnt_nFS <= 128  ; --
         when 7 => SetCnt_nFS <= 64   ; -- 1536k
-        when others => SetCnt_nFS <= 1;
+        when others => SetCnt_nFS <= 64;
     end case ;
     --
     -- Loaded counter limit for Fso128 ouput frequency (S/DIF out). No signal if SR>192kHz
@@ -166,6 +166,7 @@ process(AQMODE,SetCnt_nFS,SR,AVG,Bypass,zReadCLK,CK98M304,SetCnt_ReadCLK)
 begin
     if  AQMODE='0' then    
         -- Normal aquisition mode (24 data samples read in one nFS cycle)
+        -- 
         SetCnt_ReadCLK <= SetCnt_nFS / 64 ; -- Read clock is 64x time faster than nFS frequency
     else
 --**********************************************************************************************
@@ -265,10 +266,11 @@ end if;
 -- Generate Bypass conditions where ReadClock is the main fast clock (98.304MHz).
 -- This is the ReadCLK mux command signal to choose direct (bypass) or divided clock.
 -- 98.304MHz Read clock when SR=7, and when SR=6 and AVG=1
-    if  SR=7 or (SR=6 and AVG=1) then
-        Bypass <= '1';-- clock bypasse on
+    -- if  SR=7 or (SR=6 and AVG=1) then
+    if  (SR+AVG)=7    then -- Le bypass est actif lorsque SR+AVG donne une FSo réelle de 1536kHz
+        Bypass <= '1';-- clock bypass ON
     else
-        Bypass <= '0';-- clock bypasse off
+        Bypass <= '0';-- clock bypass OFF
     end if;
 --****************************************************************************************
   
