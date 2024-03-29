@@ -35,6 +35,7 @@ port(
     -- Inputs ports
     SR            : in  integer range 0 to 7; -- Effective ouput Sampling rate (12kHz to 1536kHz)  
     AVG           : in  integer range 0 to 7; -- Averaging ratio 4 bits, (1,2,4,8,16,32,64,128, ...)
+    CLKBypass     : in  std_logic; -- Clock bypass indicator (active when ReadClock=98.304MHz)
     AQMODE        : in  std_logic; -- ADC acquisision mode 2 bits (00=NormalRead,01=DistributedRead,others TBD)
     --ITLV          : in  std_logic; -- Allow simultaneous acquisision or interleaved (0=simultaneous 1= interleaved)
     -- Output ports
@@ -237,7 +238,7 @@ end process;
 -------------------------------------------------------
 -- Combination of enable and clocks with clock enable
 -------------------------------------------------------
-RDenable : process (ReadCLK,AVGen_SCK,CNVen_SHFT,CNVen_SCK,AVGen_READ,T_CNVen_SHFT,T_CNVen_SCK,SR,ADC_CLK)
+RDenable : process (ReadCLK,AVGen_SCK,CNVen_SHFT,CNVen_SCK,AVGen_READ,T_CNVen_SHFT,T_CNVen_SCK,SR,ADC_CLK,CLKBypass,ADC_SHIFT)
 begin
     -- To avoid glitchs when combinate clock & pulse synch to same clock,
     -- when must use "clock-enable" module below.
@@ -254,10 +255,14 @@ begin
 
 -- On ajoute un mux pour utiliser le signal "ADC_CLK" pour la lecture des data de l'ADC lorsque la clock
 -- est de 100MHz (FS=1536kHz), et "ADC_SHIFT" pour toutes les autres fréquences d'échantillonnage plus faible).
-case (AVG+SR) is
-    when 7      => ReadADCclock <= ADC_CLK       ; -- Lecture des données avec le front montant de la clock envoyé à l'ADC (SCK)
-    when others => ReadADCclock <= not ADC_SHIFT ; -- Lecture des données avec un horloge décalé de  d'une période en avance sur SCK.(
-end case;
+
+-- Partie modifier pour les configuration ou ReadClock=98.304MHz
+-- 
+if  CLKBypass='1'   then 
+    ReadADCclock <= ADC_CLK       ; -- Lecture des données avec le front montant de la clock envoyé à l'ADC (SCK)
+else
+    ReadADCclock <= not ADC_SHIFT ; -- Lecture des données avec un horloge décalé de  d'une période en avance sur SCK.(
+end if;
 
 end process RDenable;
 
@@ -360,7 +365,7 @@ end process;
 -- La clock est dirférente à haute vitesse pour tenir compte du delai
 -- d'arrivée des donnée de l'ADC.
 ------------------------------------------------------------------
-ADCserial_read : process(ADC_SHIFT,TCLK23)
+ADCserial_read : process(ADC_SHIFT,TCLK23,ReadADCclock)
 begin
 	if    rising_edge(ReadADCclock) then --stored data of SDO is send to bit 0 to 23 of DATAO
                 case TCLK23 is

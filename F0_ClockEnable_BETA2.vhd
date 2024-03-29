@@ -4,7 +4,7 @@
 -- Generate clock enable signal instead of creating another clock domain
 -- Assume that the input clock : CK98M304
 --------------------------------------------------------------------------------
--- O.N - 07/03/2024 -- take 211 LE
+-- O.N - 29/03/2024 -- take ??? LE
 --------------------------------------------------------------------------------
 -- NOTES sur les différents signaux d'horloges nécessaires :
 -- RANGE of clocks:
@@ -27,9 +27,6 @@
 -- Tester le module seul en situation réelle et vérifier la synchronicité des horloges.
 -- testé ok.
 --
---
---
---
 --------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 library  IEEE;
@@ -49,6 +46,7 @@ port(
     Fso           :	out std_logic   ;  -- Effective output sampling rate (12kHz to 1536kHz) (10ns pulse output)
     Fso128        :	out std_logic   ;  -- 128.Fso bit clock for S/PDIF output (10ns pulse output)    
     OutOfRange    :	out std_logic   ; --
+    CLKBypass     :	out std_logic   ; --
     -- test outputs
     -- TSTcounter_ReadCLK :out integer range 1 to 8192 ;
     -- TSTSetCnt_ReadCLK  :out integer range 1 to 8192
@@ -170,111 +168,86 @@ begin
         SetCnt_ReadCLK <= SetCnt_nFS / 64 ; -- Read clock is 64x time faster than nFS frequency
     else
 --**********************************************************************************************
---         -- Distributed reading aquisition mode of ADC (LTC2380-24)
---         -- (24 data samples read in the whole Fso cycle)
--- -- NOTE DU 06/03/2024 à 18h00 ;
--- -- Est il pertinent d'utiliser le SR seulement pour définir la valeur de lhorloge ReadCLK ?
--- -- Ici, par ex en mode distribué à 384kHz et AVG=2, la fréquence est trop faible pour lue !
---         case SR is
---             when 0 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8) -- SR=12kHz
---             when 1 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8) -- SR=24kHz
---             when 2 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8) -- SR=48kHz
---             when 3 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz (= 98.304/8) -- SR=96kHz
---             when 4 => SetCnt_ReadCLK <= 4 ; -- 24.576 MHz (= 98.304/4) -- SR=192kHz
---             when 5 => SetCnt_ReadCLK <= 4 ; -- 24.576 MHz (= 98.304/4) -- SR=384kHz
---             when 6 => SetCnt_ReadCLK <= 2 ; -- 49.152 MHz (= 98.304/2) -- SR=768kHz
---             when others => SetCnt_ReadCLK <= 2 ; -- 
---         end case;
---     end if;
---     -- Generate Bypass conditions where ReadClock is the main fast clock (98.304MHz).
---     -- This is the ReadCLK mux command signal to choose direct (bypass) or divided clock.
---     if  (AVG+SR)>6 then
---         Bypass <= '1';-- clock bypasse on
---     else
---         Bypass <= '0';-- clock bypasse off
---     end if;
-
--- 07/03/2024 * Table of all ReadClock value depending
+-- 29/03/2024 * Table of all ReadClock value depending
 -- on SR and AVG values. When ReadCLK must be 98.304MHz,
--- bypass bit must be set high to send clock to readclock
--- without divider.
+-- bypass bit must be set high to send clock to readclock without divider.
+-- NOTE: for more details, see document "AA2380_calc_ReadClockADC.ods"
     case SR is
         when 0 => -- FSo=12kHz
             case AVG is
-                when 0 => SetCnt_ReadCLK <=  64 ; -- 1.536 MHz
-                when 1 => SetCnt_ReadCLK <=  64 ; -- 1.536 MHz
-                when 2 => SetCnt_ReadCLK <=  64 ; -- 1.536 MHz
-                when 3 => SetCnt_ReadCLK <=  64 ; -- 1.536 MHz
-                when 4 => SetCnt_ReadCLK <=  64 ; -- 1.536 MHz
-                when 5 => SetCnt_ReadCLK <=  64 ; -- 1.536 MHz
-                when 6 => SetCnt_ReadCLK <=  32 ; -- 3.072 MHz
-                when 7 => SetCnt_ReadCLK <=  8  ; -- 12.288 MHz
+                when 0 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 1 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 2 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 3 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 4 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 5 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 6 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 7 => SetCnt_ReadCLK <= 16 ; -- 6,144 MHz
             end case;
         when 1 => -- FSo=24kHz
             case AVG is
-                when 0 => SetCnt_ReadCLK <= 64 ; --1.536 MHz
-                when 1 => SetCnt_ReadCLK <= 64 ; --1.536 MHz
-                when 2 => SetCnt_ReadCLK <= 64 ; --1.536 MHz 
-                when 3 => SetCnt_ReadCLK <= 32 ; --3.072 MHz 
-                when 4 => SetCnt_ReadCLK <= 32 ; --3.072 MHz 
-                when 5 => SetCnt_ReadCLK <= 32 ; --3.072 MHz 
-                when 6 => SetCnt_ReadCLK <= 8  ; --12.288 MHz  
-                when others => SetCnt_ReadCLK <= 8 ;
+                when 0 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 1 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 2 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz 
+                when 3 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz 
+                when 4 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz 
+                when 5 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz 
+                when 6 => SetCnt_ReadCLK <= 16 ; -- 6,144 MHz 
+                when others => SetCnt_ReadCLK <= 8 ; -- NOT ALLOWED STATE
             end case;
         when 2 => -- FSo=48kHz
             case AVG is
-                when 0 => SetCnt_ReadCLK <= 64 ; -- 1.536 MHz
-                when 1 => SetCnt_ReadCLK <= 32 ; -- 3.072 MHz 
-                when 2 => SetCnt_ReadCLK <= 32 ; -- 3.072 MHz
-                when 3 => SetCnt_ReadCLK <= 32 ; -- 3.072 MHz
-                when 4 => SetCnt_ReadCLK <= 16 ; -- 6.044 MHz
-                when 5 => SetCnt_ReadCLK <= 8  ; -- 12.288 MHz 
-                when others => SetCnt_ReadCLK <= 8 ;
+                when 0 => SetCnt_ReadCLK <= 64 ; -- 1,536 MHz
+                when 1 => SetCnt_ReadCLK <= 32 ; -- 3,072 MHz
+                when 2 => SetCnt_ReadCLK <= 32 ; -- 3,072 MHz
+                when 3 => SetCnt_ReadCLK <= 32 ; -- 3,072 MHz
+                when 4 => SetCnt_ReadCLK <= 32 ; -- 3,072 MHz
+                when 5 => SetCnt_ReadCLK <= 16 ; -- 6,144 MHz 
+                when others => SetCnt_ReadCLK <= 8 ;-- NOT ALLOWED STATE
             end case;
         when 3 => -- FSo=96kHz
             case AVG is
-                when 0 => SetCnt_ReadCLK <= 32 ; -- 3.072 MHz
-                when 1 => SetCnt_ReadCLK <= 16 ; -- 6.144 MHz
-                when 2 => SetCnt_ReadCLK <= 16 ; -- 6.144 MHz
-                when 3 => SetCnt_ReadCLK <= 16 ; -- 6.144 MHz
-                when 4 => SetCnt_ReadCLK <= 8  ; -- 12.288 MHz
-                when others => SetCnt_ReadCLK <= 8 ;
+                when 0 => SetCnt_ReadCLK <= 32 ; -- 3,072 MHz
+                when 1 => SetCnt_ReadCLK <= 16 ; -- 6,144 MHz
+                when 2 => SetCnt_ReadCLK <= 16 ; -- 6,144 MHz
+                when 3 => SetCnt_ReadCLK <= 16 ; -- 6,144 MHz
+                when 4 => SetCnt_ReadCLK <= 8  ; -- 12,288 MHz
+                when others => SetCnt_ReadCLK <= 8 ;-- NOT ALLOWED STATE
             end case;
         when 4 => -- FSo=192kHz
             case AVG is
-                when 0 => SetCnt_ReadCLK <= 16 ; -- 6.144 MHz
-                when 1 => SetCnt_ReadCLK <= 8  ; -- 12.288 MHz
-                when 2 => SetCnt_ReadCLK <= 8  ; -- 12.288 MHZ
-                when 3 => SetCnt_ReadCLK <= 4  ; -- 24.576 MHz 
-                when others => SetCnt_ReadCLK <= 8 ;
+                when 0 => SetCnt_ReadCLK <= 16 ; -- 6,144 MHz
+                when 1 => SetCnt_ReadCLK <= 8  ; -- 12,288 MHz
+                when 2 => SetCnt_ReadCLK <= 8  ; -- 12,288 MHz
+                when 3 => SetCnt_ReadCLK <= 4  ; -- 24,576 MHz 
+                when others => SetCnt_ReadCLK <= 8 ;-- NOT ALLOWED STATE
             end case;
         when 5 => -- FSo=384kHz
             case AVG is
-                when 0 => SetCnt_ReadCLK <= 8 ; -- 12.288 MHz 
-                when 1 => SetCnt_ReadCLK <= 2 ; -- 49.152 MHz
-                when 2 => SetCnt_ReadCLK <= 2 ; -- 49.152 MHz  
-                when others => SetCnt_ReadCLK <= 8 ;
+                when 0 => SetCnt_ReadCLK <= 8 ; -- 12,288 MHz 
+                when 1 => SetCnt_ReadCLK <= 2 ; -- 49,152 MHz
+                when 2 => SetCnt_ReadCLK <= 2 ; -- 49,152 MHz  
+                when others => SetCnt_ReadCLK <= 8 ;-- NOT ALLOWED STATE
             end case;   
         when 6 => -- FSo=768kHz
             case AVG is
                 when 0 => SetCnt_ReadCLK <= 2 ; -- 49.152 MHz 
-                when others => SetCnt_ReadCLK <= 8 ;
+                when others => SetCnt_ReadCLK <= 8 ;-- NOT ALLOWED STATE
             end case;
-         when others => SetCnt_ReadCLK <= 8 ;
+         when others => SetCnt_ReadCLK <= 8 ;-- NOT ALLOWED STATE
     end case;
 end if;
 -- Generate Bypass conditions where ReadClock is the main fast clock (98.304MHz).
 -- This is the ReadCLK mux command signal to choose direct (bypass) or divided clock.
--- 98.304MHz Read clock when SR=7, and when SR=6 and AVG=1
-    -- if  SR=7 or (SR=6 and AVG=1) then
-    if  (SR+AVG)=7    then -- Le bypass est actif lorsque SR+AVG donne une FSo réelle de 1536kHz
+-- 98.304MHz Read clock in these conditions :  SR=7 and when SR=6 and AVG=1
+    if  SR=7 or (SR=6 and AVG=1)   then 
         Bypass <= '1';-- clock bypass ON
     else
         Bypass <= '0';-- clock bypass OFF
     end if;
+    CLKBypass <= Bypass;
 --****************************************************************************************
-  
-    -- Mux to choose where Readclock come from.
+      -- Mux to choose where Readclock come from.
     case Bypass is
         when '0' => ReadCLK <= zReadCLK ; -- ReadClock is generated by divide counter
         when '1' => ReadCLK <= CK98M304 ; -- ReadClock is directly fast main clock
