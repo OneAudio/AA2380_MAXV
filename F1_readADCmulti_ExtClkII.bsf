@@ -21,9 +21,9 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 264 320)
+	(rect 16 16 264 352)
 	(text "F1_readADCmulti_ExtClkII" (rect 5 0 115 12)(font "Arial" ))
-	(text "inst" (rect 8 288 20 300)(font "Arial" ))
+	(text "inst" (rect 8 320 20 332)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
@@ -234,7 +234,14 @@ https://fpgasoftware.intel.com/eula.
 		(text "Test_TCLK23[4..0]" (rect 147 267 227 279)(font "Arial" ))
 		(line (pt 248 272)(pt 232 272)(line_width 3))
 	)
+	(port
+		(pt 248 288)
+		(output)
+		(text "Test_ReadADCclock" (rect 0 0 88 12)(font "Arial" ))
+		(text "Test_ReadADCclock" (rect 139 283 227 295)(font "Arial" ))
+		(line (pt 248 288)(pt 232 288)(line_width 1))
+	)
 	(drawing
-		(rectangle (rect 16 16 232 288)(line_width 1))
+		(rectangle (rect 16 16 232 320)(line_width 1))
 	)
 )

@@ -64,7 +64,8 @@ port(
     Test_CNVen_SCK    : out std_logic ;
     Test_CNVclk_cnt   : out integer range 0 to 32 ;
     Test_AVG_count    : out integer range 0 to 127;
-    Test_TCLK23       : out integer range 0 to 23
+    Test_TCLK23       : out integer range 0 to 23 ;
+    Test_ReadADCclock :out std_logic
     -- Test_TCNVen_SCK   : out std_logic ;
     -- Test_TCNVen_SHFT  : out std_logic
   --
@@ -121,6 +122,7 @@ Test_CNVen_SCK    <= CNVen_SCK ; -- TEST
 Test_CNVclk_cnt   <= CNVclk_cnt ; -- TEST
 Test_AVG_count    <= AVG_count  ; -- TEST
 Test_TCLK23       <= TCLK23     ; -- TEST
+Test_ReadADCclock <= ReadADCclock ; --TEST
 
 -- Test_TCNVen_SCK   <= T_CNVen_SCK  ; -- TEST
 -- Test_TCNVen_SHFT  <= T_CNVen_SHFT ; -- TEST
@@ -257,12 +259,12 @@ begin
 -- est de 100MHz (FS=1536kHz), et "ADC_SHIFT" pour toutes les autres fréquences d'échantillonnage plus faible).
 
 -- Partie modifier pour les configuration ou ReadClock=98.304MHz
--- 
 if  CLKBypass='1'   then 
     ReadADCclock <= ADC_CLK       ; -- Lecture des données avec le front montant de la clock envoyé à l'ADC (SCK)
 else
     ReadADCclock <= not ADC_SHIFT ; -- Lecture des données avec un horloge décalé de  d'une période en avance sur SCK.(
 end if;
+
 
 end process RDenable;
 
@@ -350,22 +352,21 @@ begin
             ResetAVGread <= AVGen_READ	;
     end if;
 
-    if	ResetAVGread = '0' then --
- 		      TCLK23 <= 0	 ;
-    elsif   rising_edge(ADC_CLK) and TCLK23 < 23 then
-        TCLK23 <= TCLK23 + 1 ;
+    if	    ResetAVGread = '0' then --
+ 		    TCLK23 <= 0	 ;
+    elsif   rising_edge(ADC_CLK) and TCLK23 < 23 then --t
+            TCLK23 <= TCLK23 + 1 ;
     end if;
-
 end process;
 
 ------------------------------------------------------------------
 -- ADC Data reading Channel L+R
 -- Modifié le 11/03/2024
 -- Le signal ReadADCclock vient du MUX.
--- La clock est dirférente à haute vitesse pour tenir compte du delai
+-- La clock est différente à haute vitesse pour tenir compte du delai
 -- d'arrivée des donnée de l'ADC.
 ------------------------------------------------------------------
-ADCserial_read : process(ADC_SHIFT,TCLK23,ReadADCclock)
+ADCserial_read : process(TCLK23,ReadADCclock)
 begin
 	if    rising_edge(ReadADCclock) then --stored data of SDO is send to bit 0 to 23 of DATAO
                 case TCLK23 is
