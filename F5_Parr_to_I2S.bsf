@@ -4,75 +4,76 @@ editor if you plan to continue editing the block that represents it in
 the Block Editor! File corruption is VERY likely to occur.
 */
 /*
-Copyright (C) 1991-2010 Altera Corporation
-Your use of Altera Corporation's design tools, logic functions 
-and other software and tools, and its AMPP partner logic 
+Copyright (C) 2023  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
-to the terms and conditions of the Altera Program License 
-Subscription Agreement, Altera MegaCore Function License 
-Agreement, or other applicable license agreement, including, 
-without limitation, that your use is for the sole purpose of 
-programming logic devices manufactured by Altera and sold by 
-Altera or its authorized distributors.  Please refer to the 
-applicable agreement for further details.
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 200 144)
-	(text "F5_Parr_to_I2S" (rect 5 0 81 12)(font "Arial" ))
-	(text "inst" (rect 8 112 25 124)(font "Arial" ))
+	(rect 16 16 240 128)
+	(text "F5_Parr_to_I2S" (rect 5 0 71 12)(font "Arial" ))
+	(text "inst" (rect 8 96 20 108)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
-		(text "CK128FS" (rect 0 0 47 12)(font "Arial" ))
-		(text "CK128FS" (rect 21 27 68 39)(font "Arial" ))
+		(text "CK64FS" (rect 0 0 36 12)(font "Arial" ))
+		(text "CK64FS" (rect 21 27 57 39)(font "Arial" ))
 		(line (pt 0 32)(pt 16 32)(line_width 1))
 	)
 	(port
 		(pt 0 48)
 		(input)
-		(text "LRCK" (rect 0 0 29 12)(font "Arial" ))
-		(text "LRCK" (rect 21 43 50 55)(font "Arial" ))
+		(text "LRCK" (rect 0 0 28 12)(font "Arial" ))
+		(text "LRCK" (rect 21 43 49 55)(font "Arial" ))
 		(line (pt 0 48)(pt 16 48)(line_width 1))
 	)
 	(port
 		(pt 0 64)
 		(input)
-		(text "PDATAL[23..0]" (rect 0 0 73 12)(font "Arial" ))
-		(text "PDATAL[23..0]" (rect 21 59 94 71)(font "Arial" ))
+		(text "PDATAL[23..0]" (rect 0 0 66 12)(font "Arial" ))
+		(text "PDATAL[23..0]" (rect 21 59 87 71)(font "Arial" ))
 		(line (pt 0 64)(pt 16 64)(line_width 3))
 	)
 	(port
 		(pt 0 80)
 		(input)
-		(text "PDATAR[23..0]" (rect 0 0 75 12)(font "Arial" ))
-		(text "PDATAR[23..0]" (rect 21 75 96 87)(font "Arial" ))
+		(text "PDATAR[23..0]" (rect 0 0 68 12)(font "Arial" ))
+		(text "PDATAR[23..0]" (rect 21 75 89 87)(font "Arial" ))
 		(line (pt 0 80)(pt 16 80)(line_width 3))
 	)
 	(port
-		(pt 184 32)
+		(pt 224 32)
 		(output)
-		(text "I2S_LRCK" (rect 0 0 51 12)(font "Arial" ))
-		(text "I2S_LRCK" (rect 112 27 163 39)(font "Arial" ))
-		(line (pt 184 32)(pt 168 32)(line_width 1))
+		(text "I2S_LRCK" (rect 0 0 47 12)(font "Arial" ))
+		(text "I2S_LRCK" (rect 156 27 203 39)(font "Arial" ))
+		(line (pt 224 32)(pt 208 32)(line_width 1))
 	)
 	(port
-		(pt 184 48)
+		(pt 224 48)
 		(output)
-		(text "I2S_BCLK" (rect 0 0 50 12)(font "Arial" ))
-		(text "I2S_BCLK" (rect 113 43 163 55)(font "Arial" ))
-		(line (pt 184 48)(pt 168 48)(line_width 1))
+		(text "I2S_BCLK" (rect 0 0 44 12)(font "Arial" ))
+		(text "I2S_BCLK" (rect 159 43 203 55)(font "Arial" ))
+		(line (pt 224 48)(pt 208 48)(line_width 1))
 	)
 	(port
-		(pt 184 64)
+		(pt 224 64)
 		(output)
-		(text "I2S_SDATA" (rect 0 0 57 12)(font "Arial" ))
-		(text "I2S_SDATA" (rect 106 59 163 71)(font "Arial" ))
-		(line (pt 184 64)(pt 168 64)(line_width 1))
+		(text "I2S_SDATA" (rect 0 0 54 12)(font "Arial" ))
+		(text "I2S_SDATA" (rect 149 59 203 71)(font "Arial" ))
+		(line (pt 224 64)(pt 208 64)(line_width 1))
 	)
 	(drawing
-		(rectangle (rect 16 16 168 112)(line_width 1))
+		(rectangle (rect 16 16 208 96)(line_width 1))
 	)
 )

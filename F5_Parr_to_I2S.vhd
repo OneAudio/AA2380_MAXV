@@ -1,6 +1,6 @@
 -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
--- Date: 22/08/19	Designer: O.N
+-- Date: 23/03/25	Designer: O.N
 -----------------------------------------------------------------
 -- Intel MAXV 5M570 CPLD	Take 27 LE.
 -- Function F5 :  F5_Parr_to_I2S.vhd
@@ -17,7 +17,7 @@ entity F5_Parr_to_I2S is
 --
 port(
 	-- INPUTS
-	CK128FS		: in  std_logic ; -- ADC 128xFs clock
+	CK64FS		: in  std_logic ; -- ADC 64xFs clock
 	LRCK		: in  std_logic ; -- Output sampling rate clock
 	PDATAL		: in  std_logic_vector(23 downto 0) ; -- Left channel parallel data in
 	PDATAR		: in  std_logic_vector(23 downto 0) ; -- Right channel parallel data in
@@ -31,7 +31,6 @@ end F5_Parr_to_I2S;
 
 architecture Behavioral of F5_Parr_to_I2S is
 
-signal	CK64FS		: std_logic  ; -- 64FS clock
 signal	LR_SELECT	: std_logic  ; -- Left/Right data selection bit
 signal	OREX		: std_logic  ; -- xor bit
 signal	LOADSR		: std_logic  ; -- shift register load signal
@@ -47,12 +46,8 @@ begin
 I2S_LRCK <= LRCK 	; -- send LRCK to I2S_LRCK
 I2S_BCLK <= CK64FS	; -- I2S Bit clock is equal to 64xFS
 
-process (CK128FS,CK64FS,LR_SELECT,OREX,PDATAL,PDATAR)	is
+process (CK64FS,LR_SELECT,OREX,PDATAL,PDATAR)	is
 begin
-	-- Divide by 2 128Fs clock
-	if	rising_edge(CK128FS)then
-		CK64FS <= not CK64FS ;
-	end if;
 	-- synchronize to 64FS
 	if 	rising_edge(CK64FS)	then
 		LR_SELECT	<= LRCK		;

@@ -4,7 +4,7 @@
 -- Generate clock enable signal instead of creating another clock domain
 -- Assume that the input clock : CK98M304
 --------------------------------------------------------------------------------
--- O.N - 29/03/2024 -- take ??? LE
+-- O.N - 23/03/2025 -- take ??? LE (old 212)
 --------------------------------------------------------------------------------
 -- NOTES sur les différents signaux d'horloges nécessaires :
 -- RANGE of clocks:
@@ -22,11 +22,9 @@
 -- ==> TOUTES LES HORLOGES GENEREES SONT PARFAITEMENT SYNCHRONE ENTRE ELLES
 -------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
--- 02/03/24 Problèmes à résoudre  :
+-- 23/03/2025   :
 -- *******************************
--- Tester le module seul en situation réelle et vérifier la synchronicité des horloges.
--- testé ok.
---
+-- Ajout sortie LRCK pour sortie I2S avec 50% de rapport cyclique
 --------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 library  IEEE;
@@ -44,9 +42,10 @@ port(
     ReadCLK       :	out std_logic   ;  -- clock used to read data (50% duty cycle output)
     nFS           :	out std_logic   ;  -- Fso x AVG ratio (12kHz to 1536kHz) (80ns pulse output)
     Fso           :	out std_logic   ;  -- Effective output sampling rate (12kHz to 1536kHz) (10ns pulse output)
-    Fso128        :	out std_logic   ;  -- 128.Fso bit clock for S/PDIF output (10ns pulse output)    
+    CK64FS        :	out std_logic   ;  -- 64 FS clock for I2S output    
     OutOfRange    :	out std_logic   ; --
     CLKBypass     :	out std_logic   ; --
+    LRCK_Fso     :	out std_logic   ; --Fso x AVG ratio (12kHz to 1536kHz) (50% duty cycle for LRCK)
     -- test outputs
     -- TSTcounter_ReadCLK :out integer range 1 to 8192 ;
     -- TSTSetCnt_ReadCLK  :out integer range 1 to 8192
@@ -60,12 +59,12 @@ signal   counter_nFS     : integer range 1 to 8192 ; -- nFS clock counter
 signal   SetCnt_nFS      : integer range 1 to 8192 ; -- nFS counter set value for frequency selection
 signal   counter_Fso     : integer range 1 to 8192 ; -- FSo clock counter
 signal   SetCnt_Fso      : integer range 1 to 8192 ; -- FSo counter set value for frequency selection
-signal   counter_Fso128  : integer range 1 to 64   ; -- FSo128 clock counter
-signal   SetCnt_Fso128   : integer range 1 to 64   ; -- FSo128 counter set value for frequency selection
+signal   counter_CK64FS  : integer range 1 to 64   ; -- CK64FS clock counter
+signal   SetCnt_CK64FS   : integer range 1 to 64   ; -- CK64FS counter set value for frequency selection
 
 signal   clken_nFS       : std_logic;
 signal   clken_FSo       : std_logic;
-signal   clken_Fso128    : std_logic;
+signal   clken_CK64FS    : std_logic;
 
 signal   counter_ReadCLK : integer range 1 to 8192 ; -- ReadCLK clock counter
 signal   SetCnt_ReadCLK  : integer range 1 to 8192 ; -- ReadCLK counter set value for frequency selection
@@ -110,7 +109,7 @@ end process  ChangeDetect;
 ------------------------------------------------------------------
 
 ------------------------------------------------------------------
--- Set SetCnt_Fso, SetCnt_nFS and SetCnt_Fso128 counters limit
+-- Set SetCnt_Fso, SetCnt_nFS and SetCnt_CK64FS counters limit
 -- values depending on SR and AVG values.
 -- This allow to select effective desired output frequencies
 ------------------------------------------------------------------
@@ -141,13 +140,7 @@ begin
         when others => SetCnt_nFS <= 64;
     end case ;
     --
-    -- Loaded counter limit for Fso128 ouput frequency (S/DIF out). No signal if SR>192kHz
-    if (SR) < 5 then
-        SetCnt_Fso128 <= SetCnt_Fso/128 ; 
-    else
-        SetCnt_Fso128 <= 1 ;
-    end if;
-    --
+    SetCnt_CK64FS <= SetCnt_Fso/64 ; 
     -- Generate OutOfRange signal to detect wrong settings (SR+AVG must be always <8 to have nFS =< 1536kHz)
     if (SR+AVG) > 7 then -- condition to detect OutOfRange mode
         OutOfRange <= '1' ; -- detect bad SR/AVG combination => value is OutOfRange
@@ -291,7 +284,8 @@ begin
     ---- FSo clock counter (80ns pulse output)
         if  clearAll='1' then
             counter_Fso <= 1 ;
-            clken_FSo <= '1';
+            clken_FSo   <= '1';
+            LRCK_Fso    <= '0';
         else
             if(counter_Fso =SetCnt_Fso ) then
                 clken_FSo <= '1';
@@ -303,18 +297,24 @@ begin
                 clken_FSo <= '0';
                 counter_Fso <= counter_Fso + 1 ;    
             end if;
-        end if;
-    ---- FSo128 clock counter (10ns pulse output)
-        if  clearAll='1' then
-            counter_Fso128 <= 1 ;
-            clken_FSo128 <= '1';
-        else
-            if(counter_Fso128 =SetCnt_Fso128 ) then
-                clken_FSo128 <= '1';
-                counter_Fso128 <= 1 ;
+            -- Generate 50% duty-cycle LRCK signal
+            if (counter_Fso < (SetCnt_Fso/2)+1 ) then
+                LRCK_Fso <= '1'; -- LRCK set to 1
             else
-                clken_FSo128 <= '0';
-                counter_Fso128 <= counter_Fso128 + 1 ;    
+                LRCK_Fso <= '0';-- LRCK set to 0
+            end if;
+        end if;
+    ---- CK64FS clock counter (10ns pulse output)
+        if  clearAll='1' then
+            counter_CK64FS <= 1 ;
+            clken_CK64FS <= '1';
+        else
+            if(counter_CK64FS =SetCnt_CK64FS ) then
+                clken_CK64FS <= '1';
+                counter_CK64FS <= 1 ;
+            else
+                clken_CK64FS <= '0';
+                counter_CK64FS <= counter_CK64FS + 1 ;    
             end if;
         end if;
         --
@@ -338,6 +338,8 @@ begin
             end if;
         end if;
         --
+        --
+        --
     end if;
 end process;
     
@@ -345,7 +347,7 @@ end process;
 -- Use the same clock and the slow clock enable signal above 
 -- to drive another part of the design to avoid domain crossing issues
 ------------------------------------------------------------------
-process(CK98M304,clken_nFS,clken_FSo,clken_FSo128)
+process(CK98M304,clken_nFS,clken_FSo,clken_CK64FS)
 begin
     if(rising_edge(CK98M304)) then
   --
@@ -361,10 +363,10 @@ begin
             FSo <= '0'; --
         end if;
     --
-        if(clken_FSo128 = '1') then
-            Fso128 <= '1'; --
+        if(clken_CK64FS = '1') then
+            CK64FS <= '1'; --
         else
-            Fso128 <= '0'; --
+            CK64FS <= '0'; --
         end if;
     --
         if(clken_ReadCLK = '1') then
