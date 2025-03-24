@@ -196,13 +196,45 @@ Les problèmes de la version v0.01 ont été resolus sauf ce qui est indiqué ci
 Il faut maintenant vérifie avec l'ADC réel que ça foncionne bien !!!
 ------------------------------------------------------------------------------------
 
+---------------------------------------------------------------------------------
+Le 24/03/2025.- Version pour carte USB-I2S 768kHz -- GIT comit n° : ; Tag V 
+CPLD : 5M570ZT100  Remplissage : ??? %  Checksum:  Usercode:
+------------------------------------------------------------------------------------
+Reprise du CPLD pour avoir une sortie I2S pour la nouvelle carte USB-I2S de "bohrok2610" (Martii) qui permet
+l'acquisition jusqu'à 768kHz sous Windows/Linux en UAC2 avec REW (Carte basé sur un uC STM32F723).
+--> La sortie I2S sera sur le connecteur 20 points J12 non isolé (isolement déjà fait sur carte USBI2S).
+Les signaux necessaires sont :
+--> LRCK,SDATA et BCK pour  la liaison I2S stéréo (3 sorties)
+--> 4 bits pour la selection des fréquences d'échantillonnages (4 entrées: DFS0,DF1,DFS2 et MCLK_SEL)
+--> Le signal de remise à zéro nRESET pour l'initialisation au démarrage de la carte USB-I2S.
+TOTAL de 8 signaux (3 OUT + 5 IN) .11 IO sont disponible sur le connecteur J12, 2 pins avec du 3.3V 
+(alimentation optos carte USBI2S) et 5 pins de masses.
 
+Le fonctionnement souhaité est:
+Selection du SR auto (USBI2S) ou manual (codeur).
+Ajout signal pour mode manuel.
+SR à supporter: 44.1 kHz à 768 kHz.
+Empécher des valeurs de moyennage non supportées. Exemple :
+A 48 kHz, avg maxi = 32 car 48x32 = 1536k.
+A 384kHz, avg maxi = 4 carte 384x4 = 1536k.
+Mappage de ces signaux sur la carte AA2380V1, J12 Unisolated (OPT I/O)
+_______________________________________ 
+MCLKSEL  <-- J12-5      NC   -->J12-6
+DFS0     <-- J12-7      +3V3 -->J12-8
+DFS1     <-- J12-9      +3V3 -->J12-10
+DFS2     <-- J12-11     GND  -->J12-12
+nRESET   <-- J12-13     GND  -->J12-14
+I2S_BCK  --> J12-15     GND  -->J12-16
+I2S_LRCK --> J12-17     GND  -->J12-18
+I2S_SDATA--> J12-19     GND  -->J12-20
+_______________________________________
+Reste dipo pour le test IO_00,UIO_1 et UIO_10.
 
-
-
-
-
-
+Les 4 cavaliers de configuration sur J17 sont;
+CONF0 (JPA) --> Entréees en mode DIFF ou SE (Si cavalier =SE, sinon différentielle)
+CONF1 (JPB) --> Filtre d'entrée analogique  (Si cavalier = LF, sinon HF)  
+CONF2 (JPC) --> Mode d'aquisition distribué (Si cavalier =distribué, sinon normal) 
+CONF3 (JPD) --> Mode selection SR int/ext   (Si cavalier =externe(J12), sinon interne par codeur)
 
 
 
