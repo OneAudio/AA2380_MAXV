@@ -219,22 +219,22 @@ A 48 kHz, avg maxi = 32 car 48x32 = 1536k.
 A 384kHz, avg maxi = 4 carte 384x4 = 1536k.
 Mappage de ces signaux sur la carte AA2380V1, J12 Unisolated (OPT I/O)
 _______________________________________ 
-MCLKSEL  <-- J12-5      NC   -->J12-6
-DFS0     <-- J12-7      +3V3 -->J12-8
-DFS1     <-- J12-9      +3V3 -->J12-10
-DFS2     <-- J12-11     GND  -->J12-12
-nRESET   <-- J12-13     GND  -->J12-14
-I2S_BCK  --> J12-15     GND  -->J12-16
-I2S_LRCK --> J12-17     GND  -->J12-18
-I2S_SDATA--> J12-19     GND  -->J12-20
+(UIO_02) pin 29 - MCLKSEL  <-- J12-5      (NC) -->J12-6
+(UIO_03) pin 30 - DFS0     <-- J12-7      +3V3 -->J12-8
+(UIO_04) pin 33 - DFS1     <-- J12-9      +3V3 -->J12-10
+(UIO_05) pin 34 - DFS2     <-- J12-11     GND  -->J12-12
+(UIO_06) pin 35 - nRESET   <-- J12-13     GND  -->J12-14
+(UIO_07) pin 36 - I2S_BCK  --> J12-15     GND  -->J12-16
+(UIO_08) pin 38 - I2S_LRCK --> J12-17     GND  -->J12-18
+(UIO_09) pin 40 - I2S_SDATA--> J12-19     GND  -->J12-20
 _______________________________________
 Reste dipo pour le test IO_00,UIO_1 et UIO_10.
 
 Les 4 cavaliers de configuration sur J17 sont;
-CONF0 (JPA) --> Entréees en mode DIFF ou SE (Si cavalier =SE, sinon différentielle)
-CONF1 (JPB) --> Filtre d'entrée analogique  (Si cavalier = LF, sinon HF)  
-CONF2 (JPC) --> Mode d'aquisition distribué (Si cavalier =distribué, sinon normal) 
-CONF3 (JPD) --> Mode selection SR int/ext   (Si cavalier =externe(J12), sinon interne par codeur)
+CONF0 (JPA) pin 41 --> Entréees en mode DIFF ou SE (Si cavalier =SE, sinon différentielle)
+CONF1 (JPB) pin 42 --> Filtre d'entrée analogique  (Si cavalier = LF, sinon HF)  
+CONF2 (JPC) pin 43 --> Mode d'aquisition distribué (Si cavalier =distribué, sinon normal) 
+CONF3 (JPD) pin 44 --> Mode selection SR int/ext   (Si cavalier =externe(J12), sinon interne par codeur)
 
 
 
