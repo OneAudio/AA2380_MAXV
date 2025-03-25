@@ -45,7 +45,8 @@ port(
     CK64FS        :	out std_logic   ;  -- 64 FS clock for I2S output    
     OutOfRange    :	out std_logic   ; --
     CLKBypass     :	out std_logic   ; --
-    LRCK_Fso     :	out std_logic   ; --Fso x AVG ratio (12kHz to 1536kHz) (50% duty cycle for LRCK)
+    LRCK_Fso      :	out std_logic   ; --Fso x AVG ratio (12kHz to 1536kHz) (50% duty cycle for LRCK)
+    CK64FSR       :	out std_logic   ; -- 64FS clock with 50% dutu cycle
     -- test outputs
     -- TSTcounter_ReadCLK :out integer range 1 to 8192 ;
     -- TSTSetCnt_ReadCLK  :out integer range 1 to 8192
@@ -308,6 +309,7 @@ begin
         if  clearAll='1' then
             counter_CK64FS <= 1 ;
             clken_CK64FS <= '1';
+            CK64FSR <= '0';
         else
             if(counter_CK64FS =SetCnt_CK64FS ) then
                 clken_CK64FS <= '1';
@@ -315,6 +317,12 @@ begin
             else
                 clken_CK64FS <= '0';
                 counter_CK64FS <= counter_CK64FS + 1 ;    
+            end if;
+            -- Generate 50% duty-cycle LRCK signal
+            if (counter_CK64FS < (SetCnt_CK64FS/2)+1 ) then
+                CK64FSR <= '1'; -- clken_CK64FSR set to 1
+            else
+                CK64FSR <= '0';-- clken_CK64FSR set to 0
             end if;
         end if;
         --

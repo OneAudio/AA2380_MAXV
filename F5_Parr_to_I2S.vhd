@@ -17,7 +17,7 @@ entity F5_Parr_to_I2S is
 --
 port(
 	-- INPUTS
-	CK64FS		: in  std_logic ; -- ADC 64xFs clock
+	CK64FS		: in  std_logic ; -- ADC 128xFs clock (80ns pulse)
 	LRCK		: in  std_logic ; -- Output sampling rate clock
 	PDATAL		: in  std_logic_vector(23 downto 0) ; -- Left channel parallel data in
 	PDATAR		: in  std_logic_vector(23 downto 0) ; -- Right channel parallel data in

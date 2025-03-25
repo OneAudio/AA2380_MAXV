@@ -113,10 +113,12 @@ begin
     end case;
     --
     if SRnAVG='0' and CONF(0)='0' then -- Choose Sampling rate value with coder (only internal mode; conf0=0)
-        if  rising_edge(Rotate) then
+        if  (SRate+AVGcoder)>7 then
+            AVGcoder <= 0 ; -- reset average if behond the limit when external FS is selected.
+        elsif  rising_edge(Rotate) then
             if  Dir='1' and SRcoder > 0 then
                 SRcoder <= SRcoder - 1 ;
-            elsif Dir='0' and SRcoder < 7 and (SRate+AVGcoder)<=7 then
+            elsif Dir='0' and SRcoder < 7 and (SRate+AVGcoder)<7 then
                 SRcoder <= SRcoder + 1 ;
             end if;
         end if;
@@ -126,7 +128,7 @@ begin
         elsif  rising_edge(Rotate) then 
             if  Dir='1' and AVGcoder > 0 then
                 AVGcoder <= AVGcoder - 1 ;
-            elsif   Dir='0' and AVGcoder < 7 and (SRate+AVGcoder)<=7 then
+            elsif   Dir='0' and AVGcoder < 7 and (SRate+AVGcoder)<7 then
                 AVGcoder <= AVGcoder + 1 ;
             end if;
         end if;
