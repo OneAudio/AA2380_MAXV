@@ -2,8 +2,8 @@
 -- AA2380V1 OSVA PROJECT.
 -- Date: 24/12/2020	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 25 LE (old 18).
--- Function F0 :  FO_ctrl_encoder_B.vhd
+-- Intel MAXV 5M570 CPLD	Take 27 LE (old 18).
+-- Function F0 :  FO_ctrl_encoder_C.vhd
 --
 -----------------------------------------------------------------
 -- New control fonction for us with new ADC reading block
@@ -26,7 +26,7 @@
 -- not set with encoder, but using jumper IO.
 -- Same for input analog buffer operation (SE/Diff and Filter BW).
 ----------------------------------------------------------------
--- Update 'C' 24/03/2025.
+-- Update 'C' 25/03/2025.
 --***********************
 -- Add external SRcoder input from USBI2S board.
 -- Add SRcoder+AVR overrange to limite average value.
@@ -46,7 +46,7 @@ Port (
     CONF		: in  std_logic_vector(3 downto 0); -- CONF jumpers inputs
     DFS		   	: in integer range 0 to 7 ; -- external sampling rate selections inputs
     -- OUTPUTS
-    SR          : buffer integer range 0 to 7 ; -- select SPDIF sampling rate
+    SRate       : buffer integer range 0 to 7 ; -- select SPDIF sampling rate
     AVGcoder 	: buffer integer range 0 to 7 ; -- select averaging ration of SinC filter
     SEnDIFF 	: buffer std_logic ; -- Single-ended / Differential input mode : Left channel
     HBWon       : buffer std_logic ; -- High bandwidth analog input filter type (0= Low bandwidth 1=High bandwidth) 
@@ -63,36 +63,10 @@ signal rotary_in        : STD_LOGIC_vector (1 downto 0)  ; -- Vector of the two 
 signal delay_rotary_q1  : STD_LOGIC  ; --
 signal pushf   	    	: STD_LOGIC  ; -- Filtered nPush button
 signal Rotate  		    : STD_LOGIC  ; -- pulse output of encoder
-signal SRcoder      	    : integer range 0 to 7 ; -- SRcoder select counter
---signal AVGcoder      	: integer range 0 to 7 ; -- AVG select counter
---signal SRcoder      	: integer range 0 to 7 ; -- AVG select counter
+signal SRcoder      	: integer range 0 to 7 ; -- SRcoder select counter
 signal Dir				: STD_LOGIC ;
--- signal OutOfRange       : STD_LOGIC ;
 
 begin
-
-----------------------------------------------------------
--- Sampling frequency external/internal selection MUX
----------------------------------------------------------
-process (CONF(0),SRcoder,DFS)
-begin
-    case(CONF(0)) is
-        when '0' => SR <= SRcoder ; -- coder sampling rates setting
-        when '1' => SR <= DFS     ; -- external input sampling rates selection
-    end case;
-end process;
----------------------------------------------------------
---  Detection of maximal value of average for each SRcoder value 
----------------------------------------------------------
--- process(AVG,SRcoder)
--- begin
--- -- Generate OutOfRange signal to detect wrong settings (SRcoder+AVG must be always <8 to have nFS =< 1536kHz)
--- if (SRcoder+AVG) > 7 then -- condition to detect OutOfRange mode
---     OutOfRange <= '1' ; -- detect bad SRcoder/AVG combination => value is OutOfRange
--- else
---     OutOfRange <= '0' ; -- SRcoder/AVG in the range.
--- end if;
--- end process;
 
 ----------------------------------------------------------
 -- Filtering of nPush button
@@ -127,38 +101,47 @@ case rotary_in is
 end if;
 end process rotary_filter;
 
-
+-----------------------------------------------------------
 -- Coder rotating select averaging ratio.
 -- To avoid bad combination of AVG/SRcoder.
---
-process (Dir,Rotate,SRcoder,AVGcoder,SRnAVG)
+-----------------------------------------------------------
+process (Dir,Rotate,SRcoder,AVGcoder,SRnAVG,CONF(0),DFS,SRate)
 begin
-    if SRnAVG='0' then
+    case CONF(0) is
+        when '0' => SRate <= SRcoder;
+        when '1' => SRate <= DFS ;
+    end case;
+    --
+    if SRnAVG='0' and CONF(0)='0' then -- Choose Sampling rate value with coder (only internal mode; conf0=0)
         if  rising_edge(Rotate) then
-            if    Dir='1' and SRcoder > 0 then
-                  SRcoder <= SRcoder - 1 ;
-            elsif Dir='0' and SRcoder < 7 and (SRcoder+AVGcoder)<=7 then
-                  SRcoder <= SRcoder + 1 ;
+            if  Dir='1' and SRcoder > 0 then
+                SRcoder <= SRcoder - 1 ;
+            elsif Dir='0' and SRcoder < 7 and (SRate+AVGcoder)<=7 then
+                SRcoder <= SRcoder + 1 ;
             end if;
         end if;
-		else
-  			if  rising_edge(Rotate) then
-    				if      Dir='1' and AVGcoder > 0 then
-    						    AVGcoder <= AVGcoder - 1 ;
-    				elsif   Dir='0' and AVGcoder < 7 and (SRcoder+AVGcoder)<=7 then
-    						    AVGcoder <= AVGcoder + 1 ;
-    				end if;
-  			end if;
-		end if;
+    else                -- Choose averaging value with coder.
+        if  (SRate+AVGcoder)>7 then
+            AVGcoder <= 0 ; -- reset average if behond the limit when external FS is selected.
+        elsif  rising_edge(Rotate) then 
+            if  Dir='1' and AVGcoder > 0 then
+                AVGcoder <= AVGcoder - 1 ;
+            elsif   Dir='0' and AVGcoder < 7 and (SRate+AVGcoder)<=7 then
+                AVGcoder <= AVGcoder + 1 ;
+            end if;
+        end if;
+    end if;
 end process;
 ---------------------------------------------------------
 -- Each short pulse on encoder nPush button allow
 -- to select sampling rate sequencially.
 ---------------------------------------------------------
-process (Pushf,SRnAVG)
+process (Pushf,SRnAVG,CONF(0))
 begin
-    if	 falling_edge(Pushf)	then     -- SRcoder change when push is released
-  		   SRnAVG <= not SRnAVG ;        -- Toggle SRcoder/AVG setting
+    if      CONF(0)='1'  then
+            SRnAVG <= '0';--reset 
+    elsif   falling_edge(Pushf)	then     -- SRcoder change when push is released
+  		    SRnAVG <= not SRnAVG ;        -- Toggle SRcoder/AVG setting
     end if;
 end process;
 ----------------------------------------------------------

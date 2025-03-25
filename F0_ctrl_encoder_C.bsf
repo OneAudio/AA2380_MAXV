@@ -69,8 +69,8 @@ https://fpgasoftware.intel.com/eula.
 	(port
 		(pt 216 32)
 		(output)
-		(text "SR[2..0]" (rect 0 0 34 12)(font "Arial" ))
-		(text "SR[2..0]" (rect 161 27 195 39)(font "Arial" ))
+		(text "SRate[2..0]" (rect 0 0 46 12)(font "Arial" ))
+		(text "SRate[2..0]" (rect 149 27 195 39)(font "Arial" ))
 		(line (pt 216 32)(pt 200 32)(line_width 3))
 	)
 	(port
