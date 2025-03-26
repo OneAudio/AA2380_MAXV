@@ -2,15 +2,15 @@
 -- AA2380V1 OSVA PROJECT.
 -- Date: 24/12/2020	Designer: O.N
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 18 LE.
--- Function F0 :  FO_ctrl_encoder_B.vhd
+-- Intel MAXV 5M570 CPLD	Take 34 LE (old 18).
+-- Function F0 :  FO_ctrl_encoder_D.vhd
 --
 -----------------------------------------------------------------
 -- New control fonction for us with new ADC reading block
 -- "F1_readADC_multimodes".
 -- This new module allow to select independently :
--- 1) Output Sample Rate from 12kHz to 1536 kHz
---    (12,24,48,96,192,384,768,1536).
+-- 1) Output Sample Rate from 48kHz to 768 kHz
+--    (48,96,192,384,768).
 -- 2) ADC conversion averaging ratio between x1 to x128.
 --    (1,2,4,8,16,32,64,128).
 -- A short push on encoder button allow to switch between
@@ -26,17 +26,20 @@
 -- not set with encoder, but using jumper IO.
 -- Same for input analog buffer operation (SE/Diff and Filter BW).
 ----------------------------------------------------------------
--- Update 'C' 24/03/2025.
+-- Update 'C' 26/03/2025.
 --***********************
 -- Add external SRcoder input from USBI2S board.
 -- Add SRcoder+AVR overrange to limite average value.
+-- Update 'D' 26/03/2025.
+--***********************
+-- Whe keep only SR between 48k to 768k according to USBI2S board capability
 ----------------------------------------------------------------
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.numeric_std.all;
 
-entity F0_ctrl_encoder_C is
+entity F0_ctrl_encoder_D is
 Port (
 		-- INPUTS
     CLKSLOW  	: in  std_logic; -- low frequency clock clock (100Hz)
@@ -44,10 +47,10 @@ Port (
     Tb		  	: in  std_logic; -- encoder track b input
     nPush   	: in  std_logic; -- encoder nPush switch input
     CONF		: in  std_logic_vector(3 downto 0); -- CONF jumpers inputs
-    DFS		   	: in  std_logic_vector(2 downto 0); -- external sampling rate selections inputs
+    DFS		   	: in integer range 0 to 7 ; -- external sampling rate selections inputs
     -- OUTPUTS
-    SRcoder       	: buffer std_logic_vector (2 downto 0); -- select SPDIF sampling rate
-    AVG      	: out std_logic_vector (2 downto 0); -- select averaging ration of SinC filter
+    SRate       : buffer integer range 0 to 7 ; -- select sampling rate
+    AVGcoder 	: buffer integer range 0 to 7 ; -- select averaging ration of SinC filter
     SEnDIFF 	: buffer std_logic ; -- Single-ended / Differential input mode : Left channel
     HBWon       : buffer std_logic ; -- High bandwidth analog input filter type (0= Low bandwidth 1=High bandwidth) 
     AQMODE      : buffer std_logic ; -- ADC reading mode selection (0=Normal 1=Distributed Read)
@@ -55,43 +58,20 @@ Port (
    --TEST SIGNALS
 
     );
- end F0_ctrl_encoder_C;
+ end F0_ctrl_encoder_D;
 
-architecture select_mode of F0_ctrl_encoder_C is
+architecture select_mode of F0_ctrl_encoder_D is
 
 signal rotary_in        : STD_LOGIC_vector (1 downto 0)  ; -- Vector of the two encoder tracks
 signal delay_rotary_q1  : STD_LOGIC  ; --
 signal pushf   	    	: STD_LOGIC  ; -- Filtered nPush button
 signal Rotate  		    : STD_LOGIC  ; -- pulse output of encoder
-signal SEL_SR      	    : integer range 0 to 7 ; -- SRcoder select counter
-signal SEL_AVG      	: integer range 0 to 7 ; -- AVG select counter
+signal SRcoder      	: integer range 0 to 7 :=2 ; -- SRcoder select counter 
 signal Dir				: STD_LOGIC ;
-signal OutOfRange       : STD_LOGIC ;
+signal limit			: integer range 0 to 15 ;
 
 begin
 
-----------------------------------------------------------
--- Sampling frequency external/internal selection MUX
----------------------------------------------------------
-process (CONF(0))
-begin
-    case(CONF(0)) is
-        when '0' => SRcoder <= SRcoder ; -- coder sampling rates setting
-        when '1' => SRcoder <= DFS     ; -- external input sampling rates selection
-    end case;
-end process;
----------------------------------------------------------
---  Detection of maximal value of average for each SRcoder value 
----------------------------------------------------------
-process(AVG,SRcoder)
-begin
--- Generate OutOfRange signal to detect wrong settings (SRcoder+AVG must be always <8 to have nFS =< 1536kHz)
-if (SRcoder+AVG) > 7 then -- condition to detect OutOfRange mode
-    OutOfRange <= '1' ; -- detect bad SRcoder/AVG combination => value is OutOfRange
-else
-    OutOfRange <= '0' ; -- SRcoder/AVG in the range.
-end if;
---
 ----------------------------------------------------------
 -- Filtering of nPush button
 -- sampled at 100Hz with clkslow
@@ -125,46 +105,59 @@ case rotary_in is
 end if;
 end process rotary_filter;
 
-
+-----------------------------------------------------------
 -- Coder rotating select averaging ratio.
 -- To avoid bad combination of AVG/SRcoder.
---
-process (Dir,Rotate,SEL_SR,SEL_AVG,SRnAVG)
+-----------------------------------------------------------
+process (CLKSLOW,Dir,Rotate,SRcoder,AVGcoder,SRnAVG,CONF(0),DFS,SRate,limit)
 begin
-    if SRnAVG='0' then
-        if  rising_edge(Rotate) then
-            if    Dir='1' and SEL_SR > 0 then
-                  SEL_SR <= SEL_SR - 1 ;
-            elsif Dir='0' and SEL_SR < 7 then
-                  SEL_SR <= SEL_SR + 1 ;
+    if  rising_edge(CLKSLOW) then
+        Limit <= (SRate+AVGcoder);
+    end if;
+    case CONF(0) is
+        when '0' => SRate <= SRcoder;
+        when '1' => SRate <= DFS ;
+    end case;
+    --
+    if SRnAVG='0' and CONF(0)='0' then -- Choose Sampling rate value with coder (only internal mode; conf0=0)
+        if  Limit>7 then
+            AVGcoder <= 7-SRate ; -- reset average if behond the limit when external FS is selected.
+        elsif  rising_edge(Rotate) then
+            -- SR coder values are bounded between 2 and 7 (48k to 768k) 
+            if  Dir='1' and SRcoder > 2 then
+                SRcoder <= SRcoder - 1 ;
+            elsif Dir='0' and SRcoder<6 and Limit<7 then
+                SRcoder <= SRcoder + 1 ;
             end if;
         end if;
-		else
-  			if  rising_edge(Rotate) then
-    				if      Dir='1' and SEL_AVG > 0 then
-    						    SEL_AVG <= SEL_AVG - 1 ;
-    				elsif   Dir='0' and SEL_AVG < 7 then
-    						    SEL_AVG <= SEL_AVG + 1 ;
-    				end if;
-  			end if;
-		end if;
-    SRcoder  <= std_logic_vector(to_unsigned(SEL_SR,3))  ; --
-    AVG <= std_logic_vector(to_unsigned(SEL_AVG,3)) ; --
+    else                -- Choose averaging value with coder.
+        if  Limit>7 then
+            AVGcoder <= 7-SRate ; -- reset average if behond the limit when external FS is selected.
+        elsif  rising_edge(Rotate) then 
+            if  Dir='1' and AVGcoder > 0 then
+                AVGcoder <= AVGcoder - 1 ;
+            elsif   Dir='0' and Limit<7 then
+                AVGcoder <= AVGcoder + 1 ;
+            end if;
+        end if;
+    end if;
 end process;
 ---------------------------------------------------------
 -- Each short pulse on encoder nPush button allow
 -- to select sampling rate sequencially.
 ---------------------------------------------------------
-process (Pushf,SRnAVG)
+process (Pushf,SRnAVG,CONF(0))
 begin
-    if	 falling_edge(Pushf)	then     -- SRcoder change when push is released
-  		   SRnAVG <= not SRnAVG ;        -- Toggle SRcoder/AVG setting
+    if      CONF(0)='1'  then
+            SRnAVG <= '0';--reset 
+    elsif   falling_edge(Pushf)	then     -- SRcoder change when push is released
+  		    SRnAVG <= not SRnAVG ;        -- Toggle SRcoder/AVG setting
     end if;
 end process;
 ----------------------------------------------------------
 -- Config jumpers allow seletion of input coupling and bandwidth for each input channel :.
-SEnDIFF	<= CONF(0) ;	--JPA config jumper "SEnDIFF" (single-ended-Differential) : 
-HBWon	  <= CONF(1) ;	--JPB config jumper "HBWon" ( Analog input filter bandwidth): Left
+SEnDIFF	<= CONF(1) ;	--JPA config jumper "SEnDIFF" (single-ended-Differential) : 
+HBWon	  <= CONF(2) ;	--JPB config jumper "HBWon" ( Analog input filter bandwidth): Left
 
 -- Jumper unmouted => Distributed Read
 -- Jumper mounted  => Normal Read

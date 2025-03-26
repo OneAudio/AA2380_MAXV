@@ -4,7 +4,7 @@
 -- Generate clock enable signal instead of creating another clock domain
 -- Assume that the input clock : CK98M304
 --------------------------------------------------------------------------------
--- O.N - 23/03/2025 -- take 227 LE (old 212)
+-- O.N - 23/03/2025 -- take 285 LE (old 212)
 --------------------------------------------------------------------------------
 -- NOTES sur les différents signaux d'horloges nécessaires :
 -- RANGE of clocks:
@@ -25,6 +25,7 @@
 -- 23/03/2025   :
 -- *******************************
 -- Ajout sortie LRCK pour sortie I2S avec 50% de rapport cyclique
+-- Ajout sortie CLK8FS pour sortie I2S 2x4 Lanes avec 50% de rapport cyclique
 --------------------------------------------------------------------------------
 -------------------------------------------------------------------------------
 library  IEEE;
@@ -42,11 +43,11 @@ port(
     ReadCLK       :	out std_logic   ;  -- clock used to read data (50% duty cycle output)
     nFS           :	out std_logic   ;  -- Fso x AVG ratio (12kHz to 1536kHz) (80ns pulse output)
     Fso           :	out std_logic   ;  -- Effective output sampling rate (12kHz to 1536kHz) (10ns pulse output)
-    CK64FS        :	out std_logic   ;  -- 64 FS clock for I2S output    
-    OutOfRange    :	out std_logic   ; --
+    CK64FS        :	out std_logic   ;  -- 64 FS clock for I2S output   
     CLKBypass     :	out std_logic   ; --
     LRCK_Fso      :	out std_logic   ; --Fso x AVG ratio (12kHz to 1536kHz) (50% duty cycle for LRCK)
-    CK64FSR       :	out std_logic   ; -- 64FS clock with 50% dutu cycle
+    CK64FSR       :	out std_logic   ; -- 64FS clock with 50% duty cycle
+    CK8FSR       :	out std_logic   ; -- 64FS clock with 50% duty cycle
     -- test outputs
     -- TSTcounter_ReadCLK :out integer range 1 to 8192 ;
     -- TSTSetCnt_ReadCLK  :out integer range 1 to 8192
@@ -61,11 +62,14 @@ signal   SetCnt_nFS      : integer range 1 to 8192 ; -- nFS counter set value fo
 signal   counter_Fso     : integer range 1 to 8192 ; -- FSo clock counter
 signal   SetCnt_Fso      : integer range 1 to 8192 ; -- FSo counter set value for frequency selection
 signal   counter_CK64FS  : integer range 1 to 64   ; -- CK64FS clock counter
-signal   SetCnt_CK64FS   : integer range 1 to 64   ; -- CK64FS counter set value for frequency selection
+signal   counter_CK8FSR  : integer range 1 to 1024  ; -- CK8FS clock counter
+signal   SetCnt_CK64FS   : integer range 1 to 128   ; -- CK64FS counter set value for frequency selection
 
 signal   clken_nFS       : std_logic;
 signal   clken_FSo       : std_logic;
 signal   clken_CK64FS    : std_logic;
+signal   clken_CK64FSR   : std_logic;
+signal   clken_CK8FSR   : std_logic;
 
 signal   counter_ReadCLK : integer range 1 to 8192 ; -- ReadCLK clock counter
 signal   SetCnt_ReadCLK  : integer range 1 to 8192 ; -- ReadCLK counter set value for frequency selection
@@ -142,13 +146,7 @@ begin
     end case ;
     --
     SetCnt_CK64FS <= SetCnt_Fso/64 ; 
-    -- Generate OutOfRange signal to detect wrong settings (SR+AVG must be always <8 to have nFS =< 1536kHz)
-    if (SR+AVG) > 7 then -- condition to detect OutOfRange mode
-        OutOfRange <= '1' ; -- detect bad SR/AVG combination => value is OutOfRange
-    else
-        OutOfRange <= '0' ; -- SR/AVG in the range.
-    end if;
-    --
+
 end process;
 ------------------------------------------------------------------
 -- ReadClock frequency selection.
@@ -309,7 +307,7 @@ begin
         if  clearAll='1' then
             counter_CK64FS <= 1 ;
             clken_CK64FS <= '1';
-            CK64FSR <= '0';
+            clken_CK64FSR <= '0';
         else
             if(counter_CK64FS =SetCnt_CK64FS ) then
                 clken_CK64FS <= '1';
@@ -320,9 +318,27 @@ begin
             end if;
             -- Generate 50% duty-cycle LRCK signal
             if (counter_CK64FS < (SetCnt_CK64FS/2)+1 ) then
-                CK64FSR <= '1'; -- clken_CK64FSR set to 1
+                clken_CK64FSR <= '1'; -- clken_CK64FSR set to 1
             else
-                CK64FSR <= '0';-- clken_CK64FSR set to 0
+                clken_CK64FSR <= '0';-- clken_CK64FSR set to 0
+            end if;
+        end if;
+        --
+        ---- CK8FSR clock counter5 50% duty-cycle
+        if  clearAll='1' then
+            counter_CK8FSR <= 1 ;
+            clken_CK8FSR <= '1';
+        else
+            if counter_CK8FSR=SetCnt_Fso/8 then
+                    clken_CK8FSR <= '0';
+                    counter_CK8FSR <= 1 ;
+            else
+                    counter_CK8FSR <= counter_CK8FSR + 1 ;    
+            end if;
+            if (counter_CK8FSR < (SetCnt_Fso/16)+1 ) then
+                clken_CK8FSR <= '0'; -- clken_CK8FSR set to 1
+            else
+                clken_CK8FSR <= '1';-- clken_CK8FSR set to 0
             end if;
         end if;
         --
@@ -375,6 +391,18 @@ begin
             CK64FS <= '1'; --
         else
             CK64FS <= '0'; --
+        end if;
+    --
+        if(clken_CK64FSR = '1') then
+            CK64FSR <= '1'; --
+        else
+            CK64FSR <= '0'; --
+        end if;
+    --
+        if(clken_CK8FSR = '1') then
+            CK8FSR <= '1'; --
+        else
+            CK8FSR <= '0'; --
         end if;
     --
         if(clken_ReadCLK = '1') then
