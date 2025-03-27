@@ -20,7 +20,7 @@
 ## PROGRAM "Quartus Prime"
 ## VERSION "Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition"
 
-## DATE    "Tue Apr  2 13:45:55 2024"
+## DATE    "Thu Mar 27 14:31:20 2025"
 
 ##
 ## DEVICE  "5M570ZT100C5"
@@ -41,12 +41,9 @@ set_time_format -unit ns -decimal_places 3
 
 create_clock -name {F7_ReadyII:inst10|CLKSLOW} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F7_ReadyII:inst10|CLKSLOW}]
 create_clock -name {F0_ClockEnable_BETA2:inst4|Fso} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F0_ClockEnable_BETA2:inst4|Fso}]
-create_clock -name {F0_ctrl_encoder_B:inst1|Rotate} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F0_ctrl_encoder_B:inst1|Rotate}]
 create_clock -name {CLK100M} -period 10.000 -waveform { 0.000 5.000 } [get_ports { CLK100M }]
-create_clock -name {F0_ctrl_encoder_B:inst1|pushf} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F0_ctrl_encoder_B:inst1|pushf}]
 create_clock -name {F0_ClockEnable_BETA2:inst4|nFS} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F0_ClockEnable_BETA2:inst4|nFS}]
-create_clock -name {F0_ClockEnable_BETA2:inst4|Fso128} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F0_ClockEnable_BETA2:inst4|Fso128}]
-create_clock -name {F0_ClockEnable_BETA2:inst4|clockDIV[3]} -period 1.000 -waveform { 0.000 0.500 } [get_registers {F0_ClockEnable_BETA2:inst4|clockDIV[3]}]
+create_clock -name {F0_ClockEnable_BETA2:inst4|clockDIV[3]} -period 10.000 -waveform { 0.000 5.000 } [get_registers { F0_ClockEnable_BETA2:inst4|clockDIV[3] }]
 
 
 #**************************************************************

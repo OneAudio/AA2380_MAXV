@@ -53,15 +53,8 @@ set_global_assignment -name USE_CONFIGURATION_DEVICE ON
 set_global_assignment -name SIMULATION_MODE TIMING
 set_global_assignment -name ADD_DEFAULT_PINS_TO_SIMULATION_OUTPUT_WAVEFORMS OFF
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
-set_location_assignment PIN_2 -to OUT_PIN10
-set_location_assignment PIN_3 -to OUT_PIN9
-set_location_assignment PIN_4 -to OUT_PIN8
 set_location_assignment PIN_5 -to IN_PIN3
 set_location_assignment PIN_6 -to IN_PIN2
-set_location_assignment PIN_7 -to OUT_PIN7
-set_location_assignment PIN_12 -to OUT_PIN6
-set_location_assignment PIN_14 -to OUT_PIN5
-set_location_assignment PIN_15 -to OUT_PIN4
 set_location_assignment PIN_16 -to IN_PIN1
 set_global_assignment -name OPTIMIZE_HOLD_TIMING "IO PATHS AND MINIMUM TPD PATHS"
 set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
@@ -93,10 +86,6 @@ set_location_assignment PIN_57 -to nLED2_Y
 set_location_assignment PIN_85 -to nROT_push
 set_location_assignment PIN_91 -to nROT_Ta
 set_location_assignment PIN_87 -to nROT_Tb
-set_location_assignment PIN_21 -to OUT_PIN0
-set_location_assignment PIN_20 -to OUT_PIN1
-set_location_assignment PIN_19 -to OUT_PIN2
-set_location_assignment PIN_18 -to OUT_PIN3
 set_location_assignment PIN_1 -to OUT_PIN11
 set_location_assignment PIN_69 -to PLL_OE
 set_location_assignment PIN_68 -to PLL_S0
@@ -190,5 +179,17 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_03
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_02
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN4
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN5
+set_global_assignment -name VHDL_FILE F15_Par2I2S_2x4LanesII.vhd
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_location_assignment PIN_21 -to I2S4L_LRCK
+set_location_assignment PIN_20 -to I2S4L_BCK
+set_location_assignment PIN_2 -to I2S4L_SYNCP
+set_location_assignment PIN_14 -to I2S4L_DATAL[0]
+set_location_assignment PIN_15 -to I2S4L_DATAL[1]
+set_location_assignment PIN_18 -to I2S4L_DATAL[2]
+set_location_assignment PIN_19 -to I2S4L_DATAL[3]
+set_location_assignment PIN_3 -to I2S4L_DATAR[0]
+set_location_assignment PIN_4 -to I2S4L_DATAR[1]
+set_location_assignment PIN_7 -to I2S4L_DATAR[2]
+set_location_assignment PIN_12 -to I2S4L_DATAR[3]
