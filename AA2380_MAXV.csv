@@ -1,0 +1,95 @@
+# Copyright (C) 2023  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and any partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Intel Program License 
+# Subscription Agreement, the Intel Quartus Prime License Agreement,
+# the Intel FPGA IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Intel and sold by Intel or its authorized distributors.  Please
+# refer to the applicable agreement for further details, at
+# https://fpgasoftware.intel.com/eula.
+
+# Quartus Prime Version 23.1std.0 Build 991 11/28/2023 SC Lite Edition
+# File: D:\Mes documents\P-CAD_PROJECTS\_PROJETS_ON\Projects\Git\_Logiciels_KICAD\AA2380_MAXV\AA2380_MAXV.csv
+# Generated on: Fri Mar 28 11:45:11 2025
+
+# Note: The column header names should not be changed if you wish to import this .csv file into the Quartus Prime software.
+
+To,Direction,Location,I/O Bank,Fitter Location,I/O Standard,Reserved,Current Strength,Strict Preservation,Weak Pull-Up Resistor,Differential Pair
+ADCL_BUSY,Input,PIN_73,2,PIN_73,3.3-V LVTTL,,,,,
+ADCL_CNV,Output,PIN_74,2,PIN_74,3.3-V LVTTL,,,,,
+ADCL_SCK,Output,PIN_72,2,PIN_72,3.3-V LVTTL,,,,,
+ADCL_SDO,Input,PIN_71,2,PIN_71,3.3-V LVTTL,,,,,
+ADCR_BUSY,Input,PIN_55,2,PIN_55,3.3-V LVTTL,,,,,
+ADCR_CNV,Output,PIN_56,2,PIN_56,3.3-V LVTTL,,,,,
+ADCR_SCK,Output,PIN_54,2,PIN_54,3.3-V LVTTL,,,,,
+ADCR_SDO,Input,PIN_53,2,PIN_53,3.3-V LVTTL,,,,,
+CLK100M,Input,PIN_62,2,PIN_62,3.3-V LVTTL,,,,,
+CLKEXT,Input,PIN_98,2,PIN_98,3.3-V LVTTL,,,,,
+CLKIN_xN,Input,PIN_64,2,PIN_64,3.3-V LVTTL,,,,,
+CONF[3],Input,PIN_44,1,PIN_44,3.3-V LVTTL,,,,on,
+CONF[2],Input,PIN_43,1,PIN_43,3.3-V LVTTL,,,,on,
+CONF[1],Input,PIN_42,1,PIN_42,3.3-V LVTTL,,,,on,
+CONF[0],Input,PIN_41,1,PIN_41,3.3-V LVTTL,,,,on,
+FILTER_CH1,Output,PIN_61,2,PIN_61,3.3-V LVTTL,,,,,
+FILTER_CH2,Output,PIN_47,1,PIN_47,3.3-V LVTTL,,,,,
+I2S4L_BCK,Output,PIN_20,1,PIN_20,3.3-V LVTTL,,,,,
+I2S4L_DATAL[3],Output,PIN_19,1,PIN_19,3.3-V LVTTL,,,,,
+I2S4L_DATAL[2],Output,PIN_18,1,PIN_18,3.3-V LVTTL,,,,,
+I2S4L_DATAL[1],Output,PIN_15,1,PIN_15,3.3-V LVTTL,,,,,
+I2S4L_DATAL[0],Output,PIN_14,1,PIN_14,3.3-V LVTTL,,,,,
+I2S4L_DATAR[3],Output,PIN_12,1,PIN_12,3.3-V LVTTL,,,,,
+I2S4L_DATAR[2],Output,PIN_7,1,PIN_7,3.3-V LVTTL,,,,,
+I2S4L_DATAR[1],Output,PIN_4,1,PIN_4,3.3-V LVTTL,,,,,
+I2S4L_DATAR[0],Output,PIN_3,1,PIN_3,3.3-V LVTTL,,,,,
+I2S4L_LRCK,Output,PIN_21,1,PIN_21,3.3-V LVTTL,,,,,
+I2S4L_SYNCP,Output,PIN_2,1,PIN_2,3.3-V LVTTL,,,,,
+IN_PIN0,Input,PIN_17,1,PIN_17,3.3-V LVTTL,,,,on,
+IN_PIN1,Input,PIN_16,1,PIN_16,3.3-V LVTTL,,,,on,
+IN_PIN2,Input,PIN_6,1,PIN_6,3.3-V LVTTL,,,,on,
+IN_PIN3,Input,PIN_5,1,PIN_5,3.3-V LVTTL,,,,on,
+IN_PIN4,Input,PIN_100,2,PIN_100,3.3-V LVTTL,,,,on,
+IN_PIN5,Input,PIN_99,2,PIN_99,3.3-V LVTTL,,,,on,
+LED_48K,Output,PIN_83,2,PIN_83,3.3-V LVTTL,,,,,
+LED_96K,Output,PIN_81,2,PIN_81,3.3-V LVTTL,,,,,
+LED_192K,Output,PIN_77,2,PIN_77,3.3-V LVTTL,,,,,
+LED_CAL,Output,PIN_78,2,PIN_78,3.3-V LVTTL,,,,,
+LED_FILTOFF,Output,PIN_82,2,PIN_82,3.3-V LVTTL,,,,,
+LED_SE,Output,PIN_76,2,PIN_76,3.3-V LVTTL,,,,,
+LEDavg0,Output,PIN_89,2,PIN_89,3.3-V LVTTL,,,,,
+LEDavg1,Output,PIN_86,2,PIN_86,3.3-V LVTTL,,,,,
+LEDavg2,Output,PIN_84,2,PIN_84,3.3-V LVTTL,,,,,
+nACTIVITY_LED,Output,PIN_75,2,PIN_75,3.3-V LVTTL,,,,,
+nLED1_G,Output,PIN_49,1,PIN_49,3.3-V LVTTL,,,,,
+nLED1_R,Output,PIN_51,1,PIN_51,3.3-V LVTTL,,,,,
+nLED1_Y,Output,PIN_50,1,PIN_50,3.3-V LVTTL,,,,,
+nLED2_G,Output,PIN_52,2,PIN_52,3.3-V LVTTL,,,,,
+nLED2_R,Output,PIN_58,2,PIN_58,3.3-V LVTTL,,,,,
+nLED2_Y,Output,PIN_57,2,PIN_57,3.3-V LVTTL,,,,,
+nROT_push,Input,PIN_85,2,PIN_85,3.3-V LVTTL,,,,on,
+nROT_Ta,Input,PIN_91,2,PIN_91,3.3-V LVTTL,,,,on,
+nROT_Tb,Input,PIN_87,2,PIN_87,3.3-V LVTTL,,,,on,
+OUT_PIN11,Output,PIN_1,2,PIN_1,3.3-V LVTTL,,,,,
+PLL_OE,Output,PIN_69,2,PIN_69,3.3-V LVTTL,,,,,
+PLL_S0,Output,PIN_68,2,PIN_68,3.3-V LVTTL,,,,,
+PLL_S1,Output,PIN_70,2,PIN_70,3.3-V LVTTL,,,,,
+PWM0,Output,PIN_96,2,PIN_96,3.3-V LVTTL,,,,,
+PWM1,Output,PIN_92,2,PIN_92,3.3-V LVTTL,,,,,
+SE_CH1,Output,PIN_66,2,PIN_66,3.3-V LVTTL,,,,,
+SE_CH2,Output,PIN_48,1,PIN_48,3.3-V LVTTL,,,,,
+SPDIFO,Output,PIN_97,2,PIN_97,3.3-V LVTTL,,,,,
+UIO_0,Output,PIN_26,1,PIN_26,3.3-V LVTTL,,,,,
+UIO_1,Output,PIN_28,1,PIN_28,3.3-V LVTTL,,,,,
+UIO_02,Input,PIN_29,1,PIN_29,3.3-V LVTTL,,,,on,
+UIO_03,Input,PIN_30,1,PIN_30,3.3-V LVTTL,,,,on,
+UIO_04,Input,PIN_33,1,PIN_33,3.3-V LVTTL,,,,,
+UIO_05,Input,PIN_34,1,PIN_34,3.3-V LVTTL,,,,,
+UIO_06,Input,PIN_35,1,PIN_35,3.3-V LVTTL,,,,on,
+UIO_7,Output,PIN_36,1,PIN_36,3.3-V LVTTL,,,,,
+UIO_8,Output,PIN_38,1,PIN_38,3.3-V LVTTL,,,,,
+UIO_9,Output,PIN_40,1,PIN_40,3.3-V LVTTL,,,,,
+UIO_10,Output,PIN_27,1,PIN_27,3.3-V LVTTL,,,,,
