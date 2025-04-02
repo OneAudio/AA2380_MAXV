@@ -238,7 +238,13 @@ CONF3 (JPD) pin 44 --> Mode selection SR int/ext   (Si cavalier =externe(J12), s
 
 
 
-
+------------------------------------------------------------------------------------
+Le 02/04/2025
+------------------------------------------------------------------------------------
+On crée la nouvelle branche pour être en mode esclave avec la carte 10M08.
+Ici on ajoute la possibilitée de choisir entre l'oscillateur de la carte AA2380V1 ou l'horloges sur 
+l'entrée SMA qui vient de la 10M08.
+Le choix se fait par la broche J12-2 (UIO_10), sans strap= clock interne AA2380, avec strap  à la masse = SMA.
 
 
 

@@ -41,7 +41,7 @@ set_global_assignment -name DEVICE 5M570ZT100C5
 set_global_assignment -name TOP_LEVEL_ENTITY AA2380_MAXV
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "9.1 SP2"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:54:12  MARCH 19, 2019"
-set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.0 SP0.02std Lite Edition"
 set_global_assignment -name USE_GENERATED_PHYSICAL_CONSTRAINTS OFF -section_id eda_blast_fpga
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -193,3 +193,5 @@ set_location_assignment PIN_3 -to I2S4L_DATAR[0]
 set_location_assignment PIN_4 -to I2S4L_DATAR[1]
 set_location_assignment PIN_7 -to I2S4L_DATAR[2]
 set_location_assignment PIN_12 -to I2S4L_DATAR[3]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_10
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UIO_10
