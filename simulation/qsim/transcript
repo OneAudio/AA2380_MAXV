@@ -1,0 +1,50 @@
+# do AA2380_MAXV.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 08:24:10 on Apr 04,2025
+# vcom -work work AA2380_MAXV_v001.vho 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package VITAL_Timing
+# -- Loading package VITAL_Primitives
+# -- Loading package maxv_atom_pack
+# -- Loading package maxv_components
+# -- Compiling entity F1_readADCmulti_ExtClkII
+# -- Compiling architecture structure of F1_readADCmulti_ExtClkII
+# End time: 08:24:10 on Apr 04,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 08:24:10 on Apr 04,2025
+# vcom -work work F5_Parr_to_I2S.vwf.vht 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity F1_readADCmulti_ExtClkII_vhd_vec_tst
+# -- Compiling architecture F1_readADCmulti_ExtClkII_arch of F1_readADCmulti_ExtClkII_vhd_vec_tst
+# End time: 08:24:10 on Apr 04,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -c -t 1ps -L maxv -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.F1_readADCmulti_ExtClkII_vhd_vec_tst 
+# Start time: 08:24:10 on Apr 04,2025
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.f1_readadcmulti_extclkii_vhd_vec_tst(f1_readadcmulti_extclkii_arch)
+# Loading ieee.vital_timing(body)
+# Loading ieee.vital_primitives(body)
+# Loading maxv.maxv_atom_pack(body)
+# Loading maxv.maxv_components
+# Loading work.f1_readadcmulti_extclkii(structure)
+# Loading ieee.std_logic_arith(body)
+# Loading maxv.maxv_io(behave)
+# Loading maxv.maxv_lcell(vital_le_atom)
+# Loading maxv.maxv_asynch_lcell(vital_le)
+# Loading maxv.maxv_lcell_register(vital_le_reg)
+# GetModuleFileName: Le module spécifié est introuvable.
+# 
+# 
+# ** Warning: Design size of 35307 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+# after#31
+# End time: 08:24:11 on Apr 04,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 1

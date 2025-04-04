@@ -1,0 +1,1176 @@
+$comment
+	File created using the following command:
+		vcd file AA2380_MAXV.msim.vcd -direction
+$end
+$date
+	Fri Apr 04 08:24:11 2025
+$end
+$version
+	ModelSim Version 2020.1
+$end
+$timescale
+	1ps
+$end
+
+$scope module f1_readadcmulti_extclkii_vhd_vec_tst $end
+$var wire 1 ! AQMODE $end
+$var wire 1 " AVG [2] $end
+$var wire 1 # AVG [1] $end
+$var wire 1 $ AVG [0] $end
+$var wire 1 % BUSYL $end
+$var wire 1 & BUSYR $end
+$var wire 1 ' Clear $end
+$var wire 1 ( CLKBypass $end
+$var wire 1 ) DOUTL [23] $end
+$var wire 1 * DOUTL [22] $end
+$var wire 1 + DOUTL [21] $end
+$var wire 1 , DOUTL [20] $end
+$var wire 1 - DOUTL [19] $end
+$var wire 1 . DOUTL [18] $end
+$var wire 1 / DOUTL [17] $end
+$var wire 1 0 DOUTL [16] $end
+$var wire 1 1 DOUTL [15] $end
+$var wire 1 2 DOUTL [14] $end
+$var wire 1 3 DOUTL [13] $end
+$var wire 1 4 DOUTL [12] $end
+$var wire 1 5 DOUTL [11] $end
+$var wire 1 6 DOUTL [10] $end
+$var wire 1 7 DOUTL [9] $end
+$var wire 1 8 DOUTL [8] $end
+$var wire 1 9 DOUTL [7] $end
+$var wire 1 : DOUTL [6] $end
+$var wire 1 ; DOUTL [5] $end
+$var wire 1 < DOUTL [4] $end
+$var wire 1 = DOUTL [3] $end
+$var wire 1 > DOUTL [2] $end
+$var wire 1 ? DOUTL [1] $end
+$var wire 1 @ DOUTL [0] $end
+$var wire 1 A DOUTR [23] $end
+$var wire 1 B DOUTR [22] $end
+$var wire 1 C DOUTR [21] $end
+$var wire 1 D DOUTR [20] $end
+$var wire 1 E DOUTR [19] $end
+$var wire 1 F DOUTR [18] $end
+$var wire 1 G DOUTR [17] $end
+$var wire 1 H DOUTR [16] $end
+$var wire 1 I DOUTR [15] $end
+$var wire 1 J DOUTR [14] $end
+$var wire 1 K DOUTR [13] $end
+$var wire 1 L DOUTR [12] $end
+$var wire 1 M DOUTR [11] $end
+$var wire 1 N DOUTR [10] $end
+$var wire 1 O DOUTR [9] $end
+$var wire 1 P DOUTR [8] $end
+$var wire 1 Q DOUTR [7] $end
+$var wire 1 R DOUTR [6] $end
+$var wire 1 S DOUTR [5] $end
+$var wire 1 T DOUTR [4] $end
+$var wire 1 U DOUTR [3] $end
+$var wire 1 V DOUTR [2] $end
+$var wire 1 W DOUTR [1] $end
+$var wire 1 X DOUTR [0] $end
+$var wire 1 Y Fso $end
+$var wire 1 Z MCLK $end
+$var wire 1 [ nCNVL $end
+$var wire 1 \ nCNVR $end
+$var wire 1 ] nFS $end
+$var wire 1 ^ OutOfRange $end
+$var wire 1 _ ReadCLK $end
+$var wire 1 ` SCKL $end
+$var wire 1 a SCKR $end
+$var wire 1 b SDOL $end
+$var wire 1 c SDOR $end
+$var wire 1 d SR [2] $end
+$var wire 1 e SR [1] $end
+$var wire 1 f SR [0] $end
+$var wire 1 g Test_ADC_CLK $end
+$var wire 1 h Test_ADC_SHIFT $end
+$var wire 1 i Test_AVG_count [6] $end
+$var wire 1 j Test_AVG_count [5] $end
+$var wire 1 k Test_AVG_count [4] $end
+$var wire 1 l Test_AVG_count [3] $end
+$var wire 1 m Test_AVG_count [2] $end
+$var wire 1 n Test_AVG_count [1] $end
+$var wire 1 o Test_AVG_count [0] $end
+$var wire 1 p Test_AVGen_READ $end
+$var wire 1 q Test_AVGen_SCK $end
+$var wire 1 r Test_CK_cycle [4] $end
+$var wire 1 s Test_CK_cycle [3] $end
+$var wire 1 t Test_CK_cycle [2] $end
+$var wire 1 u Test_CK_cycle [1] $end
+$var wire 1 v Test_CK_cycle [0] $end
+$var wire 1 w Test_CNVclk_cnt [5] $end
+$var wire 1 x Test_CNVclk_cnt [4] $end
+$var wire 1 y Test_CNVclk_cnt [3] $end
+$var wire 1 z Test_CNVclk_cnt [2] $end
+$var wire 1 { Test_CNVclk_cnt [1] $end
+$var wire 1 | Test_CNVclk_cnt [0] $end
+$var wire 1 } Test_CNVen_SCK $end
+$var wire 1 ~ Test_CNVen_SHFT $end
+$var wire 1 !! Test_ReadADCclock $end
+$var wire 1 "! Test_TCLK23 [4] $end
+$var wire 1 #! Test_TCLK23 [3] $end
+$var wire 1 $! Test_TCLK23 [2] $end
+$var wire 1 %! Test_TCLK23 [1] $end
+$var wire 1 &! Test_TCLK23 [0] $end
+
+$scope module i1 $end
+$var wire 1 '! gnd $end
+$var wire 1 (! vcc $end
+$var wire 1 )! unknown $end
+$var wire 1 *! devoe $end
+$var wire 1 +! devclrn $end
+$var wire 1 ,! devpor $end
+$var wire 1 -! ww_devoe $end
+$var wire 1 .! ww_devclrn $end
+$var wire 1 /! ww_devpor $end
+$var wire 1 0! ww_MCLK $end
+$var wire 1 1! ww_ReadCLK $end
+$var wire 1 2! ww_nFS $end
+$var wire 1 3! ww_Fso $end
+$var wire 1 4! ww_OutOfRange $end
+$var wire 1 5! ww_Clear $end
+$var wire 1 6! ww_SR [2] $end
+$var wire 1 7! ww_SR [1] $end
+$var wire 1 8! ww_SR [0] $end
+$var wire 1 9! ww_AVG [2] $end
+$var wire 1 :! ww_AVG [1] $end
+$var wire 1 ;! ww_AVG [0] $end
+$var wire 1 <! ww_CLKBypass $end
+$var wire 1 =! ww_AQMODE $end
+$var wire 1 >! ww_DOUTL [23] $end
+$var wire 1 ?! ww_DOUTL [22] $end
+$var wire 1 @! ww_DOUTL [21] $end
+$var wire 1 A! ww_DOUTL [20] $end
+$var wire 1 B! ww_DOUTL [19] $end
+$var wire 1 C! ww_DOUTL [18] $end
+$var wire 1 D! ww_DOUTL [17] $end
+$var wire 1 E! ww_DOUTL [16] $end
+$var wire 1 F! ww_DOUTL [15] $end
+$var wire 1 G! ww_DOUTL [14] $end
+$var wire 1 H! ww_DOUTL [13] $end
+$var wire 1 I! ww_DOUTL [12] $end
+$var wire 1 J! ww_DOUTL [11] $end
+$var wire 1 K! ww_DOUTL [10] $end
+$var wire 1 L! ww_DOUTL [9] $end
+$var wire 1 M! ww_DOUTL [8] $end
+$var wire 1 N! ww_DOUTL [7] $end
+$var wire 1 O! ww_DOUTL [6] $end
+$var wire 1 P! ww_DOUTL [5] $end
+$var wire 1 Q! ww_DOUTL [4] $end
+$var wire 1 R! ww_DOUTL [3] $end
+$var wire 1 S! ww_DOUTL [2] $end
+$var wire 1 T! ww_DOUTL [1] $end
+$var wire 1 U! ww_DOUTL [0] $end
+$var wire 1 V! ww_DOUTR [23] $end
+$var wire 1 W! ww_DOUTR [22] $end
+$var wire 1 X! ww_DOUTR [21] $end
+$var wire 1 Y! ww_DOUTR [20] $end
+$var wire 1 Z! ww_DOUTR [19] $end
+$var wire 1 [! ww_DOUTR [18] $end
+$var wire 1 \! ww_DOUTR [17] $end
+$var wire 1 ]! ww_DOUTR [16] $end
+$var wire 1 ^! ww_DOUTR [15] $end
+$var wire 1 _! ww_DOUTR [14] $end
+$var wire 1 `! ww_DOUTR [13] $end
+$var wire 1 a! ww_DOUTR [12] $end
+$var wire 1 b! ww_DOUTR [11] $end
+$var wire 1 c! ww_DOUTR [10] $end
+$var wire 1 d! ww_DOUTR [9] $end
+$var wire 1 e! ww_DOUTR [8] $end
+$var wire 1 f! ww_DOUTR [7] $end
+$var wire 1 g! ww_DOUTR [6] $end
+$var wire 1 h! ww_DOUTR [5] $end
+$var wire 1 i! ww_DOUTR [4] $end
+$var wire 1 j! ww_DOUTR [3] $end
+$var wire 1 k! ww_DOUTR [2] $end
+$var wire 1 l! ww_DOUTR [1] $end
+$var wire 1 m! ww_DOUTR [0] $end
+$var wire 1 n! ww_BUSYL $end
+$var wire 1 o! ww_SDOL $end
+$var wire 1 p! ww_nCNVL $end
+$var wire 1 q! ww_SCKL $end
+$var wire 1 r! ww_BUSYR $end
+$var wire 1 s! ww_SDOR $end
+$var wire 1 t! ww_nCNVR $end
+$var wire 1 u! ww_SCKR $end
+$var wire 1 v! ww_Test_CK_cycle [4] $end
+$var wire 1 w! ww_Test_CK_cycle [3] $end
+$var wire 1 x! ww_Test_CK_cycle [2] $end
+$var wire 1 y! ww_Test_CK_cycle [1] $end
+$var wire 1 z! ww_Test_CK_cycle [0] $end
+$var wire 1 {! ww_Test_ADC_CLK $end
+$var wire 1 |! ww_Test_ADC_SHIFT $end
+$var wire 1 }! ww_Test_AVGen_READ $end
+$var wire 1 ~! ww_Test_CNVen_SHFT $end
+$var wire 1 !" ww_Test_AVGen_SCK $end
+$var wire 1 "" ww_Test_CNVen_SCK $end
+$var wire 1 #" ww_Test_CNVclk_cnt [5] $end
+$var wire 1 $" ww_Test_CNVclk_cnt [4] $end
+$var wire 1 %" ww_Test_CNVclk_cnt [3] $end
+$var wire 1 &" ww_Test_CNVclk_cnt [2] $end
+$var wire 1 '" ww_Test_CNVclk_cnt [1] $end
+$var wire 1 (" ww_Test_CNVclk_cnt [0] $end
+$var wire 1 )" ww_Test_AVG_count [6] $end
+$var wire 1 *" ww_Test_AVG_count [5] $end
+$var wire 1 +" ww_Test_AVG_count [4] $end
+$var wire 1 ," ww_Test_AVG_count [3] $end
+$var wire 1 -" ww_Test_AVG_count [2] $end
+$var wire 1 ." ww_Test_AVG_count [1] $end
+$var wire 1 /" ww_Test_AVG_count [0] $end
+$var wire 1 0" ww_Test_TCLK23 [4] $end
+$var wire 1 1" ww_Test_TCLK23 [3] $end
+$var wire 1 2" ww_Test_TCLK23 [2] $end
+$var wire 1 3" ww_Test_TCLK23 [1] $end
+$var wire 1 4" ww_Test_TCLK23 [0] $end
+$var wire 1 5" ww_Test_ReadADCclock $end
+$var wire 1 6" \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~5\ $end
+$var wire 1 7" \LessThan3~5\ $end
+$var wire 1 8" \Add1~43\ $end
+$var wire 1 9" \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~10\ $end
+$var wire 1 :" \LessThan3~10\ $end
+$var wire 1 ;" \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~15\ $end
+$var wire 1 <" \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella[1]~15\ $end
+$var wire 1 =" \LessThan3~15\ $end
+$var wire 1 >" \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~20\ $end
+$var wire 1 ?" \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~20\ $end
+$var wire 1 @" \LessThan3~20\ $end
+$var wire 1 A" \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~25\ $end
+$var wire 1 B" \LessThan3~25\ $end
+$var wire 1 C" \LessThan3~30\ $end
+$var wire 1 D" \LessThan3~35\ $end
+$var wire 1 E" \Fso~combout\ $end
+$var wire 1 F" \ReadCLK~combout\ $end
+$var wire 1 G" \Mux5~1_combout\ $end
+$var wire 1 H" \AQMODE~combout\ $end
+$var wire 1 I" \CK_cycle~2_combout\ $end
+$var wire 1 J" \CK_cycle~6_combout\ $end
+$var wire 1 K" \CK_cycle~1_combout\ $end
+$var wire 1 L" \CK_cycle~5_combout\ $end
+$var wire 1 M" \CK_cycle~4_combout\ $end
+$var wire 1 N" \BUSYL~combout\ $end
+$var wire 1 O" \BUSYR~combout\ $end
+$var wire 1 P" \ADC_clocks~0_combout\ $end
+$var wire 1 Q" \CNVclk_cnt[1]~1\ $end
+$var wire 1 R" \CNVclk_cnt[2]~3\ $end
+$var wire 1 S" \CNVclk_cnt[3]~5\ $end
+$var wire 1 T" \LessThan1~1_combout\ $end
+$var wire 1 U" \LessThan1~0_combout\ $end
+$var wire 1 V" \CNVclk_cnt[4]~7\ $end
+$var wire 1 W" \CK_cycle~3_combout\ $end
+$var wire 1 X" \LessThan1~2_combout\ $end
+$var wire 1 Y" \LessThan1~3_combout\ $end
+$var wire 1 Z" \LessThan1~4_combout\ $end
+$var wire 1 [" \LessThan2~0_combout\ $end
+$var wire 1 \" \LessThan2~1_combout\ $end
+$var wire 1 ]" \LessThan2~2_combout\ $end
+$var wire 1 ^" \LessThan2~3_combout\ $end
+$var wire 1 _" \CNVen_SHFT~regout\ $end
+$var wire 1 `" \nFS~combout\ $end
+$var wire 1 a" \Mux5~8_combout\ $end
+$var wire 1 b" \Mux5~9_combout\ $end
+$var wire 1 c" \Mux5~7_combout\ $end
+$var wire 1 d" \Mux5~6_combout\ $end
+$var wire 1 e" \Mux5~4_combout\ $end
+$var wire 1 f" \Mux5~5_combout\ $end
+$var wire 1 g" \Mux5~2_combout\ $end
+$var wire 1 h" \Mux5~3_combout\ $end
+$var wire 1 i" \Add2~12\ $end
+$var wire 1 j" \Add2~7\ $end
+$var wire 1 k" \Add2~22\ $end
+$var wire 1 l" \Add2~17\ $end
+$var wire 1 m" \Add2~32\ $end
+$var wire 1 n" \Add2~27\ $end
+$var wire 1 o" \Add2~42\ $end
+$var wire 1 p" \Add2~37\ $end
+$var wire 1 q" \Add2~0_combout\ $end
+$var wire 1 r" \OutOfRange~combout\ $end
+$var wire 1 s" \Clear~combout\ $end
+$var wire 1 t" \AVG_cycles~6_combout\ $end
+$var wire 1 u" \Add1~45_cout\ $end
+$var wire 1 v" \Add1~3\ $end
+$var wire 1 w" \Add1~7_combout\ $end
+$var wire 1 x" \Add1~9\ $end
+$var wire 1 y" \Add1~13_combout\ $end
+$var wire 1 z" \Add1~15\ $end
+$var wire 1 {" \Add1~19_combout\ $end
+$var wire 1 |" \Add1~21\ $end
+$var wire 1 }" \Add1~25_combout\ $end
+$var wire 1 ~" \Add1~27\ $end
+$var wire 1 !# \Add1~31_combout\ $end
+$var wire 1 "# \Add1~33\ $end
+$var wire 1 ## \Add1~37_combout\ $end
+$var wire 1 $# \LessThan3~37_cout\ $end
+$var wire 1 %# \LessThan3~32_cout\ $end
+$var wire 1 &# \LessThan3~27_cout\ $end
+$var wire 1 '# \LessThan3~22_cout\ $end
+$var wire 1 (# \LessThan3~17_cout\ $end
+$var wire 1 )# \LessThan3~12_cout\ $end
+$var wire 1 *# \LessThan3~7_cout\ $end
+$var wire 1 +# \LessThan3~0_combout\ $end
+$var wire 1 ,# \Add1~1_combout\ $end
+$var wire 1 -# \Equal1~0_combout\ $end
+$var wire 1 .# \Equal1~1_combout\ $end
+$var wire 1 /# \Equal1~2_combout\ $end
+$var wire 1 0# \Equal1~3_combout\ $end
+$var wire 1 1# \Equal1~4_combout\ $end
+$var wire 1 2# \Add2~5_combout\ $end
+$var wire 1 3# \Add2~10_combout\ $end
+$var wire 1 4# \Equal0~0_combout\ $end
+$var wire 1 5# \Add2~15_combout\ $end
+$var wire 1 6# \Add2~20_combout\ $end
+$var wire 1 7# \Equal0~1_combout\ $end
+$var wire 1 8# \Add2~25_combout\ $end
+$var wire 1 9# \Add2~30_combout\ $end
+$var wire 1 :# \Equal0~2_combout\ $end
+$var wire 1 ;# \Add2~35_combout\ $end
+$var wire 1 <# \Add2~40_combout\ $end
+$var wire 1 =# \Equal0~3_combout\ $end
+$var wire 1 ># \Equal0~4_combout\ $end
+$var wire 1 ?# \AVGen_SCK~regout\ $end
+$var wire 1 @# \T_CNVen_SHFT~regout\ $end
+$var wire 1 A# \AVG_cycles~0_combout\ $end
+$var wire 1 B# \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella[0]~COUT\ $end
+$var wire 1 C# \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella[1]~20_combout\ $end
+$var wire 1 D# \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella[1]~17_cout\ $end
+$var wire 1 E# \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella[1]~12\ $end
+$var wire 1 F# \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella[1]~5_combout\ $end
+$var wire 1 G# \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella[1]~7\ $end
+$var wire 1 H# \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella[1]~0_combout\ $end
+$var wire 1 I# \Div0|auto_generated|divider|divider|StageOut[12]~0_combout\ $end
+$var wire 1 J# \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella[1]~10_combout\ $end
+$var wire 1 K# \Div0|auto_generated|divider|divider|StageOut[11]~2_combout\ $end
+$var wire 1 L# \Div0|auto_generated|divider|divider|StageOut[10]~4_combout\ $end
+$var wire 1 M# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[0]~COUT\ $end
+$var wire 1 N# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~25_combout\ $end
+$var wire 1 O# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~22_cout\ $end
+$var wire 1 P# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~17\ $end
+$var wire 1 Q# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~12\ $end
+$var wire 1 R# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~5_combout\ $end
+$var wire 1 S# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~7\ $end
+$var wire 1 T# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~0_combout\ $end
+$var wire 1 U# \Div0|auto_generated|divider|divider|StageOut[18]~1_combout\ $end
+$var wire 1 V# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~10_combout\ $end
+$var wire 1 W# \Div0|auto_generated|divider|divider|StageOut[17]~3_combout\ $end
+$var wire 1 X# \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella[1]~15_combout\ $end
+$var wire 1 Y# \Div0|auto_generated|divider|divider|StageOut[16]~5_combout\ $end
+$var wire 1 Z# \Div0|auto_generated|divider|divider|StageOut[15]~6_combout\ $end
+$var wire 1 [# \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~27_cout\ $end
+$var wire 1 \# \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~22_cout\ $end
+$var wire 1 ]# \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~17_cout\ $end
+$var wire 1 ^# \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~12_cout\ $end
+$var wire 1 _# \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~7_cout\ $end
+$var wire 1 `# \Div0|auto_generated|divider|divider|add_sub_4|add_sub_cella[1]~0_combout\ $end
+$var wire 1 a# \AVG_cycles~1_combout\ $end
+$var wire 1 b# \AVG_cycles~2_combout\ $end
+$var wire 1 c# \AVG_cycles~3_combout\ $end
+$var wire 1 d# \AVG_cycles~4_combout\ $end
+$var wire 1 e# \AVGen_READ~regout\ $end
+$var wire 1 f# \ADC_SHIFT~0_combout\ $end
+$var wire 1 g# \LessThan0~0_combout\ $end
+$var wire 1 h# \CNVen_SCK~regout\ $end
+$var wire 1 i# \T_CNVen_SCK~regout\ $end
+$var wire 1 j# \ADC_CLK~0_combout\ $end
+$var wire 1 k# \CLKBypass~combout\ $end
+$var wire 1 l# \ReadADCclock~0_combout\ $end
+$var wire 1 m# \SDOL~combout\ $end
+$var wire 1 n# \ResetAVGread~0_combout\ $end
+$var wire 1 o# \TCLK23[1]~1\ $end
+$var wire 1 p# \TCLK23[2]~3\ $end
+$var wire 1 q# \Mux34~0_combout\ $end
+$var wire 1 r# \LessThan5~0_combout\ $end
+$var wire 1 s# \TCLK23[3]~5\ $end
+$var wire 1 t# \Mux34~1_combout\ $end
+$var wire 1 u# \DOUTL[0]~reg0_regout\ $end
+$var wire 1 v# \Mux33~0_combout\ $end
+$var wire 1 w# \DOUTL[1]~reg0_regout\ $end
+$var wire 1 x# \Mux32~0_combout\ $end
+$var wire 1 y# \DOUTL[2]~reg0_regout\ $end
+$var wire 1 z# \Mux31~0_combout\ $end
+$var wire 1 {# \DOUTL[3]~reg0_regout\ $end
+$var wire 1 |# \Mux30~0_combout\ $end
+$var wire 1 }# \DOUTL[4]~reg0_regout\ $end
+$var wire 1 ~# \Mux29~0_combout\ $end
+$var wire 1 !$ \DOUTL[5]~reg0_regout\ $end
+$var wire 1 "$ \Mux28~0_combout\ $end
+$var wire 1 #$ \DOUTL[6]~reg0_regout\ $end
+$var wire 1 $$ \Mux27~0_combout\ $end
+$var wire 1 %$ \DOUTL[7]~reg0_regout\ $end
+$var wire 1 &$ \Mux26~0_combout\ $end
+$var wire 1 '$ \DOUTL[8]~reg0_regout\ $end
+$var wire 1 ($ \Mux25~0_combout\ $end
+$var wire 1 )$ \DOUTL[9]~reg0_regout\ $end
+$var wire 1 *$ \Mux24~0_combout\ $end
+$var wire 1 +$ \DOUTL[10]~reg0_regout\ $end
+$var wire 1 ,$ \Mux23~0_combout\ $end
+$var wire 1 -$ \DOUTL[11]~reg0_regout\ $end
+$var wire 1 .$ \Mux22~0_combout\ $end
+$var wire 1 /$ \DOUTL[12]~reg0_regout\ $end
+$var wire 1 0$ \Mux21~0_combout\ $end
+$var wire 1 1$ \DOUTL[13]~reg0_regout\ $end
+$var wire 1 2$ \Mux20~0_combout\ $end
+$var wire 1 3$ \DOUTL[14]~reg0_regout\ $end
+$var wire 1 4$ \Mux19~0_combout\ $end
+$var wire 1 5$ \DOUTL[15]~reg0_regout\ $end
+$var wire 1 6$ \r_DATAL[19]~4_combout\ $end
+$var wire 1 7$ \r_DATAL[16]~10_combout\ $end
+$var wire 1 8$ \DOUTL[16]~reg0_regout\ $end
+$var wire 1 9$ \r_DATAR[17]~0_combout\ $end
+$var wire 1 :$ \DOUTL[17]~reg0_regout\ $end
+$var wire 1 ;$ \r_DATAL[18]~5_combout\ $end
+$var wire 1 <$ \DOUTL[18]~reg0_regout\ $end
+$var wire 1 =$ \r_DATAL[19]~6_combout\ $end
+$var wire 1 >$ \DOUTL[19]~reg0_regout\ $end
+$var wire 1 ?$ \r_DATAL[20]~7_combout\ $end
+$var wire 1 @$ \DOUTL[20]~reg0_regout\ $end
+$var wire 1 A$ \r_DATAL[21]~8_combout\ $end
+$var wire 1 B$ \DOUTL[21]~reg0_regout\ $end
+$var wire 1 C$ \r_DATAR[22]~1_combout\ $end
+$var wire 1 D$ \DOUTL[22]~reg0_regout\ $end
+$var wire 1 E$ \r_DATAL[23]~9_combout\ $end
+$var wire 1 F$ \DOUTL[23]~reg0_regout\ $end
+$var wire 1 G$ \SDOR~combout\ $end
+$var wire 1 H$ \DOUTR[0]~reg0_regout\ $end
+$var wire 1 I$ \DOUTR[1]~reg0_regout\ $end
+$var wire 1 J$ \DOUTR[2]~reg0_regout\ $end
+$var wire 1 K$ \DOUTR[3]~reg0_regout\ $end
+$var wire 1 L$ \DOUTR[4]~reg0_regout\ $end
+$var wire 1 M$ \DOUTR[5]~reg0_regout\ $end
+$var wire 1 N$ \DOUTR[6]~reg0_regout\ $end
+$var wire 1 O$ \DOUTR[7]~reg0_regout\ $end
+$var wire 1 P$ \DOUTR[8]~reg0_regout\ $end
+$var wire 1 Q$ \DOUTR[9]~reg0_regout\ $end
+$var wire 1 R$ \DOUTR[10]~reg0_regout\ $end
+$var wire 1 S$ \DOUTR[11]~reg0_regout\ $end
+$var wire 1 T$ \DOUTR[12]~reg0_regout\ $end
+$var wire 1 U$ \DOUTR[13]~reg0_regout\ $end
+$var wire 1 V$ \DOUTR[14]~reg0_regout\ $end
+$var wire 1 W$ \DOUTR[15]~reg0_regout\ $end
+$var wire 1 X$ \DOUTR[16]~reg0_regout\ $end
+$var wire 1 Y$ \DOUTR[17]~reg0_regout\ $end
+$var wire 1 Z$ \DOUTR[18]~reg0_regout\ $end
+$var wire 1 [$ \DOUTR[19]~reg0_regout\ $end
+$var wire 1 \$ \DOUTR[20]~reg0_regout\ $end
+$var wire 1 ]$ \DOUTR[21]~reg0_regout\ $end
+$var wire 1 ^$ \DOUTR[22]~reg0_regout\ $end
+$var wire 1 _$ \DOUTR[23]~reg0_regout\ $end
+$var wire 1 `$ \AVG~combout\ [2] $end
+$var wire 1 a$ \AVG~combout\ [1] $end
+$var wire 1 b$ \AVG~combout\ [0] $end
+$var wire 1 c$ CNVclk_cnt [5] $end
+$var wire 1 d$ CNVclk_cnt [4] $end
+$var wire 1 e$ CNVclk_cnt [3] $end
+$var wire 1 f$ CNVclk_cnt [2] $end
+$var wire 1 g$ CNVclk_cnt [1] $end
+$var wire 1 h$ CNVclk_cnt [0] $end
+$var wire 1 i$ AVG_count [7] $end
+$var wire 1 j$ AVG_count [6] $end
+$var wire 1 k$ AVG_count [5] $end
+$var wire 1 l$ AVG_count [4] $end
+$var wire 1 m$ AVG_count [3] $end
+$var wire 1 n$ AVG_count [2] $end
+$var wire 1 o$ AVG_count [1] $end
+$var wire 1 p$ AVG_count [0] $end
+$var wire 1 q$ TCLK23 [4] $end
+$var wire 1 r$ TCLK23 [3] $end
+$var wire 1 s$ TCLK23 [2] $end
+$var wire 1 t$ TCLK23 [1] $end
+$var wire 1 u$ TCLK23 [0] $end
+$var wire 1 v$ \Div0|auto_generated|divider|divider|StageOut\ [24] $end
+$var wire 1 w$ \Div0|auto_generated|divider|divider|StageOut\ [23] $end
+$var wire 1 x$ \Div0|auto_generated|divider|divider|StageOut\ [22] $end
+$var wire 1 y$ \Div0|auto_generated|divider|divider|StageOut\ [21] $end
+$var wire 1 z$ \Div0|auto_generated|divider|divider|StageOut\ [20] $end
+$var wire 1 {$ \Div0|auto_generated|divider|divider|StageOut\ [19] $end
+$var wire 1 |$ \Div0|auto_generated|divider|divider|StageOut\ [18] $end
+$var wire 1 }$ \Div0|auto_generated|divider|divider|StageOut\ [17] $end
+$var wire 1 ~$ \Div0|auto_generated|divider|divider|StageOut\ [16] $end
+$var wire 1 !% \Div0|auto_generated|divider|divider|StageOut\ [15] $end
+$var wire 1 "% \Div0|auto_generated|divider|divider|StageOut\ [14] $end
+$var wire 1 #% \Div0|auto_generated|divider|divider|StageOut\ [13] $end
+$var wire 1 $% \Div0|auto_generated|divider|divider|StageOut\ [12] $end
+$var wire 1 %% \Div0|auto_generated|divider|divider|StageOut\ [11] $end
+$var wire 1 &% \Div0|auto_generated|divider|divider|StageOut\ [10] $end
+$var wire 1 '% \Div0|auto_generated|divider|divider|StageOut\ [9] $end
+$var wire 1 (% \Div0|auto_generated|divider|divider|StageOut\ [8] $end
+$var wire 1 )% \Div0|auto_generated|divider|divider|StageOut\ [7] $end
+$var wire 1 *% \Div0|auto_generated|divider|divider|StageOut\ [6] $end
+$var wire 1 +% \Div0|auto_generated|divider|divider|StageOut\ [5] $end
+$var wire 1 ,% \Div0|auto_generated|divider|divider|StageOut\ [4] $end
+$var wire 1 -% \Div0|auto_generated|divider|divider|StageOut\ [3] $end
+$var wire 1 .% \Div0|auto_generated|divider|divider|StageOut\ [2] $end
+$var wire 1 /% \Div0|auto_generated|divider|divider|StageOut\ [1] $end
+$var wire 1 0% \Div0|auto_generated|divider|divider|StageOut\ [0] $end
+$var wire 1 1% r_DATAL [23] $end
+$var wire 1 2% r_DATAL [22] $end
+$var wire 1 3% r_DATAL [21] $end
+$var wire 1 4% r_DATAL [20] $end
+$var wire 1 5% r_DATAL [19] $end
+$var wire 1 6% r_DATAL [18] $end
+$var wire 1 7% r_DATAL [17] $end
+$var wire 1 8% r_DATAL [16] $end
+$var wire 1 9% r_DATAL [15] $end
+$var wire 1 :% r_DATAL [14] $end
+$var wire 1 ;% r_DATAL [13] $end
+$var wire 1 <% r_DATAL [12] $end
+$var wire 1 =% r_DATAL [11] $end
+$var wire 1 >% r_DATAL [10] $end
+$var wire 1 ?% r_DATAL [9] $end
+$var wire 1 @% r_DATAL [8] $end
+$var wire 1 A% r_DATAL [7] $end
+$var wire 1 B% r_DATAL [6] $end
+$var wire 1 C% r_DATAL [5] $end
+$var wire 1 D% r_DATAL [4] $end
+$var wire 1 E% r_DATAL [3] $end
+$var wire 1 F% r_DATAL [2] $end
+$var wire 1 G% r_DATAL [1] $end
+$var wire 1 H% r_DATAL [0] $end
+$var wire 1 I% \Div0|auto_generated|divider|divider|selnose\ [29] $end
+$var wire 1 J% \Div0|auto_generated|divider|divider|selnose\ [28] $end
+$var wire 1 K% \Div0|auto_generated|divider|divider|selnose\ [27] $end
+$var wire 1 L% \Div0|auto_generated|divider|divider|selnose\ [26] $end
+$var wire 1 M% \Div0|auto_generated|divider|divider|selnose\ [25] $end
+$var wire 1 N% \Div0|auto_generated|divider|divider|selnose\ [24] $end
+$var wire 1 O% \Div0|auto_generated|divider|divider|selnose\ [23] $end
+$var wire 1 P% \Div0|auto_generated|divider|divider|selnose\ [22] $end
+$var wire 1 Q% \Div0|auto_generated|divider|divider|selnose\ [21] $end
+$var wire 1 R% \Div0|auto_generated|divider|divider|selnose\ [20] $end
+$var wire 1 S% \Div0|auto_generated|divider|divider|selnose\ [19] $end
+$var wire 1 T% \Div0|auto_generated|divider|divider|selnose\ [18] $end
+$var wire 1 U% \Div0|auto_generated|divider|divider|selnose\ [17] $end
+$var wire 1 V% \Div0|auto_generated|divider|divider|selnose\ [16] $end
+$var wire 1 W% \Div0|auto_generated|divider|divider|selnose\ [15] $end
+$var wire 1 X% \Div0|auto_generated|divider|divider|selnose\ [14] $end
+$var wire 1 Y% \Div0|auto_generated|divider|divider|selnose\ [13] $end
+$var wire 1 Z% \Div0|auto_generated|divider|divider|selnose\ [12] $end
+$var wire 1 [% \Div0|auto_generated|divider|divider|selnose\ [11] $end
+$var wire 1 \% \Div0|auto_generated|divider|divider|selnose\ [10] $end
+$var wire 1 ]% \Div0|auto_generated|divider|divider|selnose\ [9] $end
+$var wire 1 ^% \Div0|auto_generated|divider|divider|selnose\ [8] $end
+$var wire 1 _% \Div0|auto_generated|divider|divider|selnose\ [7] $end
+$var wire 1 `% \Div0|auto_generated|divider|divider|selnose\ [6] $end
+$var wire 1 a% \Div0|auto_generated|divider|divider|selnose\ [5] $end
+$var wire 1 b% \Div0|auto_generated|divider|divider|selnose\ [4] $end
+$var wire 1 c% \Div0|auto_generated|divider|divider|selnose\ [3] $end
+$var wire 1 d% \Div0|auto_generated|divider|divider|selnose\ [2] $end
+$var wire 1 e% \Div0|auto_generated|divider|divider|selnose\ [1] $end
+$var wire 1 f% \Div0|auto_generated|divider|divider|selnose\ [0] $end
+$var wire 1 g% r_DATAR [23] $end
+$var wire 1 h% r_DATAR [22] $end
+$var wire 1 i% r_DATAR [21] $end
+$var wire 1 j% r_DATAR [20] $end
+$var wire 1 k% r_DATAR [19] $end
+$var wire 1 l% r_DATAR [18] $end
+$var wire 1 m% r_DATAR [17] $end
+$var wire 1 n% r_DATAR [16] $end
+$var wire 1 o% r_DATAR [15] $end
+$var wire 1 p% r_DATAR [14] $end
+$var wire 1 q% r_DATAR [13] $end
+$var wire 1 r% r_DATAR [12] $end
+$var wire 1 s% r_DATAR [11] $end
+$var wire 1 t% r_DATAR [10] $end
+$var wire 1 u% r_DATAR [9] $end
+$var wire 1 v% r_DATAR [8] $end
+$var wire 1 w% r_DATAR [7] $end
+$var wire 1 x% r_DATAR [6] $end
+$var wire 1 y% r_DATAR [5] $end
+$var wire 1 z% r_DATAR [4] $end
+$var wire 1 {% r_DATAR [3] $end
+$var wire 1 |% r_DATAR [2] $end
+$var wire 1 }% r_DATAR [1] $end
+$var wire 1 ~% r_DATAR [0] $end
+$var wire 1 !& \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella\ [2] $end
+$var wire 1 "& \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella\ [1] $end
+$var wire 1 #& \Div0|auto_generated|divider|divider|add_sub_2|add_sub_cella\ [0] $end
+$var wire 1 $& \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella\ [3] $end
+$var wire 1 %& \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella\ [2] $end
+$var wire 1 && \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella\ [1] $end
+$var wire 1 '& \Div0|auto_generated|divider|divider|add_sub_3|add_sub_cella\ [0] $end
+$var wire 1 (& ALT_INV_AVG_count [0] $end
+$var wire 1 )& \ALT_INV_AVGen_SCK~regout\ $end
+$var wire 1 *& \ALT_INV_ReadCLK~combout\ $end
+$var wire 1 +& \ALT_INV_CK_cycle~4_combout\ $end
+$var wire 1 ,& \ALT_INV_nFS~combout\ $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+x!
+x%
+x&
+x'
+x(
+xY
+xZ
+x[
+x\
+x]
+x^
+x_
+0`
+0a
+xb
+xc
+0g
+0h
+0p
+0q
+0}
+0~
+x!!
+0'!
+1(!
+x)!
+1*!
+1+!
+1,!
+1-!
+1.!
+1/!
+x0!
+x1!
+x2!
+x3!
+x4!
+x5!
+x<!
+x=!
+xn!
+xo!
+xp!
+0q!
+xr!
+xs!
+xt!
+0u!
+0{!
+0|!
+0}!
+0~!
+0!"
+0""
+x5"
+16"
+17"
+18"
+19"
+1:"
+1;"
+1<"
+1="
+1>"
+1?"
+1@"
+1A"
+1B"
+1C"
+1D"
+xE"
+xF"
+xG"
+xH"
+xI"
+xJ"
+xK"
+xL"
+xM"
+xN"
+xO"
+xP"
+0Q"
+1R"
+0S"
+1T"
+xU"
+1V"
+xW"
+0X"
+0Y"
+1Z"
+x["
+x\"
+x]"
+x^"
+0_"
+x`"
+xa"
+xb"
+xc"
+xd"
+xe"
+xf"
+xg"
+xh"
+xi"
+xj"
+xk"
+xl"
+xm"
+xn"
+xo"
+xp"
+xq"
+xr"
+xs"
+xt"
+1u"
+1v"
+0w"
+0x"
+0y"
+1z"
+0{"
+0|"
+0}"
+1~"
+0!#
+0"#
+0##
+0$#
+x%#
+x&#
+x'#
+x(#
+x)#
+x*#
+x+#
+1,#
+x-#
+x.#
+x/#
+x0#
+x1#
+x2#
+x3#
+x4#
+x5#
+x6#
+x7#
+x8#
+x9#
+x:#
+x;#
+x<#
+x=#
+x>#
+0?#
+0@#
+0A#
+xB#
+xC#
+xD#
+xE#
+xF#
+xG#
+xH#
+xI#
+xJ#
+xK#
+xL#
+xM#
+xN#
+xO#
+xP#
+xQ#
+xR#
+xS#
+xT#
+xU#
+xV#
+xW#
+xX#
+xY#
+xZ#
+x[#
+x\#
+x]#
+x^#
+x_#
+x`#
+xa#
+xb#
+xc#
+xd#
+0e#
+0f#
+1g#
+0h#
+0i#
+0j#
+xk#
+xl#
+xm#
+xn#
+0o#
+1p#
+0q#
+1r#
+0s#
+0t#
+0u#
+0v#
+0w#
+0x#
+0y#
+0z#
+0{#
+0|#
+0}#
+0~#
+0!$
+0"$
+0#$
+0$$
+0%$
+0&$
+0'$
+0($
+0)$
+0*$
+0+$
+0,$
+0-$
+0.$
+0/$
+00$
+01$
+02$
+03$
+04$
+05$
+16$
+07$
+08$
+09$
+0:$
+0;$
+0<$
+0=$
+0>$
+0?$
+0@$
+0A$
+0B$
+0C$
+0D$
+1E$
+0F$
+xG$
+0H$
+0I$
+0J$
+0K$
+0L$
+0M$
+0N$
+0O$
+0P$
+0Q$
+0R$
+0S$
+0T$
+0U$
+0V$
+0W$
+0X$
+0Y$
+0Z$
+0[$
+0\$
+0]$
+0^$
+0_$
+1)&
+x*&
+x+&
+x,&
+0)
+0*
+0+
+0,
+0-
+0.
+0/
+00
+01
+02
+03
+04
+05
+06
+07
+08
+09
+0:
+0;
+0<
+0=
+0>
+0?
+0@
+0A
+0B
+0C
+0D
+0E
+0F
+0G
+0H
+0I
+0J
+0K
+0L
+0M
+0N
+0O
+0P
+0Q
+0R
+0S
+0T
+0U
+0V
+0W
+0X
+xr
+xs
+xt
+xu
+xv
+0w
+0x
+0y
+0z
+0{
+0|
+0i
+0j
+0k
+0l
+0m
+0n
+1o
+0"!
+0#!
+0$!
+0%!
+0&!
+x6!
+x7!
+x8!
+x9!
+x:!
+x;!
+0>!
+0?!
+0@!
+0A!
+0B!
+0C!
+0D!
+0E!
+0F!
+0G!
+0H!
+0I!
+0J!
+0K!
+0L!
+0M!
+0N!
+0O!
+0P!
+0Q!
+0R!
+0S!
+0T!
+0U!
+0V!
+0W!
+0X!
+0Y!
+0Z!
+0[!
+0\!
+0]!
+0^!
+0_!
+0`!
+0a!
+0b!
+0c!
+0d!
+0e!
+0f!
+0g!
+0h!
+0i!
+0j!
+0k!
+0l!
+0m!
+xv!
+xw!
+xx!
+xy!
+xz!
+0#"
+0$"
+0%"
+0&"
+0'"
+0("
+0)"
+0*"
+0+"
+0,"
+0-"
+0."
+1/"
+00"
+01"
+02"
+03"
+04"
+x`$
+xa$
+xb$
+0c$
+0d$
+0e$
+0f$
+0g$
+0h$
+0i$
+0j$
+0k$
+0l$
+0m$
+0n$
+0o$
+0p$
+0q$
+0r$
+0s$
+0t$
+0u$
+xv$
+xw$
+xx$
+xy$
+xz$
+x{$
+x|$
+x}$
+x~$
+x!%
+x"%
+x#%
+x$%
+x%%
+x&%
+x'%
+x(%
+x)%
+x*%
+x+%
+x,%
+x-%
+x.%
+x/%
+x0%
+01%
+02%
+03%
+04%
+05%
+06%
+07%
+08%
+09%
+0:%
+0;%
+0<%
+0=%
+0>%
+0?%
+0@%
+0A%
+0B%
+0C%
+0D%
+0E%
+0F%
+0G%
+0H%
+xI%
+xJ%
+xK%
+xL%
+xM%
+xN%
+xO%
+xP%
+xQ%
+xR%
+xS%
+xT%
+xU%
+xV%
+xW%
+xX%
+xY%
+xZ%
+x[%
+x\%
+x]%
+x^%
+x_%
+x`%
+xa%
+xb%
+xc%
+xd%
+xe%
+xf%
+0g%
+0h%
+0i%
+0j%
+0k%
+0l%
+0m%
+0n%
+0o%
+0p%
+0q%
+0r%
+0s%
+0t%
+0u%
+0v%
+0w%
+0x%
+0y%
+0z%
+0{%
+0|%
+0}%
+0~%
+x!&
+x"&
+x#&
+x$&
+x%&
+x&&
+x'&
+1(&
+x"
+x#
+x$
+xd
+xe
+xf
+$end
+#1000000000

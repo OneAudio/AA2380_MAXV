@@ -1,0 +1,284 @@
+Determining the location of the ModelSim executable...
+
+Using: C:/intelFPGA/20.1/modelsim_ase/win32aloem/
+
+To specify a ModelSim executable directory, select: Tools -> Options -> EDA Tool Options
+Note: if both Questa Intel FPGA Edition and ModelSim executables are available, Questa Intel FPGA Edition will be used.
+
+**** Generating the ModelSim Testbench ****
+
+quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off AA2380_MAXV -c AA2380_MAXV_v001 --vector_source="D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/F5_Parr_to_I2S.vwf" --testbench_file="D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/simulation/qsim/F5_Parr_to_I2S.vwf.vht"
+
+Info: *******************************************************************
+Info: Running Quartus Prime EDA Netlist Writer
+    Info: Version 23.1std.0 Build 991 11/28/2023 Patches 0.02std SC Lite Edition
+    Info: Copyright (C) 2023  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details, at
+    Info: https://fpgasoftware.intel.com/eula.
+    Info: Processing started: Fri Apr  4 08:24:07 2025
+Info: Command: quartus_eda --gen_testbench --tool=modelsim_oem --format=vhdl --write_settings_files=off AA2380_MAXV -c AA2380_MAXV_v001 --vector_source="D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/F5_Parr_to_I2S.vwf" --testbench_file="D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/simulation/qsim/F5_Parr_to_I2S.vwf.vht"
+Info (119006): Selected device 5M570ZT100C5 for design "AA2380_MAXV_v001"
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+
+t "PDATAR[13]" in design
+
+Completed successfully. 
+
+**** Generating the functional simulation netlist ****
+
+quartus_eda --write_settings_files=off --simulation --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory="D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/simulation/qsim/" AA2380_MAXV -c AA2380_MAXV_v001
+
+Info: *******************************************************************
+Info: Running Quartus Prime EDA Netlist Writer
+    Info: Version 23.1std.0 Build 991 11/28/2023 Patches 0.02std SC Lite Edition
+    Info: Copyright (C) 2023  Intel Corporation. All rights reserved.
+    Info: Your use of Intel Corporation's design tools, logic functions 
+    Info: and other software and tools, and any partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Intel Program License 
+    Info: Subscription Agreement, the Intel Quartus Prime License Agreement,
+    Info: the Intel FPGA IP License Agreement, or other applicable license
+    Info: agreement, including, without limitation, that your use is for
+    Info: the sole purpose of programming logic devices manufactured by
+    Info: Intel and sold by Intel or its authorized distributors.  Please
+    Info: refer to the applicable agreement for further details, at
+    Info: https://fpgasoftware.intel.com/eula.
+    Info: Processing started: Fri Apr  4 08:24:08 2025
+Info: Command: quartus_eda --write_settings_files=off --simulation=on --functional=on --flatten_buses=off --tool=modelsim_oem --format=vhdl --output_directory="D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/simulation/qsim/" AA2380_MAXV -c AA2380_MAXV_v001
+Info (119006): Selected device 5M570ZT100C5 for design "AA2380_MAXV_v001"
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (204019): Generated file AA2380_MAXV_v001.vho in folder "D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/simulation/qsim//" for EDA simulation tool
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
+    Info: Peak virtual memory: 4624 megabytes
+    Info: Processing ended: Fri Apr  4 08:24:09 2025
+    Info: Elapsed time: 00:00:01
+    Info: Total CPU time (on all processors): 00:00:01
+
+Completed successfully. 
+
+**** Generating the ModelSim .do script ****
+
+D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/simulation/qsim/AA2380_MAXV.do generated.
+
+Completed successfully. 
+
+**** Running the ModelSim simulation ****
+
+C:/intelFPGA/20.1/modelsim_ase/win32aloem//vsim -c -do AA2380_MAXV.do
+
+Reading pref.tcl
+
+
+# 2020.1
+
+
+# do AA2380_MAXV.do
+
+# ** Warning: (vlib-34) Library already exists at "work".
+
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+
+# Start time: 08:24:10 on Apr 04,2025
+# vcom -work work AA2380_MAXV_v001.vho 
+
+# -- Loading package STANDARD
+
+# -- Loading package TEXTIO
+
+# -- Loading package std_logic_1164
+
+# -- Loading package VITAL_Timing
+
+# -- Loading package VITAL_Primitives
+
+# -- Loading package maxv_atom_pack
+# -- Loading package maxv_components
+
+# -- Compiling entity F1_readADCmulti_ExtClkII
+
+# -- Compiling architecture structure of F1_readADCmulti_ExtClkII
+
+# End time: 08:24:10 on Apr 04,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+
+# Start time: 08:24:10 on Apr 04,2025
+# vcom -work work F5_Parr_to_I2S.vwf.vht 
+
+# -- Loading package STANDARD
+
+# -- Loading package TEXTIO
+
+# -- Loading package std_logic_1164
+
+# -- Compiling entity F1_readADCmulti_ExtClkII_vhd_vec_tst
+
+# -- Compiling architecture F1_readADCmulti_ExtClkII_arch of F1_readADCmulti_ExtClkII_vhd_vec_tst
+
+# End time: 08:24:10 on Apr 04,2025, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+
+# vsim -c -t 1ps -L maxv -L altera -L altera_mf -L 220model -L sgate -L altera_lnsim work.F1_readADCmulti_ExtClkII_vhd_vec_tst 
+# Start time: 08:24:10 on Apr 04,2025
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.f1_readadcmulti_extclkii_vhd_vec_tst(f1_readadcmulti_extclkii_arch)
+# Loading ieee.vital_timing(body)
+# Loading ieee.vital_primitives(body)
+# Loading maxv.maxv_atom_pack(body)
+# Loading maxv.maxv_components
+# Loading work.f1_readadcmulti_extclkii(structure)
+# Loading ieee.std_logic_arith(body)
+# Loading maxv.maxv_io(behave)
+# Loading maxv.maxv_lcell(vital_le_atom)
+# Loading maxv.maxv_asynch_lcell(vital_le)
+# Loading maxv.maxv_lcell_register(vital_le_reg)
+# GetModuleFileName: Le module sp?cifi? est introuvable.
+# 
+# 
+# ** Warning: Design size of 35307 statements exceeds ModelSim-Intel FPGA Starter Edition recommended capacity.
+# Expect performance to be adversely affected.
+
+# after#31
+
+# End time: 08:24:11 on Apr 04,2025, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 1
+
+Completed successfully. 
+
+**** Converting ModelSim VCD to vector waveform ****
+
+Reading D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/F5_Parr_to_I2S.vwf...
+
+Reading D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/simulation/qsim/AA2380_MAXV.msim.vcd...
+
+Processing channel transitions... 
+
+Warning: CK128FS - signal not found in VCD.
+
+Warning: I2S_BCLK - signal not found in VCD.
+
+Warning: I2S_LRCK - signal not found in VCD.
+
+Warning: I2S_SDATA - signal not found in VCD.
+
+Warning: LRCK - signal not found in VCD.
+
+Warning: PDATAL[23] - signal not found in VCD.
+
+Warning: PDATAL[22] - signal not found in VCD.
+
+Warning: PDATAL[21] - signal not found in VCD.
+
+Warning: PDATAL[20] - signal not found in VCD.
+
+Warning: PDATAL[19] - signal not found in VCD.
+
+Warning: PDATAL[18] - signal not found in VCD.
+
+Warning: PDATAL[17] - signal not found in VCD.
+
+Warning: PDATAL[16] - signal not found in VCD.
+
+Warning: PDATAL[15] - signal not found in VCD.
+
+Warning: PDATAL[14] - signal not found in VCD.
+
+Warning: PDATAL[13] - signal not found in VCD.
+
+Warning: PDATAL[12] - signal not found in VCD.
+
+Warning: PDATAL[11] - signal not found in VCD.
+
+Warning: PDATAL[10] - signal not found in VCD.
+
+Warning: PDATAL[9] - signal not found in VCD.
+
+Warning: PDATAL[8] - signal not found in VCD.
+
+Warning: PDATAL[7] - signal not found in VCD.
+
+Warning: PDATAL[6] - signal not found in VCD.
+
+Warning: PDATAL[5] - signal not found in VCD.
+
+Warning: PDATAL[4] - signal not found in VCD.
+
+Warning: PDATAL[3] - signal not found in VCD.
+
+Warning: PDATAL[2] - signal not found in VCD.
+
+Warning: PDATAL[1] - signal not found in VCD.
+
+Warning: PDATAL[0] - signal not found in VCD.
+
+Warning: PDATAR[23] - signal not found in VCD.
+
+Warning: PDATAR[22] - signal not found in VCD.
+
+Warning: PDATAR[21] - signal not found in VCD.
+
+Warning: PDATAR[20] - signal not found in VCD.
+
+Warning: PDATAR[19] - signal not found in VCD.
+
+Warning: PDATAR[18] - signal not found in VCD.
+
+Warning: PDATAR[17] - signal not found in VCD.
+
+Warning: PDATAR[16] - signal not found in VCD.
+
+Warning: PDATAR[15] - signal not found in VCD.
+
+Warning: PDATAR[14] - signal not found in VCD.
+
+Warning: PDATAR[13] - signal not found in VCD.
+
+Warning: PDATAR[12] - signal not found in VCD.
+
+Warning: PDATAR[11] - signal not found in VCD.
+
+Warning: PDATAR[10] - signal not found in VCD.
+
+Warning: PDATAR[9] - signal not found in VCD.
+
+Warning: PDATAR[8] - signal not found in VCD.
+
+Warning: PDATAR[7] - signal not found in VCD.
+
+Warning: PDATAR[6] - signal not found in VCD.
+
+Warning: PDATAR[5] - signal not found in VCD.
+
+Warning: PDATAR[4] - signal not found in VCD.
+
+Warning: PDATAR[3] - signal not found in VCD.
+
+Warning: PDATAR[2] - signal not found in VCD.
+
+Warning: PDATAR[1] - signal not found in VCD.
+
+Warning: PDATAR[0] - signal not found in VCD.
+
+Writing the resulting VWF to D:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/simulation/qsim/AA2380_MAXV_20250404082411.sim.vwf
+
+Finished VCD to VWF conversion.
+
+Completed successfully. 
+
+All completed.

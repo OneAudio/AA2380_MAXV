@@ -1,0 +1,177 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2023  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 16 16 264 384)
+	(text "SPI_LED_Mapping" (rect 5 0 84 12)(font "Arial" ))
+	(text "inst" (rect 8 352 20 364)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "SPIDATA[23..0]" (rect 0 0 68 12)(font "Arial" ))
+		(text "SPIDATA[23..0]" (rect 21 27 89 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 3))
+	)
+	(port
+		(pt 248 32)
+		(output)
+		(text "LED_192K" (rect 0 0 46 12)(font "Arial" ))
+		(text "LED_192K" (rect 181 27 227 39)(font "Arial" ))
+		(line (pt 248 32)(pt 232 32)(line_width 1))
+	)
+	(port
+		(pt 248 48)
+		(output)
+		(text "LED_96K" (rect 0 0 42 12)(font "Arial" ))
+		(text "LED_96K" (rect 185 43 227 55)(font "Arial" ))
+		(line (pt 248 48)(pt 232 48)(line_width 1))
+	)
+	(port
+		(pt 248 64)
+		(output)
+		(text "LED_48K" (rect 0 0 43 12)(font "Arial" ))
+		(text "LED_48K" (rect 184 59 227 71)(font "Arial" ))
+		(line (pt 248 64)(pt 232 64)(line_width 1))
+	)
+	(port
+		(pt 248 80)
+		(output)
+		(text "LEDavg0" (rect 0 0 40 12)(font "Arial" ))
+		(text "LEDavg0" (rect 187 75 227 87)(font "Arial" ))
+		(line (pt 248 80)(pt 232 80)(line_width 1))
+	)
+	(port
+		(pt 248 96)
+		(output)
+		(text "LEDavg1" (rect 0 0 38 12)(font "Arial" ))
+		(text "LEDavg1" (rect 189 91 227 103)(font "Arial" ))
+		(line (pt 248 96)(pt 232 96)(line_width 1))
+	)
+	(port
+		(pt 248 112)
+		(output)
+		(text "LEDavg2" (rect 0 0 40 12)(font "Arial" ))
+		(text "LEDavg2" (rect 187 107 227 119)(font "Arial" ))
+		(line (pt 248 112)(pt 232 112)(line_width 1))
+	)
+	(port
+		(pt 248 128)
+		(output)
+		(text "LED_SE" (rect 0 0 38 12)(font "Arial" ))
+		(text "LED_SE" (rect 189 123 227 135)(font "Arial" ))
+		(line (pt 248 128)(pt 232 128)(line_width 1))
+	)
+	(port
+		(pt 248 144)
+		(output)
+		(text "LED_CAL" (rect 0 0 47 12)(font "Arial" ))
+		(text "LED_CAL" (rect 180 139 227 151)(font "Arial" ))
+		(line (pt 248 144)(pt 232 144)(line_width 1))
+	)
+	(port
+		(pt 248 160)
+		(output)
+		(text "LED_FILTOFF" (rect 0 0 64 12)(font "Arial" ))
+		(text "LED_FILTOFF" (rect 163 155 227 167)(font "Arial" ))
+		(line (pt 248 160)(pt 232 160)(line_width 1))
+	)
+	(port
+		(pt 248 176)
+		(output)
+		(text "nLED2_G" (rect 0 0 42 12)(font "Arial" ))
+		(text "nLED2_G" (rect 185 171 227 183)(font "Arial" ))
+		(line (pt 248 176)(pt 232 176)(line_width 1))
+	)
+	(port
+		(pt 248 192)
+		(output)
+		(text "nLED2_R" (rect 0 0 43 12)(font "Arial" ))
+		(text "nLED2_R" (rect 184 187 227 199)(font "Arial" ))
+		(line (pt 248 192)(pt 232 192)(line_width 1))
+	)
+	(port
+		(pt 248 208)
+		(output)
+		(text "nLED2_Y" (rect 0 0 42 12)(font "Arial" ))
+		(text "nLED2_Y" (rect 185 203 227 215)(font "Arial" ))
+		(line (pt 248 208)(pt 232 208)(line_width 1))
+	)
+	(port
+		(pt 248 224)
+		(output)
+		(text "nLED1_R" (rect 0 0 42 12)(font "Arial" ))
+		(text "nLED1_R" (rect 185 219 227 231)(font "Arial" ))
+		(line (pt 248 224)(pt 232 224)(line_width 1))
+	)
+	(port
+		(pt 248 240)
+		(output)
+		(text "nLED1_G" (rect 0 0 41 12)(font "Arial" ))
+		(text "nLED1_G" (rect 186 235 227 247)(font "Arial" ))
+		(line (pt 248 240)(pt 232 240)(line_width 1))
+	)
+	(port
+		(pt 248 256)
+		(output)
+		(text "nLED1_Y" (rect 0 0 41 12)(font "Arial" ))
+		(text "nLED1_Y" (rect 186 251 227 263)(font "Arial" ))
+		(line (pt 248 256)(pt 232 256)(line_width 1))
+	)
+	(port
+		(pt 248 272)
+		(output)
+		(text "FILTER_CH1" (rect 0 0 59 12)(font "Arial" ))
+		(text "FILTER_CH1" (rect 168 267 227 279)(font "Arial" ))
+		(line (pt 248 272)(pt 232 272)(line_width 1))
+	)
+	(port
+		(pt 248 288)
+		(output)
+		(text "SE_CH1" (rect 0 0 36 12)(font "Arial" ))
+		(text "SE_CH1" (rect 191 283 227 295)(font "Arial" ))
+		(line (pt 248 288)(pt 232 288)(line_width 1))
+	)
+	(port
+		(pt 248 304)
+		(output)
+		(text "FILTER_CH2" (rect 0 0 60 12)(font "Arial" ))
+		(text "FILTER_CH2" (rect 167 299 227 311)(font "Arial" ))
+		(line (pt 248 304)(pt 232 304)(line_width 1))
+	)
+	(port
+		(pt 248 320)
+		(output)
+		(text "SE_CH2" (rect 0 0 37 12)(font "Arial" ))
+		(text "SE_CH2" (rect 190 315 227 327)(font "Arial" ))
+		(line (pt 248 320)(pt 232 320)(line_width 1))
+	)
+	(port
+		(pt 248 336)
+		(output)
+		(text "nACTIVITY_LED" (rect 0 0 77 12)(font "Arial" ))
+		(text "nACTIVITY_LED" (rect 150 331 227 343)(font "Arial" ))
+		(line (pt 248 336)(pt 232 336)(line_width 1))
+	)
+	(drawing
+		(rectangle (rect 16 16 232 352)(line_width 1))
+	)
+)

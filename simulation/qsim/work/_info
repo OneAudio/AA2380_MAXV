@@ -1,0 +1,101 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dD:/Mes documents/P-CAD_PROJECTS/_PROJETS_ON/Projects/Git/_Logiciels_KICAD/AA2380_MAXV/simulation/qsim
+Ef1_readadcmulti_extclkii
+Z1 w1743747849
+Z2 DPx4 ieee 16 vital_primitives 0 22 G>kiXP8Q9dRClKfK1Zn7j1
+Z3 DPx4 maxv 14 maxv_atom_pack 0 22 DA=HhE]4cXbV_NTemfNUC2
+Z4 DPx4 ieee 12 vital_timing 0 22 J>EBealN09f8GzldA[z2>3
+Z5 DPx4 maxv 15 maxv_components 0 22 TaF4RUHFHSK3h@z][;ZeY0
+Z6 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z7 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 2
+R0
+Z8 8AA2380_MAXV_v001.vho
+Z9 FAA2380_MAXV_v001.vho
+l0
+L35 1
+VmBPU41kJZd>i<f?ZH>f>00
+!s100 n?TY[mL9[B>VHU^Y_@jbE3
+Z10 OV;C;2020.1;71
+32
+Z11 !s110 1743747850
+!i10b 1
+Z12 !s108 1743747850.000000
+Z13 !s90 -work|work|AA2380_MAXV_v001.vho|
+Z14 !s107 AA2380_MAXV_v001.vho|
+!i113 1
+Z15 o-work work
+Z16 tExplicit 1 CvgOpt 0
+Astructure
+R2
+R3
+R4
+R5
+R6
+R7
+DEx4 work 24 f1_readadcmulti_extclkii 0 22 mBPU41kJZd>i<f?ZH>f>00
+!i122 2
+l358
+L71 6731
+VJG1[j:8CO9Lo]=]=OQ;fz2
+!s100 6kZA;84BaHR1d>QI;NjoV2
+R10
+32
+R11
+!i10b 1
+R12
+R13
+R14
+!i113 1
+R15
+R16
+Ef1_readadcmulti_extclkii_vhd_vec_tst
+Z17 w1743747847
+R6
+R7
+!i122 3
+R0
+Z18 8F5_Parr_to_I2S.vwf.vht
+Z19 FF5_Parr_to_I2S.vwf.vht
+l0
+L32 1
+VKNTE@2Z7QhnEH74?F5iLI2
+!s100 UNZC@^>9X_hJ^OSFLe_bE3
+R10
+32
+R11
+!i10b 1
+R12
+Z20 !s90 -work|work|F5_Parr_to_I2S.vwf.vht|
+Z21 !s107 F5_Parr_to_I2S.vwf.vht|
+!i113 1
+R15
+R16
+Af1_readadcmulti_extclkii_arch
+R6
+R7
+Z22 DEx4 work 36 f1_readadcmulti_extclkii_vhd_vec_tst 0 22 KNTE@2Z7QhnEH74?F5iLI2
+!i122 3
+l103
+Z23 L34 106
+Z24 V_4^E`:e4>PU>Bcz[DB^`<1
+Z25 !s100 aXRH72jVZm6kXUa4GMTe^1
+R10
+32
+R11
+!i10b 1
+R12
+R20
+R21
+!i113 1
+R15
+R16
