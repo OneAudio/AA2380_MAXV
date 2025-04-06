@@ -133,28 +133,6 @@ set_location_assignment PIN_3 -to I2S4L_DATAR[0]
 set_location_assignment PIN_4 -to I2S4L_DATAR[1]
 set_location_assignment PIN_7 -to I2S4L_DATAR[2]
 set_location_assignment PIN_12 -to I2S4L_DATAR[3]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_push
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Ta
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Tb
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[3]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[2]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[1]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[0]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN0
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN1
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN2
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN3
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCL_BUSY
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCL_SDO
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCR_BUSY
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCR_SDO
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_06
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_03
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_02
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN4
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN5
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_10
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UIO_10
 set_global_assignment -name VHDL_FILE spi_slave.vhd
 set_global_assignment -name SDC_FILE AA2380_MAXV_v001.sdc
 set_global_assignment -name VHDL_FILE F0_ctrl_encoder.vhd
@@ -198,3 +176,25 @@ set_global_assignment -name BDF_FILE Emulate_ADC.bdf
 set_global_assignment -name VHDL_FILE SPI_LED_Mapping.vhd
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_push
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Ta
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Tb
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[3]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[2]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[1]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[0]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN0
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN1
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN2
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN3
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCL_BUSY
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCL_SDO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCR_BUSY
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADCR_SDO
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_06
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_03
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_02
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN4
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN5
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to UIO_10
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UIO_10
