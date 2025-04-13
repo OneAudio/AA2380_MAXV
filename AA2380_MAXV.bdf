@@ -1350,7 +1350,7 @@ https://fpgasoftware.intel.com/eula.
 	(annotation_block (parameter)(rect 440 -32 598 2))
 )
 (symbol
-	(rect 920 -56 1112 88)
+	(rect 896 -56 1088 88)
 	(text "F13_LEDSTRI" (rect 5 0 75 12)(font "Arial" ))
 	(text "inst3" (rect 8 128 30 145)(font "Intel Clear" ))
 	(port
@@ -1414,7 +1414,7 @@ https://fpgasoftware.intel.com/eula.
 	)
 )
 (symbol
-	(rect 264 -288 488 -48)
+	(rect 16 -288 240 -48)
 	(text "F12_SPI_Mapping" (rect 5 0 93 12)(font "Arial" ))
 	(text "inst2" (rect 8 224 31 236)(font "Arial" ))
 	(port
@@ -2101,6 +2101,68 @@ https://fpgasoftware.intel.com/eula.
 		(rectangle (rect 16 16 144 224))
 	)
 )
+(symbol
+	(rect 528 -176 640 -128)
+	(text "LPM_CONSTANT" (rect 4 0 125 16)(font "Arial" (font_size 10)))
+	(text "inst36" (rect 3 37 37 51)(font "Arial" (font_size 8)))
+	(port
+		(pt 112 32)
+		(output)
+		(text "result[LPM_WIDTH-1..0]" (rect 75 19 208 33)(font "Arial" (font_size 8)))
+		(text "result[]" (rect 75 19 113 33)(font "Arial" (font_size 8)))
+		(line (pt 64 32)(pt 112 32)(line_width 3))
+	)
+	(parameter
+		"LPM_CVALUE"
+		"9C9F4D"
+		"Unsigned value to which outputs will be set"
+		(type "PARAMETER_UNSIGNED_HEX")	)
+	(parameter
+		"LPM_WIDTH"
+		"24"
+		"Width of output, any integer > 0"
+		" 1" " 2" " 3" " 4" " 5" " 6" " 7" " 8" " 9" "10" "11" "12" "13" "14" "15" "16" "20" "24" "28" "32" 
+		(type "PARAMETER_UNKNOWN")	)
+	(drawing
+		(text "(cvalue)" (rect 21 26 68 40)(font "Arial" (font_size 8)))
+		(line (pt 16 24)(pt 64 24))
+		(line (pt 16 40)(pt 64 40))
+		(line (pt 64 40)(pt 64 24))
+		(line (pt 16 40)(pt 16 24))
+	)
+	(annotation_block (parameter)(rect 368 -176 526 -125))
+)
+(symbol
+	(rect 528 -232 640 -184)
+	(text "LPM_CONSTANT" (rect 4 0 125 16)(font "Arial" (font_size 10)))
+	(text "inst14" (rect 3 37 31 54)(font "Intel Clear" ))
+	(port
+		(pt 112 32)
+		(output)
+		(text "result[LPM_WIDTH-1..0]" (rect 75 19 208 33)(font "Arial" (font_size 8)))
+		(text "result[]" (rect 75 19 113 33)(font "Arial" (font_size 8)))
+		(line (pt 64 32)(pt 112 32)(line_width 3))
+	)
+	(parameter
+		"LPM_CVALUE"
+		"B20EA7"
+		"Unsigned value to which outputs will be set"
+		(type "PARAMETER_UNSIGNED_HEX")	)
+	(parameter
+		"LPM_WIDTH"
+		"24"
+		"Width of output, any integer > 0"
+		" 1" " 2" " 3" " 4" " 5" " 6" " 7" " 8" " 9" "10" "11" "12" "13" "14" "15" "16" "20" "24" "28" "32" 
+		(type "PARAMETER_UNKNOWN")	)
+	(drawing
+		(text "(cvalue)" (rect 21 26 68 40)(font "Arial" (font_size 8)))
+		(line (pt 16 24)(pt 64 24))
+		(line (pt 16 40)(pt 64 40))
+		(line (pt 64 40)(pt 64 24))
+		(line (pt 16 40)(pt 16 24))
+	)
+	(annotation_block (parameter)(rect 368 -232 526 -181))
+)
 (connector
 	(text "DATAR[23..0]" (rect 1112 -568 1180 -556)(font "Arial" ))
 	(pt 1104 -552)
@@ -2194,11 +2256,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 512 -544)
 )
 (connector
-	(text "AQMODE" (rect 763 -440 809 -423)(font "Intel Clear" ))
-	(pt 752 -424)
-	(pt 856 -424)
-)
-(connector
 	(text "ADCL_BUSY" (rect 759 -424 819 -407)(font "Intel Clear" ))
 	(pt 752 -408)
 	(pt 856 -408)
@@ -2272,18 +2329,6 @@ https://fpgasoftware.intel.com/eula.
 	(pt 752 -200)
 )
 (connector
-	(text "DATAL[23..0]" (rect 760 -200 826 -188)(font "Arial" ))
-	(pt 856 -184)
-	(pt 752 -184)
-	(bus)
-)
-(connector
-	(text "DATAR[23..0]" (rect 760 -184 828 -172)(font "Arial" ))
-	(pt 856 -168)
-	(pt 752 -168)
-	(bus)
-)
-(connector
 	(pt 1112 -232)
 	(pt 1144 -232)
 )
@@ -2337,42 +2382,6 @@ https://fpgasoftware.intel.com/eula.
 	(bus)
 )
 (connector
-	(pt 1152 -24)
-	(pt 1112 -24)
-)
-(connector
-	(pt 1152 -8)
-	(pt 1112 -8)
-)
-(connector
-	(pt 1152 8)
-	(pt 1112 8)
-)
-(connector
-	(pt 1152 24)
-	(pt 1112 24)
-)
-(connector
-	(pt 1152 40)
-	(pt 1112 40)
-)
-(connector
-	(pt 1152 56)
-	(pt 1112 56)
-)
-(connector
-	(text "LED1[2..0]" (rect 869 -40 917 -23)(font "Intel Clear" ))
-	(pt 856 -24)
-	(pt 920 -24)
-	(bus)
-)
-(connector
-	(text "LED2[2..0]" (rect 868 -24 916 -7)(font "Intel Clear" ))
-	(pt 856 -8)
-	(pt 920 -8)
-	(bus)
-)
-(connector
 	(pt 1152 128)
 	(pt 1112 128)
 )
@@ -2404,66 +2413,6 @@ https://fpgasoftware.intel.com/eula.
 	(text "MCLKIN" (rect 96 -480 134 -463)(font "Intel Clear" ))
 	(pt 88 -464)
 	(pt 136 -464)
-)
-(connector
-	(text "SPIDATA[23..0]" (rect 185 -272 256 -255)(font "Intel Clear" ))
-	(pt 168 -256)
-	(pt 264 -256)
-	(bus)
-)
-(connector
-	(text "SR[2..0]" (rect 504 -272 545 -260)(font "Arial" ))
-	(pt 488 -256)
-	(pt 552 -256)
-	(bus)
-)
-(connector
-	(text "AVG[2..0]" (rect 504 -256 552 -244)(font "Arial" ))
-	(pt 488 -240)
-	(pt 552 -240)
-	(bus)
-)
-(connector
-	(text "LED1[2..0]" (rect 501 -240 549 -223)(font "Intel Clear" ))
-	(pt 488 -224)
-	(pt 552 -224)
-	(bus)
-)
-(connector
-	(text "LED2[2..0]" (rect 500 -224 548 -207)(font "Intel Clear" ))
-	(pt 488 -208)
-	(pt 552 -208)
-	(bus)
-)
-(connector
-	(text "SE_CH1" (rect 501 -208 543 -196)(font "Arial" ))
-	(pt 488 -192)
-	(pt 552 -192)
-)
-(connector
-	(text "SE_CH2" (rect 501 -192 543 -180)(font "Arial" ))
-	(pt 488 -176)
-	(pt 552 -176)
-)
-(connector
-	(text "FILTER_CH1" (rect 499 -176 565 -164)(font "Arial" ))
-	(pt 488 -160)
-	(pt 552 -160)
-)
-(connector
-	(text "FILTER_CH2" (rect 499 -160 565 -148)(font "Arial" ))
-	(pt 488 -144)
-	(pt 552 -144)
-)
-(connector
-	(text "AQMODE" (rect 499 -144 545 -127)(font "Intel Clear" ))
-	(pt 488 -128)
-	(pt 552 -128)
-)
-(connector
-	(text "LED_ACT" (rect 507 -128 551 -111)(font "Intel Clear" ))
-	(pt 488 -112)
-	(pt 552 -112)
 )
 (connector
 	(pt 328 32)
@@ -2626,5 +2575,130 @@ https://fpgasoftware.intel.com/eula.
 	(text "SR[2]" (rect 903 368 928 385)(font "Intel Clear" ))
 	(pt 960 384)
 	(pt 896 384)
+)
+(connector
+	(text "SPIDATA[23..0]" (rect -63 -272 8 -255)(font "Intel Clear" ))
+	(pt -80 -256)
+	(pt 16 -256)
+	(bus)
+)
+(connector
+	(text "SR[2..0]" (rect 256 -272 297 -260)(font "Arial" ))
+	(pt 240 -256)
+	(pt 304 -256)
+	(bus)
+)
+(connector
+	(text "AVG[2..0]" (rect 256 -256 304 -244)(font "Arial" ))
+	(pt 240 -240)
+	(pt 304 -240)
+	(bus)
+)
+(connector
+	(text "LED1[2..0]" (rect 253 -240 301 -223)(font "Intel Clear" ))
+	(pt 240 -224)
+	(pt 304 -224)
+	(bus)
+)
+(connector
+	(text "LED2[2..0]" (rect 252 -224 300 -207)(font "Intel Clear" ))
+	(pt 240 -208)
+	(pt 304 -208)
+	(bus)
+)
+(connector
+	(text "SE_CH1" (rect 253 -208 295 -196)(font "Arial" ))
+	(pt 240 -192)
+	(pt 304 -192)
+)
+(connector
+	(text "SE_CH2" (rect 253 -192 295 -180)(font "Arial" ))
+	(pt 240 -176)
+	(pt 304 -176)
+)
+(connector
+	(text "FILTER_CH1" (rect 251 -176 317 -164)(font "Arial" ))
+	(pt 240 -160)
+	(pt 304 -160)
+)
+(connector
+	(text "FILTER_CH2" (rect 251 -160 317 -148)(font "Arial" ))
+	(pt 240 -144)
+	(pt 304 -144)
+)
+(connector
+	(text "AQMODE" (rect 251 -144 297 -127)(font "Intel Clear" ))
+	(pt 240 -128)
+	(pt 304 -128)
+)
+(connector
+	(text "LED_ACT" (rect 259 -128 303 -111)(font "Intel Clear" ))
+	(pt 240 -112)
+	(pt 304 -112)
+)
+(connector
+	(text "DATAXL[23..0]" (rect 656 -216 727 -204)(font "Arial" ))
+	(pt 640 -200)
+	(pt 712 -200)
+	(bus)
+)
+(connector
+	(text "DATAXR[23..0]" (rect 656 -160 730 -148)(font "Arial" ))
+	(pt 640 -144)
+	(pt 712 -144)
+	(bus)
+)
+(connector
+	(text "DATAL[23..0]" (rect 760 -200 826 -188)(font "Arial" ))
+	(pt 856 -184)
+	(pt 752 -184)
+	(bus)
+)
+(connector
+	(text "DATAR[23..0]" (rect 760 -184 828 -172)(font "Arial" ))
+	(pt 856 -168)
+	(pt 752 -168)
+	(bus)
+)
+(connector
+	(text "LED1[2..0]" (rect 845 -40 893 -23)(font "Intel Clear" ))
+	(pt 832 -24)
+	(pt 896 -24)
+	(bus)
+)
+(connector
+	(text "LED2[2..0]" (rect 844 -24 892 -7)(font "Intel Clear" ))
+	(pt 832 -8)
+	(pt 896 -8)
+	(bus)
+)
+(connector
+	(pt 1088 -24)
+	(pt 1152 -24)
+)
+(connector
+	(pt 1088 -8)
+	(pt 1152 -8)
+)
+(connector
+	(pt 1088 8)
+	(pt 1152 8)
+)
+(connector
+	(pt 1088 24)
+	(pt 1152 24)
+)
+(connector
+	(pt 1088 40)
+	(pt 1152 40)
+)
+(connector
+	(pt 1088 56)
+	(pt 1152 56)
+)
+(connector
+	(text "CONF[0]" (rect 763 -440 804 -423)(font "Intel Clear" ))
+	(pt 752 -424)
+	(pt 856 -424)
 )
 (junction (pt 328 32))
