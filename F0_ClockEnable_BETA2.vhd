@@ -45,7 +45,7 @@ port(
     Fso           :	out std_logic   ;  -- Effective output sampling rate (12kHz to 1536kHz) (10ns pulse output)
     CK64FS        :	out std_logic   ;  -- 64 FS clock for I2S output   
     CLKBypass     :	out std_logic   ; --
-    LRCK_Fso      :	out std_logic   ; --Fso x AVG ratio (12kHz to 1536kHz) (50% duty cycle for LRCK)
+    LRCKen_Fso      :	out std_logic   ; --Fso x AVG ratio (12kHz to 1536kHz) (50% duty cycle for LRCK)
     CK64FSR       :	out std_logic   ; -- 64FS clock with 50% duty cycle
     CK8FSR       :	out std_logic   ; -- 64FS clock with 50% duty cycle
     -- test outputs
@@ -74,7 +74,7 @@ signal   clken_CK8FSR   : std_logic;
 signal   counter_ReadCLK : integer range 1 to 8192 ; -- ReadCLK clock counter
 signal   SetCnt_ReadCLK  : integer range 1 to 8192 ; -- ReadCLK counter set value for frequency selection
 signal   clken_ReadCLK   : std_logic;
-signal   LRCKen_Fso      : std_logic;
+--signal   LRCKen_Fso      : std_logic;
 signal   zReadCLK        : std_logic; 
 signal   Bypass          : std_logic;
 
@@ -372,7 +372,7 @@ end process;
 -- Use the same clock and the slow clock enable signal above 
 -- to drive another part of the design to avoid domain crossing issues
 ------------------------------------------------------------------
-process(CK98M304,clken_nFS,clken_FSo,clken_CK64FS,LRCKen_Fso)
+process(CK98M304,clken_nFS,clken_FSo,clken_CK64FS)
 begin
     if(rising_edge(CK98M304)) then
   --
@@ -388,11 +388,11 @@ begin
             FSo <= '0'; --
         end if;
     --
-        if(LRCKen_Fso = '1') then
-            LRCK_Fso <= '1'; --
-        else
-            LRCK_Fso <= '0'; --
-        end if;
+--        if(LRCKen_Fso = '1') then
+--            LRCK_Fso <= '1'; --
+--        else
+--            LRCK_Fso <= '0'; --
+--        end if;
     --
         if(clken_CK64FS = '1') then
             CK64FS <= '1'; --
