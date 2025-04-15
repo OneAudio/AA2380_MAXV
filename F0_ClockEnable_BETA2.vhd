@@ -4,7 +4,7 @@
 -- Generate clock enable signal instead of creating another clock domain
 -- Assume that the input clock : CK98M304
 --------------------------------------------------------------------------------
--- O.N - 23/03/2025 -- take 285 LE (old 212)
+-- O.N - 23/03/2025 -- take 286 LE (old 212)
 --------------------------------------------------------------------------------
 -- NOTES sur les différents signaux d'horloges nécessaires :
 -- RANGE of clocks:
@@ -74,6 +74,7 @@ signal   clken_CK8FSR   : std_logic;
 signal   counter_ReadCLK : integer range 1 to 8192 ; -- ReadCLK clock counter
 signal   SetCnt_ReadCLK  : integer range 1 to 8192 ; -- ReadCLK counter set value for frequency selection
 signal   clken_ReadCLK   : std_logic;
+signal   LRCKen_Fso      : std_logic;
 signal   zReadCLK        : std_logic; 
 signal   Bypass          : std_logic;
 
@@ -284,7 +285,7 @@ begin
         if  clearAll='1' then
             counter_Fso <= 1 ;
             clken_FSo   <= '1';
-            LRCK_Fso    <= '0';
+            LRCKen_Fso    <= '0';
         else
             if(counter_Fso =SetCnt_Fso ) then
                 clken_FSo <= '1';
@@ -298,9 +299,9 @@ begin
             end if;
             -- Generate 50% duty-cycle LRCK signal
             if (counter_Fso < (SetCnt_Fso/2)+1 ) then
-                LRCK_Fso <= '1'; -- LRCK set to 1
+                LRCKen_Fso <= '1'; -- LRCK set to 1
             else
-                LRCK_Fso <= '0';-- LRCK set to 0
+                LRCKen_Fso <= '0';-- LRCK set to 0
             end if;
         end if;
     ---- CK64FS clock counter (10ns pulse output)
@@ -371,7 +372,7 @@ end process;
 -- Use the same clock and the slow clock enable signal above 
 -- to drive another part of the design to avoid domain crossing issues
 ------------------------------------------------------------------
-process(CK98M304,clken_nFS,clken_FSo,clken_CK64FS)
+process(CK98M304,clken_nFS,clken_FSo,clken_CK64FS,LRCKen_Fso)
 begin
     if(rising_edge(CK98M304)) then
   --
@@ -385,6 +386,12 @@ begin
             FSo <= '1'; --
         else
             FSo <= '0'; --
+        end if;
+    --
+        if(LRCKen_Fso = '1') then
+            LRCK_Fso <= '1'; --
+        else
+            LRCK_Fso <= '0'; --
         end if;
     --
         if(clken_CK64FS = '1') then
