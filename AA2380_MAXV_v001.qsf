@@ -176,7 +176,6 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN5
 set_global_assignment -name VHDL_FILE F15_Par2I2S_2x4LanesII.vhd
 set_location_assignment PIN_21 -to I2S4L_LRCK
 set_location_assignment PIN_20 -to I2S4L_BCK
-set_location_assignment PIN_2 -to I2S4L_SYNCP
 set_location_assignment PIN_14 -to I2S4L_DATAL[0]
 set_location_assignment PIN_15 -to I2S4L_DATAL[1]
 set_location_assignment PIN_18 -to I2S4L_DATAL[2]
@@ -194,5 +193,8 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CLKIN_xN
 set_global_assignment -name VHDL_FILE F16_UIOTEST.vhd
 set_global_assignment -name VHDL_FILE LUT_counter32P.vhd
 set_global_assignment -name VHDL_FILE LUT_Quarter.vhd
+set_location_assignment PIN_2 -to CNT_SYNC
+set_global_assignment -name VHDL_FILE LUT_QuarterII.vhd
+set_global_assignment -name VHDL_FILE LUT_counter128P.vhd
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
