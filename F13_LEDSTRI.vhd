@@ -28,6 +28,6 @@ begin
      nLED1_R <= not LED1(2);
      nLED2_Y <= not LED2(0);
      nLED2_G <= not LED2(1);
-     nLED2_R <= not LED1(2);
+     nLED2_R <= not LED2(2);
     
 end Behavioral;
