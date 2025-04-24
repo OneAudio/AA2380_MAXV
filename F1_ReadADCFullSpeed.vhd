@@ -10,7 +10,9 @@
 -- Function to read data from two LT2380-24 ADC using normal mode 
 -- at sampling frequency equal to CLKFS.
 -- 24 reading/conversion. Fsmax of ADC: 1536kHz
---------------------------------------------------------------------------------
+-----------------------------------------------------------------
+-- Simulation OK.
+-----------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 use IEEE.numeric_std.all;

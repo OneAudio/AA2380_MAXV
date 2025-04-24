@@ -34,7 +34,7 @@ begin
 -----------------------------------------------------------------------
 -- LRCK divider
 -----------------------------------------------------------------------
-process(LRCK,DFS)
+process(LRCK,DFS,CNTdiv,LUTclk,Div2,div4,div8,div16)
 begin
     if  rising_edge(LRCK)    then
         CNTdiv <= CNTdiv + 1;

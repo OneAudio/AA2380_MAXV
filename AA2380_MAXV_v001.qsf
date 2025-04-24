@@ -38,7 +38,7 @@
 
 set_global_assignment -name FAMILY "MAX V"
 set_global_assignment -name DEVICE 5M570ZT100C5
-set_global_assignment -name TOP_LEVEL_ENTITY F1_ReadADCFullSpeed
+set_global_assignment -name TOP_LEVEL_ENTITY AA2380_MAXV
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "9.1 SP2"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "08:54:12  MARCH 19, 2019"
 set_global_assignment -name LAST_QUARTUS_VERSION "23.1std.0 SP0.02std Lite Edition"
@@ -65,7 +65,6 @@ set_location_assignment PIN_64 -to CLKIN_xN
 set_location_assignment PIN_61 -to FILTER_CH1
 set_location_assignment PIN_47 -to FILTER_CH2
 set_location_assignment PIN_17 -to IN_PIN0
-set_location_assignment PIN_100 -to IN_PIN4
 set_location_assignment PIN_99 -to IN_PIN5
 set_location_assignment PIN_83 -to LED_48K
 set_location_assignment PIN_81 -to LED_96K
@@ -161,7 +160,6 @@ set_global_assignment -name VHDL_FILE F12_SPI_Mapping.vhd
 set_global_assignment -name VHDL_FILE F13_LEDSTRI.vhd
 set_global_assignment -name VHDL_FILE F14_DAT2BUS.vhd
 set_global_assignment -name VHDL_FILE F15_Par2I2S_2x4LanesII.vhd
-set_location_assignment PIN_21 -to I2S4L_LRCK
 set_location_assignment PIN_20 -to I2S4L_BCK
 set_location_assignment PIN_14 -to I2S4L_DATAL[0]
 set_location_assignment PIN_15 -to I2S4L_DATAL[1]
@@ -182,8 +180,7 @@ set_global_assignment -name VHDL_FILE LUT_Quarter.vhd
 set_location_assignment PIN_2 -to CNT_SYNC
 set_global_assignment -name VHDL_FILE LUT_QuarterII.vhd
 set_global_assignment -name VHDL_FILE LUT_counter128P.vhd
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
+set_global_assignment -name VHDL_FILE F1_ReadADCFullSpeed.vhd
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_push
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Ta
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Tb
@@ -195,7 +192,11 @@ set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN0
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN1
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN2
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN3
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN4
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN5
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CLKIN_xN
-set_global_assignment -name VHDL_FILE F1_ReadADCFullSpeed.vhd
+set_global_assignment -name VHDL_FILE F0_CE_CLOCKS.vhd
+set_global_assignment -name VHDL_FILE F15_Par2I2S_2S4P.vhd
+set_location_assignment PIN_100 -to MASTER_LRCK
+set_global_assignment -name VHDL_FILE F7_ReadyIII.vhd
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"

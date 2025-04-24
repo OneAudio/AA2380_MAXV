@@ -1,0 +1,107 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2023  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 16 16 272 160)
+	(text "F15_Par2I2S_2S4P" (rect 5 0 85 12)(font "Arial" ))
+	(text "inst" (rect 8 128 20 140)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "MCLKI" (rect 0 0 30 12)(font "Arial" ))
+		(text "MCLKI" (rect 21 27 51 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32)(line_width 1))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "CLK8FS" (rect 0 0 36 12)(font "Arial" ))
+		(text "CLK8FS" (rect 21 43 57 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48)(line_width 1))
+	)
+	(port
+		(pt 0 64)
+		(input)
+		(text "LRCK" (rect 0 0 28 12)(font "Arial" ))
+		(text "LRCK" (rect 21 59 49 71)(font "Arial" ))
+		(line (pt 0 64)(pt 16 64)(line_width 1))
+	)
+	(port
+		(pt 0 80)
+		(input)
+		(text "DATAL[23..0]" (rect 0 0 60 12)(font "Arial" ))
+		(text "DATAL[23..0]" (rect 21 75 81 87)(font "Arial" ))
+		(line (pt 0 80)(pt 16 80)(line_width 3))
+	)
+	(port
+		(pt 0 96)
+		(input)
+		(text "DATAR[23..0]" (rect 0 0 62 12)(font "Arial" ))
+		(text "DATAR[23..0]" (rect 21 91 83 103)(font "Arial" ))
+		(line (pt 0 96)(pt 16 96)(line_width 3))
+	)
+	(port
+		(pt 256 32)
+		(output)
+		(text "I2S_BCLK" (rect 0 0 44 12)(font "Arial" ))
+		(text "I2S_BCLK" (rect 191 27 235 39)(font "Arial" ))
+		(line (pt 256 32)(pt 240 32)(line_width 1))
+	)
+	(port
+		(pt 256 48)
+		(output)
+		(text "I2S4L_SDATAL[3..0]" (rect 0 0 92 12)(font "Arial" ))
+		(text "I2S4L_SDATAL[3..0]" (rect 143 43 235 55)(font "Arial" ))
+		(line (pt 256 48)(pt 240 48)(line_width 3))
+	)
+	(port
+		(pt 256 64)
+		(output)
+		(text "I2S4L_SDATAR[3..0]" (rect 0 0 94 12)(font "Arial" ))
+		(text "I2S4L_SDATAR[3..0]" (rect 141 59 235 71)(font "Arial" ))
+		(line (pt 256 64)(pt 240 64)(line_width 3))
+	)
+	(port
+		(pt 256 80)
+		(output)
+		(text "Synchpulse" (rect 0 0 46 12)(font "Arial" ))
+		(text "Synchpulse" (rect 189 75 235 87)(font "Arial" ))
+		(line (pt 256 80)(pt 240 80)(line_width 1))
+	)
+	(port
+		(pt 256 96)
+		(output)
+		(text "LRCKd1_test" (rect 0 0 56 12)(font "Arial" ))
+		(text "LRCKd1_test" (rect 179 91 235 103)(font "Arial" ))
+		(line (pt 256 96)(pt 240 96)(line_width 1))
+	)
+	(port
+		(pt 256 112)
+		(output)
+		(text "LRCKd2_test" (rect 0 0 57 12)(font "Arial" ))
+		(text "LRCKd2_test" (rect 178 107 235 119)(font "Arial" ))
+		(line (pt 256 112)(pt 240 112)(line_width 1))
+	)
+	(drawing
+		(rectangle (rect 16 16 240 128)(line_width 1))
+	)
+)
