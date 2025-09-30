@@ -1,0 +1,11 @@
+Fitter Status : Successful - Wed Sep 10 16:09:02 2025
+Quartus Prime Version : 23.1std.0 Build 991 11/28/2023 Patches 0.02std SC Lite Edition
+Revision Name : AA2380_MAXV_v001
+Top-level Entity Name : AA2380_MAXV
+Family : MAX V
+Device : 5M570ZT100C5
+Timing Models : Final
+Total logic elements : 153 / 570 ( 27 % )
+Total pins : 71 / 74 ( 96 % )
+Total virtual pins : 0
+UFM blocks : 0 / 1 ( 0 % )

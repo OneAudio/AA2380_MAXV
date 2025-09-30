@@ -1,0 +1,117 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Setup 'spi_slave:inst7|rx[0]'
+Slack : -33.425
+TNS   : -33.425
+
+Type  : Setup 'F0_CE_CLOCKS:inst12|MCLKDV64'
+Slack : -15.287
+TNS   : -134.185
+
+Type  : Setup 'IN_PIN2'
+Slack : -15.246
+TNS   : -443.389
+
+Type  : Setup 'CLKIN_xN'
+Slack : -14.329
+TNS   : -159.038
+
+Type  : Setup 'F7_ReadyIII:inst8|CLK_1kHz'
+Slack : -13.425
+TNS   : -134.235
+
+Type  : Setup 'F0_CE_CLOCKS:inst12|MCLKDV8'
+Slack : -9.028
+TNS   : -80.656
+
+Type  : Setup 'LUT_counter128P:inst11|LUTclk'
+Slack : -6.806
+TNS   : -39.264
+
+Type  : Setup 'MASTER_LRCK'
+Slack : -6.022
+TNS   : -19.841
+
+Type  : Hold 'F0_CE_CLOCKS:inst12|MCLKDV64'
+Slack : -3.279
+TNS   : -3.279
+
+Type  : Hold 'F0_CE_CLOCKS:inst12|MCLKDV8'
+Slack : 1.187
+TNS   : 0.000
+
+Type  : Hold 'IN_PIN2'
+Slack : 1.187
+TNS   : 0.000
+
+Type  : Hold 'CLKIN_xN'
+Slack : 3.351
+TNS   : 0.000
+
+Type  : Hold 'LUT_counter128P:inst11|LUTclk'
+Slack : 3.386
+TNS   : 0.000
+
+Type  : Hold 'MASTER_LRCK'
+Slack : 3.777
+TNS   : 0.000
+
+Type  : Hold 'spi_slave:inst7|rx[0]'
+Slack : 4.183
+TNS   : 0.000
+
+Type  : Hold 'F7_ReadyIII:inst8|CLK_1kHz'
+Slack : 5.217
+TNS   : 0.000
+
+Type  : Recovery 'F0_CE_CLOCKS:inst12|MCLKDV8'
+Slack : -11.814
+TNS   : -225.926
+
+Type  : Recovery 'IN_PIN2'
+Slack : 0.961
+TNS   : 0.000
+
+Type  : Removal 'IN_PIN2'
+Slack : -3.973
+TNS   : -175.989
+
+Type  : Removal 'F0_CE_CLOCKS:inst12|MCLKDV8'
+Slack : 4.802
+TNS   : 0.000
+
+Type  : Minimum Pulse Width 'CLKIN_xN'
+Slack : -2.289
+TNS   : -2.289
+
+Type  : Minimum Pulse Width 'IN_PIN2'
+Slack : -2.289
+TNS   : -2.289
+
+Type  : Minimum Pulse Width 'MASTER_LRCK'
+Slack : -2.289
+TNS   : -2.289
+
+Type  : Minimum Pulse Width 'F0_CE_CLOCKS:inst12|MCLKDV64'
+Slack : 0.161
+TNS   : 0.000
+
+Type  : Minimum Pulse Width 'F0_CE_CLOCKS:inst12|MCLKDV8'
+Slack : 0.161
+TNS   : 0.000
+
+Type  : Minimum Pulse Width 'F7_ReadyIII:inst8|CLK_1kHz'
+Slack : 0.161
+TNS   : 0.000
+
+Type  : Minimum Pulse Width 'LUT_counter128P:inst11|LUTclk'
+Slack : 0.161
+TNS   : 0.000
+
+Type  : Minimum Pulse Width 'spi_slave:inst7|rx[0]'
+Slack : 0.500
+TNS   : 0.000
+
+------------------------------------------------------------
