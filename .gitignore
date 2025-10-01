@@ -1,0 +1,120 @@
+################################################################################
+# .gitignore pour projet Quartus Prime (Intel/Altera)
+#
+# Objectif :
+#   - Suivre sous Git uniquement les fichiers utiles :
+#       * Sources HDL : rtl/, tb/
+#       * Contraintes : constraints/
+#       * Projet Quartus : .qpf, .qsf
+#       * Descripteurs IP : ip/ (.qsys, .qip, .tcl)
+#       * Scripts : sim/, scripts/
+#       * Documentation : docs/
+#       * Binaires finaux voulus : .sof, .pof, .hex
+#
+#   - Ignorer :
+#       * Bases de données Quartus
+#       * Artefacts de compilation
+#       * Fichiers temporaires, backups, logs
+#       * IP générées (synthesis/, simulation/, submodules/)
+#       * Artefacts de simulation (work/, wlf, transcript…)
+#
+# Notes :
+#   - Le "!" annule une règle d’ignore → permet de garder certains fichiers.
+#   - output_files est ignoré par défaut mais les .sof/.pof/.hex sont gardés.
+################################################################################
+
+
+################################################################################
+# 1. OS & éditeurs
+################################################################################
+.DS_Store              # Fichiers cachés macOS
+Thumbs.db              # Fichiers cachés Windows
+*.swp                  # Fichiers temporaires Vim
+*.tmp                  # Fichiers temporaires
+*~                     # Sauvegardes automatiques d’éditeurs
+.vscode/               # Configurations locales VS Code
+*.code-workspace       # Espaces de travail VS Code
+
+
+################################################################################
+# 2. Quartus — bases de données
+################################################################################
+db/                    # Base de données Quartus
+incremental_db/        # Compilation incrémentale Quartus
+*.qdb                  # Database interne Quartus
+
+
+################################################################################
+# 3. Quartus — fichiers de sortie/reports
+################################################################################
+output_files/          # Tous les fichiers générés (voir exceptions plus bas)
+*.rpt                  # Rapports de compilation
+*.chg                  # Logs internes
+*.smsg                 # Messages système Quartus
+*.eqn                  # Équations générées
+*.log                  # Logs de build
+*.jou                  # Journaux de session
+*.html                 # Rapports HTML générés
+*.bak                  # Sauvegardes automatiques
+*.ddb                  # Database interne Quartus
+*.idb                  # Index interne Quartus
+*.qar                  # Archives Quartus exportées
+*.qws                  # Fichier workspace utilisateur
+*.qdf                  # Fichier temporaire de projet
+*.qdf.*                # Variantes de fichier temporaire
+
+
+################################################################################
+# 4. IP Platform Designer / Qsys — générés
+################################################################################
+.qsys_edit/            # État UI interne Qsys (inutile à versionner)
+
+# IP générées → on garde .qsys/.qip/.tcl, on ignore les artefacts
+ip/**/synthesis/
+ip/**/simulation/
+ip/**/submodules/
+
+# Cas génériques (au cas où d’autres IP soient ajoutées)
+**/generated*/
+**/quartus_syn/
+**/quartus_sim/
+
+
+################################################################################
+# 5. Simulation (ModelSim/Questa) — artefacts
+################################################################################
+work/                  # Librairie compilée
+*.wlf                  # Dumps waveform
+vsim.wlf               # Waveform par défaut
+transcript             # Log de simulation
+modelsim.ini           # Config ModelSim générée automatiquement
+
+# Exceptions : scripts de simu qu’on veut garder
+!sim/**.do
+!sim/**.tcl
+!sim/**.ini
+!sim/**.mk
+!sim/Makefile
+!sim/README.md
+
+
+################################################################################
+# 6. Binaires finaux FPGA — CONSERVÉS
+################################################################################
+# Même si output_files est ignoré globalement,
+# on garde volontairement ces fichiers utiles pour programmation FPGA.
+!*.sof
+!*.pof
+!*.hex
+!output_files/README.md
+
+
+################################################################################
+# 7. Documentation — CONSERVÉE
+################################################################################
+# Tous les formats de documentation sont suivis volontairement :
+#   pdf, doc, docx, xls, xlsx, ods, odt, txt, svg, drawio
+# Aucun pattern d’ignore ne les exclut.
+# Exemples : docs/manual.pdf, docs/schema.drawio, docs/report.xlsx
+
+!**/README.md

@@ -1,0 +1,34 @@
+# --------------------------------------------
+# Normalisation des fins de ligne
+# --------------------------------------------
+# Par défaut : tous les fichiers texte sont normalisés en LF
+* text=auto eol=lf
+
+# Scripts Windows : doivent sortir en CRLF
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.ps1  text eol=crlf
+
+# (Optionnel) Si tu as des scripts shell, on force LF :
+# *.sh   text eol=lf
+
+# --------------------------------------------
+# Binaires : jamais de conversion
+# --------------------------------------------
+*.drawio binary
+*.ods    binary
+*.odt    binary
+*.xls    binary
+*.xlsx   binary
+*.pdf    binary
+*.jpeg   binary
+*.jpg    binary
+*.png    binary
+*.gif    binary
+*.sof    binary
+*.pof    binary
+*.jic    binary
+*.rbf    binary
+*.hex    binary
+*.elf    binary
+*.bin    binary
