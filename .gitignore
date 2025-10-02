@@ -1,6 +1,5 @@
 ################################################################################
 # .gitignore pour projet Quartus Prime (Intel/Altera)
-#
 # Objectif :
 #   - Suivre sous Git uniquement les fichiers utiles :
 #       * Sources HDL : rtl/, tb/
@@ -26,48 +25,76 @@
 
 ################################################################################
 # 1. OS & éditeurs
-################################################################################
-.DS_Store              # Fichiers cachés macOS
-Thumbs.db              # Fichiers cachés Windows
-*.swp                  # Fichiers temporaires Vim
-*.tmp                  # Fichiers temporaires
-*~                     # Sauvegardes automatiques d’éditeurs
-.vscode/               # Configurations locales VS Code
-*.code-workspace       # Espaces de travail VS Code
-
+######################################################## ########################
+# Fichiers cachés Windows              
+Thumbs.db
+# Fichiers temporaires Vim                  
+*.swp
+# Fichiers temporaires                  
+*.tmp
+# Sauvegardes automatiques d’éditeurs                     
+*~
+# Configurations locales VS Code               
+.vscode/
+# Espaces de travail VS Code
+*.code-workspace
 
 ################################################################################
 # 2. Quartus — bases de données
 ################################################################################
-db/                    # Base de données Quartus
-incremental_db/        # Compilation incrémentale Quartus
-*.qdb                  # Database interne Quartus
-
+# Base de données Quartus
+db/
+# Compilation incrémentale Quartus
+incremental_db/
+# Database interne Quartus        
+*.qdb
 
 ################################################################################
 # 3. Quartus — fichiers de sortie/reports
 ################################################################################
-output_files/          # Tous les fichiers générés (voir exceptions plus bas)
-*.rpt                  # Rapports de compilation
-*.chg                  # Logs internes
-*.smsg                 # Messages système Quartus
-*.eqn                  # Équations générées
-*.log                  # Logs de build
-*.jou                  # Journaux de session
-*.html                 # Rapports HTML générés
-*.bak                  # Sauvegardes automatiques
-*.ddb                  # Database interne Quartus
-*.idb                  # Index interne Quartus
-*.qar                  # Archives Quartus exportées
-*.qws                  # Fichier workspace utilisateur
-*.qdf                  # Fichier temporaire de projet
-*.qdf.*                # Variantes de fichier temporaire
+# Tous les fichiers générés (voir exceptions plus bas)
+!output_files/
+output_files/*
+# Même si output_files est ignoré globalement,
+# on garde volontairement ces fichiers utiles pour programmation FPGA.
+!output_files/*.sof
+!output_files/*.pof
+!output_files/*.hex
+# Rapports de compilation
+*.rpt
+# Logs internes                  
+*.chg
+# Messages système Quartus                  
+*.smsg
+# Équations générées                 
+*.eqn
+# Logs de build                  
+*.log
+# Journaux de session                 
+*.jou
+# Rapports HTML générés                  
+*.html
+# Sauvegardes automatiques                 
+*.bak
+# Database interne Quartus                  
+*.ddb
+# Index interne Quartus                 
+*.idb
+# Archives Quartus exportées                  
+*.qar
+# Fichier workspace utilisateur                  
+*.qws
+# Fichier temporaire de projet                  
+*.qdf
+# Variantes de fichier temporaire                  
+*.qdf.*
 
 
 ################################################################################
 # 4. IP Platform Designer / Qsys — générés
 ################################################################################
-.qsys_edit/            # État UI interne Qsys (inutile à versionner)
+# État UI interne Qsys (inutile à versionner)
+.qsys_edit/
 
 # IP générées → on garde .qsys/.qip/.tcl, on ignore les artefacts
 ip/**/synthesis/
@@ -79,15 +106,19 @@ ip/**/submodules/
 **/quartus_syn/
 **/quartus_sim/
 
-
 ################################################################################
 # 5. Simulation (ModelSim/Questa) — artefacts
 ################################################################################
-work/                  # Librairie compilée
-*.wlf                  # Dumps waveform
-vsim.wlf               # Waveform par défaut
-transcript             # Log de simulation
-modelsim.ini           # Config ModelSim générée automatiquement
+# Librairie compilée
+work/
+# Dumps waveform                  
+*.wlf
+# Waveform par défaut                  
+vsim.wlf
+# Log de simulation               
+transcript
+# Config ModelSim générée automatiquement             
+modelsim.ini
 
 # Exceptions : scripts de simu qu’on veut garder
 !sim/**.do
@@ -96,17 +127,6 @@ modelsim.ini           # Config ModelSim générée automatiquement
 !sim/**.mk
 !sim/Makefile
 !sim/README.md
-
-
-################################################################################
-# 6. Binaires finaux FPGA — CONSERVÉS
-################################################################################
-# Même si output_files est ignoré globalement,
-# on garde volontairement ces fichiers utiles pour programmation FPGA.
-!*.sof
-!*.pof
-!*.hex
-!output_files/README.md
 
 
 ################################################################################
