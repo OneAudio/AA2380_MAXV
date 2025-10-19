@@ -1,4 +1,4 @@
------------------------------------------------------------------
+ -----------------------------------------------------------------
 -- AA2380V1 OSVA PROJECT.
 -- Date: 19/04/2025	Designer: O.N
 -----------------------------------------------------------------
@@ -70,7 +70,7 @@ begin
     if  Synchpulse='1' then
             Lshift  <= DATAL ; -- load Left channel data to be transmitted
 			Rshift  <= DATAR ; -- load Right channel data to be transmitted
-    elsif falling_edge(CLK8FS) then
+    elsif rising_edge(CLK8FS) then
 		Lshift  <= Lshift(19 downto 0) & "0000" ;-- shift data
 		Rshift  <= Rshift(19 downto 0) & "0000" ;-- shift data
 	end if;

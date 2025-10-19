@@ -53,28 +53,13 @@ set_global_assignment -name USE_CONFIGURATION_DEVICE ON
 set_global_assignment -name SIMULATION_MODE TIMING
 set_global_assignment -name ADD_DEFAULT_PINS_TO_SIMULATION_OUTPUT_WAVEFORMS OFF
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
-set_location_assignment PIN_5 -to IN_PIN3
-set_location_assignment PIN_6 -to IN_PIN2
-set_location_assignment PIN_16 -to IN_PIN1
 set_global_assignment -name OPTIMIZE_HOLD_TIMING "IO PATHS AND MINIMUM TPD PATHS"
 set_global_assignment -name FITTER_EFFORT "STANDARD FIT"
 set_global_assignment -name INCREMENTAL_VECTOR_INPUT_SOURCE F9_ADCx2_FastRead.vwf
 set_location_assignment PIN_62 -to CLK100M
 set_location_assignment PIN_98 -to CLKEXT
-set_location_assignment PIN_64 -to CLKIN_xN
 set_location_assignment PIN_61 -to FILTER_CH1
 set_location_assignment PIN_47 -to FILTER_CH2
-set_location_assignment PIN_17 -to IN_PIN0
-set_location_assignment PIN_99 -to IN_PIN5
-set_location_assignment PIN_83 -to LED_48K
-set_location_assignment PIN_81 -to LED_96K
-set_location_assignment PIN_77 -to LED_192K
-set_location_assignment PIN_78 -to LED_CAL
-set_location_assignment PIN_82 -to LED_FILTOFF
-set_location_assignment PIN_76 -to LED_SE
-set_location_assignment PIN_89 -to LEDavg0
-set_location_assignment PIN_86 -to LEDavg1
-set_location_assignment PIN_84 -to LEDavg2
 set_location_assignment PIN_75 -to nACTIVITY_LED
 set_location_assignment PIN_49 -to nLED1_G
 set_location_assignment PIN_51 -to nLED1_R
@@ -82,10 +67,6 @@ set_location_assignment PIN_50 -to nLED1_Y
 set_location_assignment PIN_52 -to nLED2_G
 set_location_assignment PIN_58 -to nLED2_R
 set_location_assignment PIN_57 -to nLED2_Y
-set_location_assignment PIN_85 -to nROT_push
-set_location_assignment PIN_91 -to nROT_Ta
-set_location_assignment PIN_87 -to nROT_Tb
-set_location_assignment PIN_1 -to OUT_PIN11
 set_location_assignment PIN_69 -to PLL_OE
 set_location_assignment PIN_68 -to PLL_S0
 set_location_assignment PIN_70 -to PLL_S1
@@ -101,7 +82,7 @@ set_location_assignment PIN_43 -to CONF[2]
 set_location_assignment PIN_44 -to CONF[3]
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "NO HEAT SINK WITH STILL AIR"
 set_global_assignment -name OPTIMIZATION_MODE "HIGH PERFORMANCE EFFORT"
-set_global_assignment -name AUTO_PACKED_REGISTERS_MAX "MINIMIZE AREA WITH CHAINS"
+set_global_assignment -name AUTO_PACKED_REGISTERS_MAX NORMAL
 set_location_assignment PIN_26 -to UIO_0
 set_location_assignment PIN_28 -to UIO_1
 set_location_assignment PIN_36 -to UIO_7
@@ -116,7 +97,6 @@ set_location_assignment PIN_71 -to ADCL_SDO
 set_location_assignment PIN_55 -to ADCR_BUSY
 set_location_assignment PIN_53 -to ADCR_SDO
 set_global_assignment -name ALLOW_REGISTER_RETIMING ON
-set_location_assignment PIN_20 -to I2S4L_BCK
 set_location_assignment PIN_14 -to I2S4L_DATAL[0]
 set_location_assignment PIN_15 -to I2S4L_DATAL[1]
 set_location_assignment PIN_18 -to I2S4L_DATAL[2]
@@ -130,25 +110,35 @@ set_location_assignment PIN_30 -to UIO_3
 set_location_assignment PIN_33 -to UIO_4
 set_location_assignment PIN_34 -to UIO_5
 set_location_assignment PIN_35 -to UIO_6
-set_location_assignment PIN_2 -to CNT_SYNC
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_push
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Ta
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to nROT_Tb
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[3]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[2]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[1]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[0]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN0
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN1
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN2
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN3
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to IN_PIN5
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CLKIN_xN
 set_location_assignment PIN_100 -to MASTER_LRCK
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
 set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS OFF
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_location_assignment PIN_5 -to I2S4L_8F
+set_location_assignment PIN_99 -to nRESET
+set_location_assignment PIN_21 -to SPARE_OUT0
+set_location_assignment PIN_20 -to SPARE_OUT1
+set_location_assignment PIN_16 -to SPI_CLOCK
+set_location_assignment PIN_17 -to SPI_MOSI
+set_location_assignment PIN_1 -to SPI_MISO
+set_location_assignment PIN_6 -to SPI_nCS
+set_location_assignment PIN_64 -to MCLK
+set_location_assignment PIN_91 -to J18_1
+set_location_assignment PIN_89 -to J18_2
+set_location_assignment PIN_87 -to J18_3
+set_location_assignment PIN_86 -to J18_4
+set_location_assignment PIN_85 -to J18_5
+set_location_assignment PIN_84 -to J18_6
+set_location_assignment PIN_83 -to J18_7
+set_location_assignment PIN_82 -to J18_8
+set_location_assignment PIN_81 -to J18_9
+set_location_assignment PIN_78 -to J18_10
+set_location_assignment PIN_77 -to J18_11
+set_location_assignment PIN_76 -to J18_12
+set_global_assignment -name VHDL_FILE rtl/F16_UIOTESTB.vhd
 set_global_assignment -name VHDL_FILE rtl/spi_slave.vhd
 set_global_assignment -name VHDL_FILE rtl/LUT_QuarterII.vhd
 set_global_assignment -name VHDL_FILE rtl/LUT_counter128P.vhd
@@ -162,3 +152,8 @@ set_global_assignment -name VHDL_FILE rtl/F1_ReadADCFullSpeed.vhd
 set_global_assignment -name VHDL_FILE rtl/F0_CE_CLOCKS.vhd
 set_global_assignment -name BDF_FILE rtl/Emulate_ADC.bdf
 set_global_assignment -name BDF_FILE rtl/AA2380_MAXV.bdf
+set_global_assignment -name VHDL_FILE rtl/F7_ReadyIV.vhd
+set_global_assignment -name QIP_FILE OSC.qip
+set_global_assignment -name VHDL_FILE rtl/F21_MCLKDETECT.vhd
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
