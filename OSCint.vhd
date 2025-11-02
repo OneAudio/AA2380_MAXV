@@ -4,7 +4,7 @@
 -- MODULE: ALTUFM_OSC 
 
 -- ============================================================
--- File Name: OSC.vhd
+-- File Name: OSCint.vhd
 -- Megafunction Name(s):
 -- 			ALTUFM_OSC
 --
@@ -44,15 +44,15 @@
  LIBRARY ieee;
  USE ieee.std_logic_1164.all;
 
- ENTITY  OSC_altufm_osc_iu7 IS 
+ ENTITY  OSCint_altufm_osc_iu7 IS 
 	 PORT 
 	 ( 
 		 osc	:	OUT  STD_LOGIC;
 		 oscena	:	IN  STD_LOGIC
 	 ); 
- END OSC_altufm_osc_iu7;
+ END OSCint_altufm_osc_iu7;
 
- ARCHITECTURE RTL OF OSC_altufm_osc_iu7 IS
+ ARCHITECTURE RTL OF OSCint_altufm_osc_iu7 IS
 
 	 SIGNAL  wire_gnd	:	STD_LOGIC;
 	 SIGNAL  wire_vcc	:	STD_LOGIC;
@@ -105,29 +105,29 @@
 		oscena => oscena
 	  );
 
- END RTL; --OSC_altufm_osc_iu7
+ END RTL; --OSCint_altufm_osc_iu7
 --VALID FILE
 
 
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
 
-ENTITY OSC IS
+ENTITY OSCint IS
 	PORT
 	(
 		oscena		: IN STD_LOGIC ;
 		osc		: OUT STD_LOGIC 
 	);
-END OSC;
+END OSCint;
 
 
-ARCHITECTURE RTL OF osc IS
+ARCHITECTURE RTL OF oscint IS
 
 	SIGNAL sub_wire0	: STD_LOGIC ;
 
 
 
-	COMPONENT OSC_altufm_osc_iu7
+	COMPONENT OSCint_altufm_osc_iu7
 	PORT (
 			oscena	: IN STD_LOGIC ;
 			osc	: OUT STD_LOGIC 
@@ -137,7 +137,7 @@ ARCHITECTURE RTL OF osc IS
 BEGIN
 	osc    <= sub_wire0;
 
-	OSC_altufm_osc_iu7_component : OSC_altufm_osc_iu7
+	OSCint_altufm_osc_iu7_component : OSCint_altufm_osc_iu7
 	PORT MAP (
 		oscena => oscena,
 		osc => sub_wire0
@@ -160,10 +160,10 @@ END RTL;
 -- Retrieval info: CONNECT: osc 0 0 0 0 @osc 0 0 0 0
 -- Retrieval info: USED_PORT: oscena 0 0 0 0 INPUT NODEFVAL "oscena"
 -- Retrieval info: CONNECT: @oscena 0 0 0 0 oscena 0 0 0 0
--- Retrieval info: GEN_FILE: TYPE_NORMAL OSC.vhd TRUE FALSE
--- Retrieval info: GEN_FILE: TYPE_NORMAL OSC.qip TRUE FALSE
--- Retrieval info: GEN_FILE: TYPE_NORMAL OSC.bsf TRUE TRUE
--- Retrieval info: GEN_FILE: TYPE_NORMAL OSC_inst.vhd TRUE TRUE
--- Retrieval info: GEN_FILE: TYPE_NORMAL OSC.inc TRUE TRUE
--- Retrieval info: GEN_FILE: TYPE_NORMAL OSC.cmp TRUE TRUE
+-- Retrieval info: GEN_FILE: TYPE_NORMAL OSCint.vhd TRUE FALSE
+-- Retrieval info: GEN_FILE: TYPE_NORMAL OSCint.qip TRUE FALSE
+-- Retrieval info: GEN_FILE: TYPE_NORMAL OSCint.bsf TRUE TRUE
+-- Retrieval info: GEN_FILE: TYPE_NORMAL OSCint_inst.vhd TRUE TRUE
+-- Retrieval info: GEN_FILE: TYPE_NORMAL OSCint.inc FALSE TRUE
+-- Retrieval info: GEN_FILE: TYPE_NORMAL OSCint.cmp TRUE TRUE
 -- Retrieval info: LIB_FILE: maxv

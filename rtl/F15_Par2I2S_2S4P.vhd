@@ -1,95 +1,115 @@
- -----------------------------------------------------------------
--- AA2380V1 OSVA PROJECT.
--- Date: 19/04/2025	Designer: O.N
------------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 51 LE.
--- Function F15: F15_Par2I2S_2S4P.vhd
--- 
--- Parrallel to 2x4 Lanes serial interface
--- Simplified version for F1_ReadADCFullSpeed.vhd reading block
-------------------------------------------------------------------
+    -----------------------------------------------------------------
+    -- AA2380V1 OSVA PROJECT.
+    -- Date: 31/10/2025	Designer: O.N
+    -----------------------------------------------------------------
+    -- Intel MAXV 5M570 CPLD	Take 98 LE.
+    -- Function F15: F15_Par2I2S_2S4P.vhd
+    -- 
+    -- Parrallel to 2x4 Lanes serial interface
+    -- Simplified version for F1_ReadADCFullSpeed.vhd reading block
+    --
+    -- Update : add input for fixed values test mode (hB20EA7 and h9C9F4D)
+    -- Test values are set as generics DATAL_TST and DATAR_TST
+    ------------------------------------------------------------------
 
-LIBRARY ieee;
-USE ieee.std_logic_1164.all;
-use IEEE.numeric_std.all;
+    LIBRARY ieee;
+    USE ieee.std_logic_1164.all;
+    use IEEE.numeric_std.all;
 
-entity F15_Par2I2S_2S4P is
---
-port(
-	-- INPUTS
-	MCLKI		: in  std_logic ;
-	CLK8FS		: in  std_logic ; -- main clock 8FS
-	LRCK		: in  std_logic ; -- Output sampling rate clock
-	DATAL		: in  std_logic_vector(23 downto 0) ; -- Left channel parallel data in
-	DATAR		: in  std_logic_vector(23 downto 0) ; -- Right channel parallel data in
-	-- OUTPUTS
-	I2S_BCLK		: out  std_logic ; -- I2S bit clock 
-	I2S4L_SDATAL	: out  std_logic_vector(3 downto 0);   -- I2S data 4 lanes
-	I2S4L_SDATAR	: out  std_logic_vector(3 downto 0);   -- I2S data 4 lanes
-	Synchpulse		: buffer  std_logic;
-	LRCKd1_test 	: out  std_logic ;
-	LRCKd2_test 	: out  std_logic 
-);
- 
-end F15_Par2I2S_2S4P;
+    entity F15_Par2I2S_2S4P is
+    --
+    GENERIC(
+        DATAL_TST : std_logic_vector(23 downto 0) := x"B20EA7"; -- Test word left channel
+        DATAR_TST : std_logic_vector(23 downto 0) := x"9C9F4D"	-- Test word right channel
+        ); 
+    port(
+        -- INPUTS
+        MCLKI		: in  std_logic ; -- main clock (98.304 MHz or 90.3168 MHz)
+        CLK8FS		: in  std_logic ; -- main clock 8FS of parallel data rate
+        LRCK		: in  std_logic ; -- Output sampling rate clock (=FS)
+        DATAL		: in  std_logic_vector(23 downto 0) ; -- Left  channel parallel data in
+        DATAR		: in  std_logic_vector(23 downto 0) ; -- Right channel parallel data in
+        TSTMODE		: in  std_logic ; -- Test mode enable with fixed values on data outputs
+        -- OUTPUTS
+        I2S4L_SDATAL	: out  std_logic_vector(3 downto 0);   -- I2S data 4 lanes
+        I2S4L_SDATAR	: out  std_logic_vector(3 downto 0);   -- I2S data 4 lanes
+        PARI2S_LOAD		: buffer  std_logic
+        -- LRCKd1_test 	: out  std_logic ;
+        -- LRCKd2_test 	: out  std_logic 
+    );
+    
+    end F15_Par2I2S_2S4P;
 
-architecture Behavioral of F15_Par2I2S_2S4P is
+    architecture Behavioral of F15_Par2I2S_2S4P is
 
-signal  SR_DATA		: std_logic_vector(23 downto 0)  ; -- Data to be shifted
-signal  Lshift		: std_logic_vector(23 downto 0)  ; -- shift register output
-signal  Rshift		: std_logic_vector(23 downto 0)  ; -- shift register output
+    signal  SR_DATA		: std_logic_vector(23 downto 0)  ; -- Data to be shifted
+    signal  Lshift		: std_logic_vector(23 downto 0)  ; -- shift register output
+    signal  Rshift		: std_logic_vector(23 downto 0)  ; -- shift register output
 
--- signal Synchpulse	: std_logic  ;
-signal LRCKd1		: std_logic  := '0'  ;
-signal LRCKd2		: std_logic  := '0'  ;
+    begin
 
+
+    ------------------------------------------------------------------
+    -- Process to generate PARI2S_LOAD on rising edge of LRCK
+    -- PARI2S_LOAD is used to load new data into shift registers
+    -- It's width is one MCLKI cycle synchronous to MCLKI
+    ------------------------------------------------------------------
+    -- process (MCLKI,LRCK)
+    --     variable LRCKd1, LRCKd2 : std_logic;
+    --     variable next_synch : std_logic;
+    -- begin
+    --     -- combinational logic to detect rising edge of LRCK
+    --     next_synch := LRCK and not(LRCKd2); -- 
+    --     -- next_synch is '1' for one MCLKI cycle on rising edge of LRCK
+    --     if rising_edge(MCLKI) then
+    --         LRCKd1 := LRCK;  -- delay LRCK by one MCLKI cycle
+    --         LRCKd2 := LRCKd1;-- delay LRCK by two MCLKI cycles
+    --         -- Output PARI2S_LOAD	
+    --         PARI2S_LOAD <= next_synch;--
+    --     end if;
+    -- end process;
+process (MCLKI)
+    variable LRCKd : std_logic := '0';
 begin
+    if rising_edge(MCLKI) then
+        -- Détection du front montant de LRCK
+        if (LRCK = '1' and LRCKd = '0') then
+            PARI2S_LOAD <= '1';  -- Pulse dès le front de LRCK
+        else
+            PARI2S_LOAD <= '0';
+        end if;
 
-I2S_BCLK <= CLK8FS	; -- I2S Bit clock is equal to 64xFS
-LRCKd1_test <=  LRCKd1;
-LRCKd2_test <=  LRCKd2;
-------------------------------------------------------------------
--- Generate I2s control signal for shift register 
-------------------------------------------------------------------
-process (MCLKI,LRCKd1,LRCKd2,LRCK)	is
-begin
-	-- 
-	if 	rising_edge(MCLKI)	then
-		LRCKd1 <= LRCK ;
-		LRCKd2 <= LRCKd1;
-	end if;
-	Synchpulse <= LRCK and not(LRCKd2);
+        -- Mémorisation de l'état précédent de LRCK
+        LRCKd := LRCK;
+    end if;
 end process;
-	
---------------------------------------------------------------------------------
--- shift of data 
---------------------------------------------------------------------------------
-process (CLK8FS,Synchpulse,DATAL,DATAR)
-begin
-	-- Shift are made on each falling_edge of 64FS cloc
-    if  Synchpulse='1' then
-            Lshift  <= DATAL ; -- load Left channel data to be transmitted
-			Rshift  <= DATAR ; -- load Right channel data to be transmitted
-    elsif rising_edge(CLK8FS) then
-		Lshift  <= Lshift(19 downto 0) & "0000" ;-- shift data
-		Rshift  <= Rshift(19 downto 0) & "0000" ;-- shift data
-	end if;
-end process;
-I2S4L_SDATAL <= Lshift(23 downto 20); -- MSB of shift register is serial data out
-I2S4L_SDATAR <= Rshift(23 downto 20); -- MSB of shift register is serial data out	
 
-end architecture ;
+    --------------------------------------------------------------------------
+    -- Processes to handle shift registers for I2S 4 lanes serial data output
+    -- Each clock cycle of CLK8FS, shift left by 4 bits
+    -- On PARI2S_LOAD, load new data into shift registers
+    -- If TSTMODE = '1', load fixed test values into shift registers
+    --------------------------------------------------------------------------------
+    process (CLK8FS,PARI2S_LOAD,TSTMODE,DATAL,DATAR)
+    begin
+            -- On PARI2S_LOAD, load new data into shift registers
+        if PARI2S_LOAD = '1' then
+            -- Check if test mode is enabled
+            if TSTMODE = '1' then
+                Lshift <= DATAL_TST; -- Load Left test data into shift register
+                Rshift <= DATAR_TST; -- Load Right test data into shift register
+            else
+                Lshift <= DATAL; -- Load input Left data into shift register
+                Rshift <= DATAR; -- Load input Right data into shift register
+            end if;
+        elsif rising_edge(CLK8FS) then
+            -- Shift left by 4 bits on each CLK8FS rising edge
+                Lshift <= Lshift(19 downto 0) & "0000"; -- Shift left by 4 bits
+                Rshift <= Rshift(19 downto 0) & "0000"; -- Shift left by 4 bits
+        end if;
+    end process;
 
+    I2S4L_SDATAL <= Lshift(23 downto 20); -- MSB of shift register is serial data out
+    I2S4L_SDATAR <= Rshift(23 downto 20); -- MSB of shift register is serial data out	
 
-
-
-
-
-
-
-
-
-
-
-
-
+    end architecture ;

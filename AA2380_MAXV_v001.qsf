@@ -110,10 +110,6 @@ set_location_assignment PIN_30 -to UIO_3
 set_location_assignment PIN_33 -to UIO_4
 set_location_assignment PIN_34 -to UIO_5
 set_location_assignment PIN_35 -to UIO_6
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[3]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[2]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[1]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[0]
 set_location_assignment PIN_100 -to MASTER_LRCK
 set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS OFF
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
@@ -138,6 +134,10 @@ set_location_assignment PIN_81 -to J18_9
 set_location_assignment PIN_78 -to J18_10
 set_location_assignment PIN_77 -to J18_11
 set_location_assignment PIN_76 -to J18_12
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[3]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[2]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[1]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[0]
 set_global_assignment -name VHDL_FILE rtl/F16_UIOTESTB.vhd
 set_global_assignment -name VHDL_FILE rtl/spi_slave.vhd
 set_global_assignment -name VHDL_FILE rtl/LUT_QuarterII.vhd
@@ -145,15 +145,15 @@ set_global_assignment -name VHDL_FILE rtl/LUT_counter128P.vhd
 set_global_assignment -name VHDL_FILE rtl/F16_UIOTEST.vhd
 set_global_assignment -name VHDL_FILE rtl/F15_Par2I2S_2S4P.vhd
 set_global_assignment -name VHDL_FILE rtl/F14_DAT2BUS.vhd
-set_global_assignment -name VHDL_FILE rtl/F13_LEDSTRI.vhd
 set_global_assignment -name VHDL_FILE rtl/F12_SPI_Mapping.vhd
 set_global_assignment -name VHDL_FILE rtl/F7_ReadyIII.vhd
 set_global_assignment -name VHDL_FILE rtl/F1_ReadADCFullSpeed.vhd
 set_global_assignment -name VHDL_FILE rtl/F0_CE_CLOCKS.vhd
 set_global_assignment -name BDF_FILE rtl/Emulate_ADC.bdf
 set_global_assignment -name BDF_FILE rtl/AA2380_MAXV.bdf
-set_global_assignment -name VHDL_FILE rtl/F7_ReadyIV.vhd
 set_global_assignment -name QIP_FILE OSC.qip
 set_global_assignment -name VHDL_FILE rtl/F21_MCLKDETECT.vhd
+set_global_assignment -name QIP_FILE OSCint.qip
+set_global_assignment -name VHDL_FILE rtl/F13_LEDS_DRV.vhd
 set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
 set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"

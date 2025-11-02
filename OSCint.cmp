@@ -14,7 +14,7 @@
 --https://fpgasoftware.intel.com/eula.
 
 
-component OSC
+component OSCint
 	PORT
 	(
 		oscena		: IN STD_LOGIC ;
