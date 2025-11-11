@@ -23,7 +23,7 @@ port(
     -- Inputs Clocks
     MCLK          : in  std_logic  ; -- master input clock (98.304 MHz or 90.3168 MHz)
     CLKFS         : in  std_logic  ; -- Sampling frequency clock
-    CLEAR          : in  std_logic ; -- clear input active high
+    nRESET        : in  std_logic ; -- nRESET input active high
     -- Output ports
     DOUTL	 	  : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Left channel
     DOUTR	 	  : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Right channel
@@ -248,9 +248,9 @@ end process ADCserial_read;
 -- of "FSo" (Effective output sample frequency).
 --
 ------------------------------------------------------------------------------
-process (CLKFS,r_DATAL,r_DATAR,CLEAR)
+process (CLKFS,r_DATAL,r_DATAR,nRESET)
 begin
-  if    CLEAR='1' then
+  if    nRESET='0' then
         DOUTL <= x"000000"  ; -- Reset DATA if OutOfRange detected
         DOUTR <= x"000000"  ; -- Reset DATA if OutOfRange detected
   elsif	rising_edge(CLKFS) then
