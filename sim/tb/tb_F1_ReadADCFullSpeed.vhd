@@ -16,7 +16,15 @@ entity tb_F1_ReadADCFullSpeed is
     G_TBUSY_NS  : time    := 13 ns;       -- délai CNV↓ -> BUSY↑
     G_TCONV_NS  : time    := 392 ns;      -- durée conversion (BUSY haut)
     -- Pour la sinusoïde/cos : 1 période sur N échantillons
-    G_SIG_PERIOD_SAMPLES : integer := 1024
+    G_SIG_PERIOD_SAMPLES : integer := 1024;
+
+    -- ********** NOUVEAU : motifs alternés pour chaque voie **********
+    -- Formats: vecteurs sur G_BITS (24) bits; valeurs par défaut d'exemple
+    G_L_VAL_A   : std_logic_vector(23 downto 0) := x"7A_BCDE";
+    G_L_VAL_B   : std_logic_vector(23 downto 0) := x"85_4321";
+    G_R_VAL_A   : std_logic_vector(23 downto 0) := x"12_3456";
+    G_R_VAL_B   : std_logic_vector(23 downto 0) := x"ED_CBA9"
+
   );
 end entity;
 
@@ -110,19 +118,62 @@ begin
   ------------------------------------------------------------------------------
   -- Génération des valeurs SIN/COS à chaque début de conversion (CNV actif bas)
   ------------------------------------------------------------------------------
-  adc_math : process
-    variable amp     : real := real(G_FS) * (G_AMPL_PCT / 100.0);
-    variable theta   : real;
-    variable idx_mod : integer;
-  begin
-    wait until falling_edge(nCNVL) or falling_edge(nCNVR);  -- **FIX** actif bas
-    sample_idx <= sample_idx + 1;
-    idx_mod := sample_idx mod G_SIG_PERIOD_SAMPLES;
-    theta   := 2.0 * math_pi * real(idx_mod) / real(G_SIG_PERIOD_SAMPLES);
+  -- adc_math : process
+  --   variable amp     : real := real(G_FS) * (G_AMPL_PCT / 100.0);
+  --   variable theta   : real;
+  --   variable idx_mod : integer;
+  -- begin
+  --   wait until falling_edge(nCNVL) or falling_edge(nCNVR);  -- **FIX** actif bas
+  --   sample_idx <= sample_idx + 1;
+  --   idx_mod := sample_idx mod G_SIG_PERIOD_SAMPLES;
+  --   theta   := 2.0 * math_pi * real(idx_mod) / real(G_SIG_PERIOD_SAMPLES);
 
-    l_sample_hold <= real_to_signed( amp * sin(theta), G_BITS); -- L = sin
-    r_sample_hold <= real_to_signed( amp * cos(theta), G_BITS); -- R = cos
-  end process;
+  --   l_sample_hold <= real_to_signed( amp * sin(theta), G_BITS); -- L = sin
+  --   r_sample_hold <= real_to_signed( amp * cos(theta), G_BITS); -- R = cos
+  -- end process;
+
+-- Helper: resize propre vers 'signed(G_BITS)'
+
+
+  ------------------------------------------------------------------------------
+  -- Envoi des données alternées A/B à chaque conversion
+  ------------------------------------------------------------------------------
+function slv_to_signed_resize(slv : std_logic_vector; width : natural) return signed is
+  variable tmp : signed(width-1 downto 0);
+  variable inS : signed(slv'length-1 downto 0);
+begin
+  inS := signed(slv);
+  if inS'length = width then
+    return inS;
+  elsif inS'length < width then
+    -- extension de signe
+    tmp := resize(inS, width);
+    return tmp;
+  else
+    -- tronque en conservant le signe (bits de poids fort)
+    return resize(inS, width);
+  end if;
+end function;
+
+-- *** NOUVEAU : à chaque début de conversion (CNV actif bas), alterner A/B ***
+adc_pattern_select : process
+  variable use_A : boolean := true;
+begin
+  wait until falling_edge(nCNVL) or falling_edge(nCNVR);
+
+  -- alterne A/B à chaque conversion (même alternance pour L et R)
+  use_A := not use_A;
+
+  if use_A then
+    l_sample_hold <= slv_to_signed_resize(G_L_VAL_A, G_BITS);
+    r_sample_hold <= slv_to_signed_resize(G_R_VAL_A, G_BITS);
+  else
+    l_sample_hold <= slv_to_signed_resize(G_L_VAL_B, G_BITS);
+    r_sample_hold <= slv_to_signed_resize(G_R_VAL_B, G_BITS);
+  end if;
+end process;
+
+
 
   ------------------------------------------------------------------------------
   -- Modèle BUSY (CNV actif bas)
