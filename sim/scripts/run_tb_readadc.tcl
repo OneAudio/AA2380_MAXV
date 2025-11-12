@@ -55,35 +55,35 @@ vsim -t ps work.tb_F1_ReadADCFullSpeed
 do wave.do
 
 # --- Signaux TOP TB ---
-add wave -divider "== TB clocks & reset =="
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/MCLK
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/CLKFS
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/RESETn
+add wave -divider "CLK & RAZ"
+add wave -label MCLK    -radix binary  /tb_F1_ReadADCFullSpeed/MCLK
+add wave -label CLKFS   -radix binary  /tb_F1_ReadADCFullSpeed/CLKFS
+add wave -label RESETn  -radix binary  /tb_F1_ReadADCFullSpeed/RESETn
 
-add wave -divider "== ADC LIF (L/R) =="
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/SCKL
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/SCKR
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/nCNVL
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/nCNVR
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/BUSYL
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/BUSYR
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/SDOL
-add wave -radix binary  /tb_F1_ReadADCFullSpeed/SDOR
+add wave -divider "ADC SPI"
+add wave -label SCKL    -radix binary  /tb_F1_ReadADCFullSpeed/SCKL
+add wave -label SCKR    -radix binary  /tb_F1_ReadADCFullSpeed/SCKR
+add wave -label nCNVL   -radix binary  /tb_F1_ReadADCFullSpeed/nCNVL
+add wave -label nCNVR   -radix binary  /tb_F1_ReadADCFullSpeed/nCNVR
+add wave -label BUSYL   -radix binary  /tb_F1_ReadADCFullSpeed/BUSYL
+add wave -label BUSYR   -radix binary  /tb_F1_ReadADCFullSpeed/BUSYR
+add wave -label SDOL    -radix binary  /tb_F1_ReadADCFullSpeed/SDOL
+add wave -label SDOR    -radix binary  /tb_F1_ReadADCFullSpeed/SDOR
 
-add wave -divider "== DUT parallel outputs (if present) =="
+add wave -divider "PAR outs =="
 # Ces signaux existent si ton TB mappe DOUTL/DOUTR. Sinon commente ces 2 lignes.
-add wave -radix signed  /tb_F1_ReadADCFullSpeed/DOUTL
-add wave -radix signed  /tb_F1_ReadADCFullSpeed/DOUTR
+add wave -label DOUTL   -radix hex  /tb_F1_ReadADCFullSpeed/DOUTL
+add wave -label DOUTR   -radix hex  /tb_F1_ReadADCFullSpeed/DOUTR
 
 # --- Quelques internes utiles du DUT (si noms identiques) ---
 # Ajuste/Commente si les noms diffèrent dans F1_ReadADCFullSpeed.vhd
-# catch { add wave -divider "== DUT internals ==" }
-# catch { add wave -radix binary  /tb_F1_ReadADCFullSpeed/dut/CNVen_SCK }
-# catch { add wave -radix binary  /tb_F1_ReadADCFullSpeed/dut/ADC_CLK }
-# catch { add wave -radix unsigned /tb_F1_ReadADCFullSpeed/dut/TCLK23 }
-# catch { add wave -radix unsigned /tb_F1_ReadADCFullSpeed/dut/CNVclk_cnt }
-# catch { add wave -radix hex     /tb_F1_ReadADCFullSpeed/dut/r_DATAL }
-# catch { add wave -radix hex     /tb_F1_ReadADCFullSpeed/dut/r_DATAR }
+catch { add wave -divider "internals" }
+catch { add wave -label CNVen_SCK   -radix binary   /tb_F1_ReadADCFullSpeed/dut/CNVen_SCK }
+catch { add wave -label ADC_CLK     -radix binary   /tb_F1_ReadADCFullSpeed/dut/ADC_CLK }
+catch { add wave -label TCLK23      -radix unsigned /tb_F1_ReadADCFullSpeed/dut/TCLK23 }
+catch { add wave -label CNVclk_cnt  -radix unsigned /tb_F1_ReadADCFullSpeed/dut/CNVclk_cnt }
+catch { add wave -label r_DATAL     -radix hex      /tb_F1_ReadADCFullSpeed/dut/r_DATAL }
+catch { add wave -label r_DATAR     -radix hex      /tb_F1_ReadADCFullSpeed/dut/r_DATAR }
 
 view wave
 run -all

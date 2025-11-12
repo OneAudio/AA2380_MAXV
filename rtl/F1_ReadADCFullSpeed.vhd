@@ -121,25 +121,48 @@ begin
 --   end if;
   --
 --   if  (sBUSYR='0' and sBUSYL='0')  then -- sBUSY flags must be low.
-  if  (BUSYR='0' and BUSYL='0')  then -- sBUSY flags must be low.
-      if    rising_edge(MCLK) then   -- All the process is synchronous to MCLK
-                --
-    			if  CNVclk_cnt <= 24 then    -- compare cycle counter value
-                    CNVclk_cnt <= CNVclk_cnt + 1 ;      -- Increment clock cylce counter
-    			end if;
-                --
-                -- ADC clock pulse window
-                if    CNVclk_cnt>0 and  CNVclk_cnt <= 24  then
-                        CNVen_SCK  <= '1' ; -- Enable window for clock
-                else
-                        CNVen_SCK  <= '0' ; -- Disable window for clock
-                end if;
-		    --
-	    end if;
-  else
-      CNVclk_cnt <= 0;  -- Reset tclk_cnt when BUSY is high
-      -- Added below 11/02/24: (more clean behaviour)
-      CNVen_SCK  <= '0' ; -- sck window always disable when busy active
+--*************************************************************************************
+--   if  (BUSYR='0' and BUSYL='0')  then -- sBUSY flags must be low.
+--       if    rising_edge(MCLK) then   -- All the process is synchronous to MCLK
+--                 --
+--     			if  CNVclk_cnt <= 24 then    -- compare cycle counter value
+--                     CNVclk_cnt <= CNVclk_cnt + 1 ;      -- Increment clock cylce counter
+--     			end if;
+--                 --
+--                 -- ADC clock pulse window
+--                 if    CNVclk_cnt>0 and  CNVclk_cnt <= 24  then
+--                         CNVen_SCK  <= '1' ; -- Enable window for clock
+--                 else
+--                         CNVen_SCK  <= '0' ; -- Disable window for clock
+--                 end if;
+-- 		    --
+-- 	    end if;
+--   else
+--       CNVclk_cnt <= 0;  -- Reset tclk_cnt when BUSY is high
+--       -- Added below 11/02/24: (more clean behaviour)
+--       CNVen_SCK  <= '0' ; -- sck window always disable when busy active
+--   end if;
+-- end process;
+--*************************************************************************************
+  if    rising_edge(MCLK) then   -- All the process is synchronous to MCLK
+      if  (BUSYR='0' and BUSYL='0')  then -- sBUSY flags must be low.
+                      --
+          if        CNVclk_cnt <= 24 then         -- compare cycle counter value
+                    CNVclk_cnt <= CNVclk_cnt + 1 ;-- Increment clock cylce counter
+          end if;
+          --
+          -- ADC clock pulse window
+          if      CNVclk_cnt <= 24  then
+                  CNVen_SCK  <= '1' ; -- Enable window for clock
+          else
+                  CNVen_SCK  <= '0' ; -- Disable window for clock
+          end if;
+          --
+      else
+          CNVclk_cnt <= 0;  -- Reset tclk_cnt when BUSY is high
+          -- Added below 11/02/24: (more clean behaviour)
+          CNVen_SCK  <= '0' ; -- sck window always disable when busy active
+      end if;
   end if;
 end process;
 
@@ -152,7 +175,7 @@ begin
             T_CNVen_SCK  <= CNVen_SCK  ; -- signal "CNVen_SCK" synch to falling edge of MCLK
     end if;
     -- Now combinations below will not produce glitches !
-    ADC_CLK   <= T_CNVen_SCK  and MCLK ;
+    ADC_CLK   <= MCLK when T_CNVen_SCK='1' else '0' ; --
 
 end process RDenable;
 
@@ -188,7 +211,7 @@ end process;
 ------------------------------------------------------------------
 ADCserial_read : process(TCLK23,ADC_CLK)
 begin
-	if    rising_edge(ADC_CLK) then --stored data of SDO is send to bit 0 to 23 of DATAO
+	if    falling_edge(ADC_CLK) then --stored data of SDO is send to bit 0 to 23 of DATAO
                 case TCLK23 is
                 when  0  => r_DATAL(23)  <= SDOL ; -- MSB Left channel
                             r_DATAR(23)  <= SDOR ; -- MSB Right channel

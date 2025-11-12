@@ -9,7 +9,8 @@ use ieee.math_real.all;
 entity tb_F1_ReadADCFullSpeed is
   generic (
     G_MCLK_HZ   : integer := 98_304_000;  -- 98.304 MHz
-    G_CLKFS_HZ  : integer := 192_000;     -- 12k .. 1_536k
+    G_CLKFS_HZ  : integer := 1_536_000;     -- 12k .. 1_536k
+    -- G_CLKFS_HZ  : integer := 768_000;     -- 12k .. 1_536k
     G_AMPL_PCT  : real    := 90.0;        -- amplitude en % pleine échelle
     G_BITS      : integer := 24;          -- résolution ADC
     G_TBUSY_NS  : time    := 13 ns;       -- délai CNV↓ -> BUSY↑
@@ -163,7 +164,7 @@ begin
 
   -- Puis sortir les bits restants sur chaque SCK↓ (MSB-first)
   for i in 1 to G_BITS-1 loop
-    wait until falling_edge(SCKL);
+    wait until rising_edge(SCKL);
     -- Décaler d'un cran et émettre le nouveau MSB
     v_shift := v_shift(G_BITS-2 downto 0) & '0';
     SDOL    <= v_shift(G_BITS-1);
@@ -181,7 +182,7 @@ begin
   report "[R] load " & integer'image(to_integer(r_sample_hold)) severity note;
 
   for i in 1 to G_BITS-1 loop
-    wait until falling_edge(SCKR);
+    wait until rising_edge(SCKR);
     v_shift := v_shift(G_BITS-2 downto 0) & '0';
     SDOR    <= v_shift(G_BITS-1);
   end loop;
