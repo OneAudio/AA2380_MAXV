@@ -9,6 +9,7 @@ entity tb_F1_ReadADCFullSpeed2 is
   generic (
     G_MCLK_HZ   : integer := 98_304_000;
     G_CLKFS_HZ  : integer := 1_536_000;
+    -- G_CLKFS_HZ  : integer := 768_000;
     G_BITS      : integer := 24;
     G_TBUSY_NS  : time    := 13 ns;
     G_TCONV_NS  : time    := 392 ns;

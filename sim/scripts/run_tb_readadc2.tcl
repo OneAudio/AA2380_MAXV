@@ -84,6 +84,7 @@ catch { add wave -label TCLK23      -radix unsigned /tb_F1_ReadADCFullSpeed2/dut
 catch { add wave -label CNVclk_cnt  -radix unsigned /tb_F1_ReadADCFullSpeed2/dut/CNVclk_cnt }
 catch { add wave -label r_DATAL     -radix hex      /tb_F1_ReadADCFullSpeed2/dut/r_DATAL }
 catch { add wave -label r_DATAR     -radix hex      /tb_F1_ReadADCFullSpeed2/dut/r_DATAR }
+catch { add wave -label T_CNVen_SCK -radix binary   /tb_F1_ReadADCFullSpeed2/dut/T_CNVen_SCK }
 
 view wave
 run 10 us

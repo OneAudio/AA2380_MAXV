@@ -37,7 +37,7 @@ port(
     BUSYR         : in std_logic  ; -- ADC BUSY signal (active high), Right channel
     SDOR          : in std_logic  ; -- ADC data output, Right channel
     nCNVR         : out std_logic ; -- ADC start conv signal (inverted), Right channel
-    SCKR          : buffer std_logic  -- ADC data read clock, Right channel
+    SCKR          : buffer std_logic -- ADC data read clock, Right channel
     --
     -- Testing purpose IO--
   --
@@ -47,7 +47,7 @@ end F1_ReadADCFullSpeed;
 
 architecture Behavioral of F1_ReadADCFullSpeed is
 --
-signal CLKFS_Pulse  : std_logic ; -- 
+signal CNV      : std_logic ; -- 
 signal CLKFSd1  : std_logic ; -- 
 signal CLKFSd2  : std_logic ; -- 
 
@@ -59,50 +59,35 @@ signal CNVen_SCK     : std_logic ; --
 signal ADC_CLK       : std_logic ; --
 signal TCLK23        : integer range 0 to 23 ; --
 
-signal r_DATAR	 	 : std_logic_vector(23 downto 0);
-signal r_DATAL	 	 : std_logic_vector(23 downto 0);
+signal r_DATAR	 	   : std_logic_vector(23 downto 0);
+signal r_DATAL	 	   : std_logic_vector(23 downto 0);
 
-signal T_CNVen_SCK  : std_logic ; --
+signal T_CNVen_SCK   : std_logic ; --
 
---
-
-
-
-
+----------------------------------------------------------------
 
 begin
 
---- Copy of signals for tests purpose
--- Test_ <=  ; -- TEST 
--- Test_ <=  ; -- TEST
--- Test_ <=  ; -- TEST
--- Test_ <=  ; -- TEST
--- Test_ <=  ; -- TEST
--- Test_ <=  ; -- TEST
--- Test_ <=  ; -- TEST
--- Test_ <=  ; -- TEST
--- Test_ <=  ; -- TEST
--- Test_ <=  ; -- TEST
--- Test_ <=  ; -- TEST
+--signaux à tester
+
 
 ------------------------------------------------------------------
--- Generate CLKFS_Pulse from CLKFS 
+-- Generate CNV from CLKFS 
+-- Both Left and Righ CNV pulse come from nFS pulse
+-- CNV pulse width must be 20ns min (low or high),
+-- (See LTC2380-24 datasheet timing specs page 5).
 ------------------------------------------------------------------
-process (MCLK,CLKFS,CLKFSd2,CLKFSd1) is
+process (MCLK) is
 begin
 	-- 
 	if 	rising_edge(MCLK)	then
-		CLKFSd1 <= CLKFS ;
-		CLKFSd2 <= CLKFSd1;
+      CLKFSd1 <= CLKFS ;
+      CLKFSd2 <= CLKFSd1;
+	    CNV <= CLKFS and not(CLKFSd2);
 	end if;
-	CLKFS_Pulse <= CLKFS and not(CLKFSd2);
 end process;
-
-------------------------------------------------------------------
--- Both Left and Righ CNV pulse come from nFS pulse
-------------------------------------------------------------------
-nCNVL  <= not CLKFS_Pulse ;
-nCNVR  <= not CLKFS_Pulse ;
+  nCNVL  <= not CNV ;
+  nCNVR  <= not CNV ;
 ------------------------------------------------------------------
 --  Data read CLock pulse generator
 -- 24 is the number of reading clock cycle / conversion
@@ -112,90 +97,58 @@ nCNVR  <= not CLKFS_Pulse ;
 -- and then start readind data and generate read clock for ADC (ADC_CLK)
 --
 ------------------------------------------------------------------
-ADC_clocks : process (MCLK,BUSYL,BUSYR,CNVclk_cnt,sBUSYL,sBUSYR)
+ADC_clocks : process (MCLK)
 begin
-  ---- Generate synchronous to MCLK BUSY flag (delay 1 period max:10ns@100M)
---   if rising_edge(MCLK) then
---         sBUSYL <=BUSYL ; -- Synch BUSYL to MCLK
---         sBUSYR <=BUSYR ; -- Synch BUSYR to MCLK
---   end if;
-  --
---   if  (sBUSYR='0' and sBUSYL='0')  then -- sBUSY flags must be low.
 --*************************************************************************************
---   if  (BUSYR='0' and BUSYL='0')  then -- sBUSY flags must be low.
---       if    rising_edge(MCLK) then   -- All the process is synchronous to MCLK
---                 --
---     			if  CNVclk_cnt <= 24 then    -- compare cycle counter value
---                     CNVclk_cnt <= CNVclk_cnt + 1 ;      -- Increment clock cylce counter
---     			end if;
---                 --
---                 -- ADC clock pulse window
---                 if    CNVclk_cnt>0 and  CNVclk_cnt <= 24  then
---                         CNVen_SCK  <= '1' ; -- Enable window for clock
---                 else
---                         CNVen_SCK  <= '0' ; -- Disable window for clock
---                 end if;
--- 		    --
--- 	    end if;
---   else
---       CNVclk_cnt <= 0;  -- Reset tclk_cnt when BUSY is high
---       -- Added below 11/02/24: (more clean behaviour)
---       CNVen_SCK  <= '0' ; -- sck window always disable when busy active
---   end if;
--- end process;
---*************************************************************************************
-  if    rising_edge(MCLK) then   -- All the process is synchronous to MCLK
+  if    falling_edge(MCLK) then   -- All the process is synchronous to MCLK (Falling edge)
       if  (BUSYR='0' and BUSYL='0')  then -- sBUSY flags must be low.
-                      --
-          if        CNVclk_cnt <= 24 then         -- compare cycle counter value
-                    CNVclk_cnt <= CNVclk_cnt + 1 ;-- Increment clock cylce counter
-          end if;
+          --
+    			if    CNVclk_cnt <= 24 then    -- compare cycle counter value
+                CNVclk_cnt <= CNVclk_cnt + 1 ;      -- Increment clock cylce counter
+    			end if;
           --
           -- ADC clock pulse window
-          if      CNVclk_cnt <= 24  then
+          if      CNVclk_cnt < 24  then
                   CNVen_SCK  <= '1' ; -- Enable window for clock
           else
                   CNVen_SCK  <= '0' ; -- Disable window for clock
           end if;
-          --
       else
           CNVclk_cnt <= 0;  -- Reset tclk_cnt when BUSY is high
           -- Added below 11/02/24: (more clean behaviour)
           CNVen_SCK  <= '0' ; -- sck window always disable when busy active
-      end if;
+	    end if;
   end if;
 end process;
+ADC_CLK   <= MCLK when CNVen_SCK='1' else '0' ; --
 
 -------------------------------------------------------
 -- Combination of enable and clocks with clock enable
 -------------------------------------------------------
-RDenable : process (MCLK,CNVen_SCK,T_CNVen_SCK,ADC_CLK)
-begin
-    if   falling_edge(MCLK) then
-            T_CNVen_SCK  <= CNVen_SCK  ; -- signal "CNVen_SCK" synch to falling edge of MCLK
-    end if;
-    -- Now combinations below will not produce glitches !
-    ADC_CLK   <= MCLK when T_CNVen_SCK='1' else '0' ; --
+-- RDenable : process (MCLK,CNVen_SCK,T_CNVen_SCK,ADC_CLK)
+-- begin
+--     if   falling_edge(MCLK) then
+--             T_CNVen_SCK  <= CNVen_SCK  ; -- signal "CNVen_SCK" synch to falling edge of MCLK
+--     end if;
+--     -- Now combinations below will not produce glitches !
+--     ADC_CLK   <= MCLK when T_CNVen_SCK='1' else '0' ; --
 
-end process RDenable;
+-- end process RDenable;
 
 SCKR <= ADC_CLK ; --
 SCKL <= ADC_CLK ; --
-----
+-- ----
 
-------------------------------------------------------------------
-
-----------------------------------------------------------------------------
 
 
 ------------------------------------------------------------------
 ---- window to limit the reading of the only 23 first clock cycle AVGen_READ
 --------------------------------------------------------------------
 -- ** MODIF DU 30/01/24 pour régler le problème lorsque  AVG=0 pas de moyennage 
-process (ADC_CLK,TCLK23,CLKFS_Pulse)
+process (ADC_CLK,TCLK23,CNV)
 begin
   -- the TCLK23 counter is reset outside "AVGen_READ" window.
-    if	    CLKFS_Pulse = '1' then --
+    if	    CNV = '1' then --
  		    TCLK23 <= 0	 ;
     elsif   rising_edge(ADC_CLK) and TCLK23 < 23 then --t
             TCLK23 <= TCLK23 + 1 ;
@@ -211,7 +164,7 @@ end process;
 ------------------------------------------------------------------
 ADCserial_read : process(TCLK23,ADC_CLK)
 begin
-	if    falling_edge(ADC_CLK) then --stored data of SDO is send to bit 0 to 23 of DATAO
+	if    rising_edge(ADC_CLK) then --stored data of SDO is send to bit 0 to 23 of DATAO
                 case TCLK23 is
                 when  0  => r_DATAL(23)  <= SDOL ; -- MSB Left channel
                             r_DATAR(23)  <= SDOR ; -- MSB Right channel
