@@ -266,5 +266,30 @@ L'entrée de la carte USB-I2S n'est donc plus présente.
 
 A tester avec la carte AA10M08 elle aussi à modifier en coonséquence....
 
+-----------------------------------------------------------------------------------
+Le 14/011/2025 - commit git f6b2682  
+------------------------------------------------------------------------------------
+Le CPLD a été profondément remanié pour ne fonctionner qu'en esclave de la carte 
+AA10M08.
+Cela fonctionne, mais il reste un problème insoluble.
+Il n'est pas possible d'affectuer un lecture de l'ADC à 1536 kHz.
+Le durée restante pendant la période d'aquisition n'est pas suffisante pour être en mesure
+de lire les 24 bits de données. Pour être plus précis : 
+Fs= 1536 kHz , Ts=1/Fs= 651 ns.
+Tconv (temps de conversion) = 392 ns
+T_busyLH = Délai  maxi entre CNV et début du BUSY = 13 ns
+T_acq = 651 - 392 - 13 = 246 ns --> fenêtre de lecture des données.
+Il reste donc 246 ns max pour lire les 24 bits en série.
+Avec MCLK=98.304MHz, Tclk= 10.173 ns par période
+Soit au maximum 246/10.173 = 24.18 périodes possible !
+On se trouve juste à la limite, et comme le calcul ne tient pas compte du fait que
+le front descendent de BUSY est asynchrone de MCLK, on peut facilement perdre 10ns ou plus..
+En pratique pas réaliste pour un fonctionnement fiable.
 
-
+NOTE , mesure de busy et T_busyLH  en réel sur voie gauche OSVA :
+*****************************************************************
+T_busyLH = 3.6 ns  -- Tconv (busy high) = 363 ns (datasheet dit 343 à 392 ns)
+Avec ces valeurs réelles on a  : 
+T_acq = 651 - 363 - 4 = 284 ns --> fenêtre de lecture des données.
+Avec MCLK=98.304MHz, Tclk= 10.173 ns par période
+Soit au maximum 246/10.173 = 27.9 périodes possible, c'est déjà mieux.

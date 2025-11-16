@@ -11,8 +11,9 @@ entity tb_F1_ReadADCFullSpeed2 is
     G_CLKFS_HZ  : integer := 1_536_000;
     -- G_CLKFS_HZ  : integer := 768_000;
     G_BITS      : integer := 24;
-    G_TBUSY_NS  : time    := 13 ns;
-    G_TCONV_NS  : time    := 392 ns;
+    G_TBUSY_NS  : time    := 4 ns; -- valeurs réelles mesurée sur LTC2380-24
+    G_TCONV_NS  : time    := 363 ns; -- valeurs réelles mesurée sur LTC2380-24
+    G_TDSDO_NS  : time    := 8 ns;  -- délai SDO après SCK rising edge
 
     -- >>> motifs alternés sur chaque voie (définissables dans vsim -g)
     G_L_VAL_A   : std_logic_vector(23 downto 0) := x"7A_BCDE";
@@ -143,6 +144,7 @@ begin
 
     for i in 1 to G_BITS-1 loop
       wait until rising_edge(SCKL);
+      wait for G_TDSDO_NS;
       v_shift := v_shift(G_BITS-2 downto 0) & '0';
       SDOL    <= v_shift(G_BITS-1);
     end loop;
@@ -158,6 +160,7 @@ begin
 
     for i in 1 to G_BITS-1 loop
       wait until rising_edge(SCKR);
+      wait for G_TDSDO_NS;
       v_shift := v_shift(G_BITS-2 downto 0) & '0';
       SDOR    <= v_shift(G_BITS-1);
     end loop;

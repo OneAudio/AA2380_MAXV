@@ -79,12 +79,12 @@ add wave -label DOUTR   -radix hex  /tb_F1_ReadADCFullSpeed2/DOUTR
 # Ajuste/Commente si les noms diffèrent dans F1_ReadADCFullSpeed.vhd
 catch { add wave -divider "internals" }
 catch { add wave -label CNVen_SCK   -radix binary   /tb_F1_ReadADCFullSpeed2/dut/CNVen_SCK }
+catch { add wave -label SDO_Read    -radix binary   /tb_F1_ReadADCFullSpeed2/dut/SDO_Read }
 catch { add wave -label ADC_CLK     -radix binary   /tb_F1_ReadADCFullSpeed2/dut/ADC_CLK }
 catch { add wave -label TCLK23      -radix unsigned /tb_F1_ReadADCFullSpeed2/dut/TCLK23 }
 catch { add wave -label CNVclk_cnt  -radix unsigned /tb_F1_ReadADCFullSpeed2/dut/CNVclk_cnt }
 catch { add wave -label r_DATAL     -radix hex      /tb_F1_ReadADCFullSpeed2/dut/r_DATAL }
 catch { add wave -label r_DATAR     -radix hex      /tb_F1_ReadADCFullSpeed2/dut/r_DATAR }
-catch { add wave -label T_CNVen_SCK -radix binary   /tb_F1_ReadADCFullSpeed2/dut/T_CNVen_SCK }
 
 view wave
 run 10 us

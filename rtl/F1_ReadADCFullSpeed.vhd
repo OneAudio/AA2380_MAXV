@@ -4,7 +4,7 @@
 -- Design notes, please read : "SPECIF_SPI_LTC2380-24.vhd" and
 -- "F1_readADCmulti_ExtClk.xls"
 -----------------------------------------------------------------
--- Intel MAXV 5M570 CPLD	Take 143 LE
+-- Intel MAXV 5M570 CPLD	Take 122 LE
 -- Function F1 :  F1_ReadADCFullSpeed.vhd
 --
 -- Function to read data from two LT2380-24 ADC using normal mode 
@@ -12,6 +12,9 @@
 -- 24 reading/conversion. Fsmax of ADC: 1536kHz
 -----------------------------------------------------------------
 -- Simulation OK.
+-- Le 16/11/2025 fonctionne OK sur ma carte de test AA2380V1
+-- avec MCLK=98.304MHz et Fs= 768kHz.
+-- Reste à valider avec CLKFS=1.536MHz 
 -----------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.all;
@@ -21,13 +24,13 @@ entity F1_ReadADCFullSpeed is
 --
 port(
     -- Inputs Clocks
-    MCLK          : in  std_logic  ; -- master input clock (98.304 MHz or 90.3168 MHz)
-    CLKFS         : in  std_logic  ; -- Sampling frequency clock
-    nRESET        : in  std_logic ; -- nRESET input active high
+    MCLK          : in  std_logic  ; -- Master input clock (98.304 MHz or 90.3168 MHz)
+    CLKFS         : in  std_logic  ; -- Sampling frequency clock ( 12 to 1536 kHz, square wave)
+    nRESET        : in  std_logic  ; -- nRESET input active low
     -- Output ports
-    DOUTL	 	  : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Left channel
-    DOUTR	 	  : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide, Right channel
-    --- ADC i/o control signals
+    DOUTL	 	  : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide CA2, Left channel
+    DOUTR	 	  : out std_logic_vector(23 downto 0); --ADC parrallel output data, 24 bits wide CA2, Right channel
+    -- ADC i/o control signals
     -- Left Channel ADC control
     BUSYL         : in std_logic  ; -- ADC BUSY signal(active high), Left channel
     SDOL          : in std_logic  ; -- ADC data output, Left channel
@@ -38,9 +41,6 @@ port(
     SDOR          : in std_logic  ; -- ADC data output, Right channel
     nCNVR         : out std_logic ; -- ADC start conv signal (inverted), Right channel
     SCKR          : buffer std_logic -- ADC data read clock, Right channel
-    --
-    -- Testing purpose IO--
-  --
 );
 
 end F1_ReadADCFullSpeed;
@@ -50,6 +50,7 @@ architecture Behavioral of F1_ReadADCFullSpeed is
 signal CNV      : std_logic ; -- 
 signal CLKFSd1  : std_logic ; -- 
 signal CLKFSd2  : std_logic ; -- 
+signal CLKFSd3  : std_logic ; -- 
 
 signal sBUSYL        : std_logic ; -- synch Left ADC busy flag
 signal sBUSYR        : std_logic ; -- synch Right ADC busy flag
@@ -57,12 +58,11 @@ signal sBUSYR        : std_logic ; -- synch Right ADC busy flag
 signal CNVclk_cnt    : integer range 0 to 32 ; --
 signal CNVen_SCK     : std_logic ; --
 signal ADC_CLK       : std_logic ; --
+signal SDO_Read      : std_logic ; --
 signal TCLK23        : integer range 0 to 23 ; --
 
 signal r_DATAR	 	   : std_logic_vector(23 downto 0);
 signal r_DATAL	 	   : std_logic_vector(23 downto 0);
-
-signal T_CNVen_SCK   : std_logic ; --
 
 ----------------------------------------------------------------
 
@@ -73,87 +73,76 @@ begin
 
 ------------------------------------------------------------------
 -- Generate CNV from CLKFS 
--- Both Left and Righ CNV pulse come from nFS pulse
+-- Both Left and Righ CNV pulse come from CLKFS square wave.
 -- CNV pulse width must be 20ns min (low or high),
 -- (See LTC2380-24 datasheet timing specs page 5).
+-- Here it is 3x MCLK period (about 30ns with 98.304MHz MCLK).
 ------------------------------------------------------------------
 process (MCLK) is
 begin
 	-- 
 	if 	rising_edge(MCLK)	then
-      CLKFSd1 <= CLKFS ;
-      CLKFSd2 <= CLKFSd1;
-	    CNV <= CLKFS and not(CLKFSd2);
+      CLKFSd1 <= CLKFS  ; -- first delay
+      CLKFSd2 <= CLKFSd1; -- second delay
+      CLKFSd3 <= CLKFSd2; -- third delay
+	    CNV <= CLKFS and not(CLKFSd3); -- Generate CNV pulse from CLKFS rising edge
 	end if;
 end process;
-  nCNVL  <= not CNV ;
-  nCNVR  <= not CNV ;
+
+-- Inverted CNV for both ADCs because CNS is inverted and resynchronized tp MCLK
+-- inside AA2380V1 board.
+nCNVL  <= not CNV ;
+nCNVR  <= not CNV ;
+
 ------------------------------------------------------------------
 --  Data read CLock pulse generator
--- 24 is the number of reading clock cycle / conversion
+--  24 is the number of reading clock cycle / conversion
 -- "MCLK" is clock used to read data 
 --
 -- Detect when Busy flag of ADC become low (conversion is done),
 -- and then start readind data and generate read clock for ADC (ADC_CLK)
---
 ------------------------------------------------------------------
 ADC_clocks : process (MCLK)
 begin
---*************************************************************************************
-  if    falling_edge(MCLK) then   -- All the process is synchronous to MCLK (Falling edge)
+  if    rising_edge(MCLK) then   -- All the process is synchronous to MCLK (Falling edge)
       if  (BUSYR='0' and BUSYL='0')  then -- sBUSY flags must be low.
-          --
-    			if    CNVclk_cnt <= 24 then    -- compare cycle counter value
-                CNVclk_cnt <= CNVclk_cnt + 1 ;      -- Increment clock cylce counter
+          -- Increment TCLK23 counter
+          if    TCLK23 < 23 then
+                TCLK23 <= TCLK23 + 1 ;
+          end if;
+          -- MCLK cycle counter for ADC clock generation and data reading window
+    			if    CNVclk_cnt <= 24 then          -- compare cycle counter value
+                CNVclk_cnt <= CNVclk_cnt + 1 ; -- Increment clock cylce counter
     			end if;
           --
-          -- ADC clock pulse window
-          if      CNVclk_cnt < 24  then
+          -- ADC SCK pulses clock window
+          -- SCK pulse are delayed of 1 MCLK period compare to data reading window
+          if      CNVclk_cnt> 0 and  CNVclk_cnt < 24  then
                   CNVen_SCK  <= '1' ; -- Enable window for clock
           else
                   CNVen_SCK  <= '0' ; -- Disable window for clock
           end if;
+
+          -- Data reading window
+          -- Data reading window start 1 MCLK period before SCK clock window 
+          if      CNVclk_cnt < 24  then
+                  SDO_Read  <= '1' ; -- Enable window for clock
+          else
+                  SDO_Read  <= '0' ; -- Disable window for clock
+          end if;
       else
-          CNVclk_cnt <= 0;  -- Reset tclk_cnt when BUSY is high
-          -- Added below 11/02/24: (more clean behaviour)
-          CNVen_SCK  <= '0' ; -- sck window always disable when busy active
-	    end if;
+          CNVclk_cnt <= 0   ; -- Reset tclk_cnt when BUSY is high
+          CNVen_SCK  <='0'  ; -- sck window always disable when busy active
+          TCLK23     <= 0   ; -- Reset TCLK23 counter when BUSY is high
+      end if;
   end if;
 end process;
-ADC_CLK   <= MCLK when CNVen_SCK='1' else '0' ; --
+ADC_CLK   <= MCLK when CNVen_SCK='1' else '0' ; -- Generate ADC read clock when CNVen_SCK is active
 
--------------------------------------------------------
--- Combination of enable and clocks with clock enable
--------------------------------------------------------
--- RDenable : process (MCLK,CNVen_SCK,T_CNVen_SCK,ADC_CLK)
--- begin
---     if   falling_edge(MCLK) then
---             T_CNVen_SCK  <= CNVen_SCK  ; -- signal "CNVen_SCK" synch to falling edge of MCLK
---     end if;
---     -- Now combinations below will not produce glitches !
---     ADC_CLK   <= MCLK when T_CNVen_SCK='1' else '0' ; --
-
--- end process RDenable;
-
-SCKR <= ADC_CLK ; --
+-- Generate SCK for both ADCs
+SCKR <= ADC_CLK ; -- 
 SCKL <= ADC_CLK ; --
 -- ----
-
-
-
-------------------------------------------------------------------
----- window to limit the reading of the only 23 first clock cycle AVGen_READ
---------------------------------------------------------------------
--- ** MODIF DU 30/01/24 pour régler le problème lorsque  AVG=0 pas de moyennage 
-process (ADC_CLK,TCLK23,CNV)
-begin
-  -- the TCLK23 counter is reset outside "AVGen_READ" window.
-    if	    CNV = '1' then --
- 		    TCLK23 <= 0	 ;
-    elsif   rising_edge(ADC_CLK) and TCLK23 < 23 then --t
-            TCLK23 <= TCLK23 + 1 ;
-    end if;
-end process;
 
 ------------------------------------------------------------------
 -- ADC Data reading Channel L+R
@@ -162,73 +151,32 @@ end process;
 -- La clock est différente à haute vitesse pour tenir compte du delai
 -- d'arrivée des donnée de l'ADC.
 ------------------------------------------------------------------
-ADCserial_read : process(TCLK23,ADC_CLK)
+ADCserial_read : process(MCLK)
+variable idx : integer range 0 to 23; 
 begin
-	if    rising_edge(ADC_CLK) then --stored data of SDO is send to bit 0 to 23 of DATAO
-                case TCLK23 is
-                when  0  => r_DATAL(23)  <= SDOL ; -- MSB Left channel
-                            r_DATAR(23)  <= SDOR ; -- MSB Right channel
-                when  1  => r_DATAL(22)  <= SDOL ;
-                            r_DATAR(22)  <= SDOR ;
-                when  2  => r_DATAL(21)  <= SDOL ;
-                            r_DATAR(21)  <= SDOR ;
-                when  3  => r_DATAL(20)  <= SDOL ;
-                            r_DATAR(20)  <= SDOR ;
-                when  4  => r_DATAL(19)  <= SDOL ;
-                            r_DATAR(19)  <= SDOR ;
-                when  5  => r_DATAL(18)  <= SDOL ;
-                            r_DATAR(18)  <= SDOR ;
-                when  6  => r_DATAL(17)  <= SDOL ;
-                            r_DATAR(17)  <= SDOR ;
-                when  7  => r_DATAL(16)  <= SDOL ;
-                            r_DATAR(16)  <= SDOR ;
-                when  8  => r_DATAL(15)  <= SDOL ;
-                            r_DATAR(15)  <= SDOR ;
-                when  9  => r_DATAL(14)  <= SDOL ;
-                            r_DATAR(14)  <= SDOR ;
-                when 10  => r_DATAL(13)  <= SDOL ;
-                            r_DATAR(13)  <= SDOR ;
-                when 11  => r_DATAL(12)  <= SDOL ;
-                            r_DATAR(12)  <= SDOR ;
-                when 12  => r_DATAL(11)  <= SDOL ;
-                            r_DATAR(11)  <= SDOR ;
-                when 13  => r_DATAL(10)  <= SDOL ;
-                            r_DATAR(10)  <= SDOR ;
-                when 14  => r_DATAL( 9)  <= SDOL ;
-                            r_DATAR( 9)  <= SDOR ;
-                when 15  => r_DATAL( 8)  <= SDOL ;
-                            r_DATAR( 8)  <= SDOR ;
-                when 16  => r_DATAL( 7)  <= SDOL ;
-                            r_DATAR( 7)  <= SDOR ;
-                when 17  => r_DATAL( 6)  <= SDOL ;
-                            r_DATAR( 6)  <= SDOR ;
-                when 18  => r_DATAL( 5)  <= SDOL ;
-                            r_DATAR( 5)  <= SDOR ;
-                when 19  => r_DATAL( 4)  <= SDOL ;
-                            r_DATAR( 4)  <= SDOR ;
-                when 20  => r_DATAL( 3)  <= SDOL ;
-                            r_DATAR( 3)  <= SDOR ;
-                when 21  => r_DATAL( 2)  <= SDOL ;
-                            r_DATAR( 2)  <= SDOR ;
-                when 22  => r_DATAL( 1)  <= SDOL ;
-                            r_DATAR( 1)  <= SDOR ;
-                when 23  => r_DATAL( 0)  <= SDOL ; -- LSB Left channel
-                            r_DATAR( 0)  <= SDOR ; -- LSB Right channel
-                when others => NULL;
-    		end case;
-  end if;
+ if rising_edge(MCLK) then
+    if SDO_Read = '1' then
+      -- Data reading only when SDO_Read window is active
+      if  (TCLK23 >= 0) and (TCLK23 <= 23) then
+      -- Shift data into data registers
+      -- at each MCLK rising edge during data reading window
+          idx := 23 - TCLK23;
+          r_DATAL <= r_DATAL(22 downto 0) & SDOL; -- shift Left channel data
+          r_DATAR <= r_DATAR(22 downto 0) & SDOR; -- shift Right channel data
+      end if;
+    end if;
+ end if;
 end process ADCserial_read;
 
 ------------------------------------------------------------------------------
 -- Transfer data register to DOUTL and DOUTR output at each rising edge
--- of "FSo" (Effective output sample frequency).
---
+-- of CLKFS (Effective output sample frequency)
 ------------------------------------------------------------------------------
-process (CLKFS,r_DATAL,r_DATAR,nRESET)
+process (CLKFS,nRESET)
 begin
   if    nRESET='0' then
-        DOUTL <= x"000000"  ; -- Reset DATA if OutOfRange detected
-        DOUTR <= x"000000"  ; -- Reset DATA if OutOfRange detected
+        DOUTL <= x"000000"  ; -- Reset DATA if nRESET is active
+        DOUTR <= x"000000"  ; -- Reset DATA if nRESET is active
   elsif	rising_edge(CLKFS) then
     		DOUTL <= r_DATAL; -- Left channel data latch
     		DOUTR <= r_DATAR; -- Right channel data latch
