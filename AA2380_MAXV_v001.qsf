@@ -134,12 +134,6 @@ set_location_assignment PIN_47 -to FILTER_LEFT
 set_location_assignment PIN_61 -to FILTER_RIGHT
 set_location_assignment PIN_48 -to SE_LEFT
 set_location_assignment PIN_66 -to SE_RIGHT
-set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
-set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[3]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[2]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[1]
-set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[0]
 set_global_assignment -name SDC_FILE constraints/AA2380_MAXV_v001.sdc
 set_global_assignment -name VHDL_FILE rtl/F16_UIOTESTB.vhd
 set_global_assignment -name VHDL_FILE rtl/spi_slave.vhd
@@ -159,3 +153,9 @@ set_global_assignment -name VHDL_FILE rtl/F21_MCLKDETECT.vhd
 set_global_assignment -name QIP_FILE OSCint.qip
 set_global_assignment -name VHDL_FILE rtl/F13_LEDS_DRV.vhd
 set_global_assignment -name VHDL_FILE rtl/tri_gen_dual_24b.vhd
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[3]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[2]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[1]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to CONF[0]
+set_global_assignment -name LL_ROOT_REGION ON -section_id "Root Region"
+set_global_assignment -name LL_MEMBER_STATE LOCKED -section_id "Root Region"
